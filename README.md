@@ -70,3 +70,7 @@ dot -Tjson Model_1.json \
 ```
 
 This writes the rendered graph into an SVG file named `Model_1.svg`.
+
+Here is an example of what a rendered graph looks like:
+
+![Example TLA+ state graph rendered with D2](https://github.com/user-attachments/assets/21b5406f-408b-4cd5-9370-fbcb66c032be)
