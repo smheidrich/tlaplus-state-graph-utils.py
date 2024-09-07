@@ -39,7 +39,7 @@ other options.
 
 ## tlaplus-dot-reasonable-json-to-d2.py
 
-This transforms the "reasonable" JSON format outputted by the previous script
+This transforms the "reasonable" JSON format output by the previous script
 into a [D2](https://d2lang.com/) graph with LaTeX formatting for the TLA+
 states, which might look a bit nicer than the regular ASCII representation in
 TLA+'s native state graph.
