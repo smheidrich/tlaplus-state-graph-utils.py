@@ -36,6 +36,35 @@ dot -Tjson Model_1.json | tlaplus-dot-json-to-reasonable-json.py
 This writes compact JSON to standard output. Refer to the `--help` text for
 other options.
 
+The JSON's structure looks like this:
+
+```json
+{
+  "metadata": {
+    "format": {
+      "name": "reasonable-tlaplus-state-graph-json",
+      "version": "0.1"
+    }
+  },
+  "states": [
+    {
+      "id": 1,
+      "labelTlaPlus": "/\\ a = 1 /\\ b = 2 \n ..."
+    },
+    ...
+  ],
+  "steps": [
+    {
+      "id": 0,
+      "actionName": "CheckFileExists",
+      "fromStateId": 1,
+      "toStateId": 2,
+      "colorId": "1"
+    },
+    ...
+  ]
+}
+```
 
 ## tlaplus-dot-reasonable-json-to-d2.py
 
