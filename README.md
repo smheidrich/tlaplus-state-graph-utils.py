@@ -54,8 +54,8 @@ dot -Tjson Model_1.json \
 | tlaplus-dot-reasonable-json-to-d2.py
 ```
 
-As before, this writes compact JSON to standard output and you can refer to the
-`--help` text for other options.
+As before, this writes to standard output and you can refer to the `--help`
+text for other options.
 
 You can pipe this output into `d2` in turn to render the graph.
 I recommend using the Elk layout engine rather than the default (Dagre) for

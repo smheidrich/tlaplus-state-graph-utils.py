@@ -3,6 +3,7 @@
 # /// script
 # requires-python = ">=3.9,<4"
 # ///
+from collections.abc import Callable
 import json
 from argparse import ArgumentParser, FileType
 from collections import defaultdict
@@ -15,7 +16,7 @@ from typing import IO, Any
 __version__ = "0.1.0"
 
 
-latex: bool = getenv("TLAPLUS_D2_LATEX", True)
+latex: bool = bool(getenv("TLAPLUS_D2_LATEX", True))
 
 
 # Core
@@ -50,9 +51,9 @@ class Step:
   color_id: str
 
 
-def parse_and_write_d2(infile: IO[Any], outfile: IO[str]):
+def parse_and_write_d2(infile: IO[Any], outfile: IO[str]) -> None:
   # Shortcut:
-  writeln = lambda s: outfile.write(f"{s}\n")
+  writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
 
   # Parse JSON
   d = json.load(stdin)
@@ -160,11 +161,6 @@ arg_parser.add_argument(
   type=FileType("w"),
   default="-",
   help="output file path or '-' to use stdout (the default)",
-)
-arg_parser.add_argument(
-  "--pretty",
-  action="store_true",
-  help="pretty-printed rather than compact JSON",
 )
 arg_parser.add_argument(
   "--version", action="version", version=f"%(prog)s {__version__}"
