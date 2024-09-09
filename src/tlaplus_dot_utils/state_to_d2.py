@@ -5,6 +5,8 @@ from py_d2 import D2Diagram, D2Shape  # type: ignore
 
 from .state_parsing import FunctionMerge, Record, SealedValue, SimpleValue
 
+inline_value_newline: bool = False
+
 
 def dataclasses_state_to_d2(
   var_name_to_dc: Mapping[bytes, SealedValue | bytes],
@@ -70,7 +72,7 @@ def _dataclass_state_to_d2_recursive(
     case _ as unreachable:
       assert_never(unreachable)
 
-  nl = "\\n" if False else ""  # TODO make configurable
+  nl = "\\n" if inline_value_newline else ""
   label = f"{var_name.decode('utf-8') + nl + simple_value}"
   label = '"' + label.strip("'").replace('"', '\\"') + '"'
   shape = D2Shape(name=f"var{i}", label=label)

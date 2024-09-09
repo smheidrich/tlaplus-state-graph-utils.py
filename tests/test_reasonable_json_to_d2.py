@@ -32,6 +32,27 @@ def test_long_example_boxes_simple_values_inline_against_reference(
   assert d2 == long_example_d2_boxes_simple_values_inline
 
 
+@patch("tlaplus_dot_utils.state_to_d2.inline_value_newline", True)
+def test_long_example_boxes_simple_values_inline_newline_against_reference(
+  long_example_reasonable_json: dict[str, Any],
+  long_example_d2_boxes_simple_values_inline_newline: str,
+) -> None:
+  # Run
+  out = StringIO()
+  parse_and_write_d2(StringIO(json.dumps(long_example_reasonable_json)), out)
+  out.seek(0)
+  d2 = format_d2(out.read())
+
+  # Uncomment to regenerate:
+  # from pathlib import Path
+  # Path(
+  # "tests/data/long-example/boxes-simple-values-inline-newline.d2"
+  # ).write_text(d2)
+
+  # Check
+  assert d2 == long_example_d2_boxes_simple_values_inline_newline
+
+
 def test_long_example_boxes_simple_values_not_inline_against_reference(
   long_example_reasonable_json: dict[str, Any],
   long_example_d2_boxes_simple_values_not_inline: str,
@@ -49,7 +70,7 @@ def test_long_example_boxes_simple_values_not_inline_against_reference(
   # Uncomment to regenerate:
   # from pathlib import Path
   # Path("tests/data/long-example/boxes-simple-values-not-inline.d2").write_text(
-    # d2
+  # d2
   # )
 
   # Check
