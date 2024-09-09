@@ -5,99 +5,12 @@
 # ///
 import json
 from argparse import FileType
-from dataclasses import dataclass
-from typing import IO, Any
+from typing import Any
 
+from ..dot_json_to_reasonable_json import dot_jsonish_to_reasonable_jsonish
 from .root import subparsers
 
 __version__ = "0.1.0"
-
-
-# Core
-
-
-@dataclass
-class State:
-  id: int
-  label_tlaplus: str
-
-
-@dataclass
-class Step:
-  id: int
-  action_name: str
-  from_state_id: int
-  to_state_id: int
-  color_id: str
-
-
-def parse_and_return_jsonish(file: IO[Any]) -> dict[str, Any]:
-  # Load JSON
-  d = json.load(file)
-
-  # Extract relevant parts
-  edge_ds, object_ds = d["edges"], d["objects"]
-  state_object_ds = [
-    d
-    for d in object_ds
-    if d["label"]
-    and d.get("shape") != "record"
-    and d.get("name") != "cluster_legend"
-  ]
-  legend_ds = [d for d in object_ds if d.get("shape") == "record"]
-  legend_color_to_action_name = {d["fillcolor"]: d["name"] for d in legend_ds}
-
-  # Construct dataclass instances
-  states = [
-    State(
-      id=d["_gvid"],
-      label_tlaplus=d["label"]
-      .replace("\\\\", "\\")
-      .replace("\\n", "\n")
-      .replace("\\\\", "\\"),
-    )
-    for d in state_object_ds
-  ]
-  steps = [
-    Step(
-      id=d["_gvid"],
-      action_name=legend_color_to_action_name[d["color"]],
-      from_state_id=d["tail"],
-      to_state_id=d["head"],
-      color_id=d["color"],
-    )
-    for d in edge_ds
-  ]
-
-  # Return as JSON-ish data structure
-  return {
-    "metadata": {
-      "format": {
-        "name": "reasonable-tlaplus-state-graph-json",
-        "version": "0.1",
-      },
-    },
-    "states": [
-      {
-        "id": state.id,
-        "labelTlaPlus": state.label_tlaplus,
-      }
-      for state in states
-    ],
-    "steps": [
-      {
-        "id": step.id,
-        "actionName": step.action_name,
-        "fromStateId": step.from_state_id,
-        "toStateId": step.to_state_id,
-        "colorId": step.color_id,
-      }
-      for step in steps
-    ],
-  }
-
-
-# CLI
 
 
 arg_parser = subparsers.add_parser(
@@ -130,7 +43,8 @@ arg_parser.add_argument(
 
 
 def run_for_cli_args(args: Any) -> None:
-  jsonish = parse_and_return_jsonish(args.input)
+  d = json.load(args.input)
+  jsonish = dot_jsonish_to_reasonable_jsonish(d)
 
   if args.pretty:
     json.dump(jsonish, args.output, indent=2)
