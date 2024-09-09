@@ -31,7 +31,7 @@ def parse_and_write_d2(infile: IO[Any], outfile: IO[str]) -> None:
   writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
 
   # Parse JSON
-  d = json.load(stdin)
+  d = json.load(infile)
 
   # Check metadata version
   try:

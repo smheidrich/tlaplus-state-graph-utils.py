@@ -11,6 +11,44 @@ wheels = [
 ]
 
 [[package]]
+name = "coverage"
+version = "7.6.1"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+sdist = { url = "http://localhost:3141/root/pypi/+f/953/510dfb7b12ab6/coverage-7.6.1.tar.gz", hash = "sha256:953510dfb7b12ab69d20135a0662397f077c59b1e6379a768e97c59d852ee51d" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/95c/ae0efeb032af8/coverage-7.6.1-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:95cae0efeb032af8458fc27d191f85d1717b1d4e49f7cb226cf526ff28179778" },
+    { url = "http://localhost:3141/root/pypi/+f/562/1a9175cf9d0b0/coverage-7.6.1-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:5621a9175cf9d0b0c84c2ef2b12e9f5f5071357c4d2ea6ca1cf01814f45d2391" },
+    { url = "http://localhost:3141/root/pypi/+f/260/933720fdcd753/coverage-7.6.1-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:260933720fdcd75340e7dbe9060655aff3af1f0c5d20f46b57f262ab6c86a5e8" },
+    { url = "http://localhost:3141/root/pypi/+f/07e/2ca0ad381b913/coverage-7.6.1-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:07e2ca0ad381b91350c0ed49d52699b625aab2b44b65e1b4e02fa9df0e92ad2d" },
+    { url = "http://localhost:3141/root/pypi/+f/c44/fee9975f04b33/coverage-7.6.1-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c44fee9975f04b33331cb8eb272827111efc8930cfd582e0320613263ca849ca" },
+    { url = "http://localhost:3141/root/pypi/+f/877/abb17e6339d96/coverage-7.6.1-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:877abb17e6339d96bf08e7a622d05095e72b71f8afd8a9fefc82cf30ed944163" },
+    { url = "http://localhost:3141/root/pypi/+f/3e0/cadcf6733c091/coverage-7.6.1-cp312-cp312-musllinux_1_2_i686.whl", hash = "sha256:3e0cadcf6733c09154b461f1ca72d5416635e5e4ec4e536192180d34ec160f8a" },
+    { url = "http://localhost:3141/root/pypi/+f/c3c/02d12f837d968/coverage-7.6.1-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:c3c02d12f837d9683e5ab2f3d9844dc57655b92c74e286c262e0fc54213c216d" },
+    { url = "http://localhost:3141/root/pypi/+f/e05/882b70b87a18d/coverage-7.6.1-cp312-cp312-win32.whl", hash = "sha256:e05882b70b87a18d937ca6768ff33cc3f72847cbc4de4491c8e73880766718e5" },
+    { url = "http://localhost:3141/root/pypi/+f/b5d/7b556859dd85f/coverage-7.6.1-cp312-cp312-win_amd64.whl", hash = "sha256:b5d7b556859dd85f3a541db6a4e0167b86e7273e1cdc973e5b175166bb634fdb" },
+    { url = "http://localhost:3141/root/pypi/+f/a4a/cd025ecc06185/coverage-7.6.1-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:a4acd025ecc06185ba2b801f2de85546e0b8ac787cf9d3b06e7e2a69f925b106" },
+    { url = "http://localhost:3141/root/pypi/+f/a6d/3adcf24b624a7/coverage-7.6.1-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:a6d3adcf24b624a7b778533480e32434a39ad8fa30c315208f6d3e5542aeb6e9" },
+    { url = "http://localhost:3141/root/pypi/+f/d0c/212c49b6c10e6/coverage-7.6.1-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d0c212c49b6c10e6951362f7c6df3329f04c2b1c28499563d4035d964ab8e08c" },
+    { url = "http://localhost:3141/root/pypi/+f/6e8/1d7a3e5888245/coverage-7.6.1-cp313-cp313-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:6e81d7a3e58882450ec4186ca59a3f20a5d4440f25b1cff6f0902ad890e6748a" },
+    { url = "http://localhost:3141/root/pypi/+f/78b/260de9790fd81/coverage-7.6.1-cp313-cp313-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:78b260de9790fd81e69401c2dc8b17da47c8038176a79092a89cb2b7d945d060" },
+    { url = "http://localhost:3141/root/pypi/+f/a78/d169acd383000/coverage-7.6.1-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:a78d169acd38300060b28d600344a803628c3fd585c912cacc9ea8790fe96862" },
+    { url = "http://localhost:3141/root/pypi/+f/2c0/9f4ce52cb99dd/coverage-7.6.1-cp313-cp313-musllinux_1_2_i686.whl", hash = "sha256:2c09f4ce52cb99dd7505cd0fc8e0e37c77b87f46bc9c1eb03fe3bc9991085388" },
+    { url = "http://localhost:3141/root/pypi/+f/687/8ef48d4227aac/coverage-7.6.1-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:6878ef48d4227aace338d88c48738a4258213cd7b74fd9a3d4d7582bb1d8a155" },
+    { url = "http://localhost:3141/root/pypi/+f/44d/f346d5215a8c0/coverage-7.6.1-cp313-cp313-win32.whl", hash = "sha256:44df346d5215a8c0e360307d46ffaabe0f5d3502c8a1cefd700b34baf31d411a" },
+    { url = "http://localhost:3141/root/pypi/+f/828/4cf8c0dd272a2/coverage-7.6.1-cp313-cp313-win_amd64.whl", hash = "sha256:8284cf8c0dd272a247bc154eb6c95548722dce90d098c17a883ed36e67cdb129" },
+    { url = "http://localhost:3141/root/pypi/+f/d32/96782ca4eab57/coverage-7.6.1-cp313-cp313t-macosx_10_13_x86_64.whl", hash = "sha256:d3296782ca4eab572a1a4eca686d8bfb00226300dcefdf43faa25b5242ab8a3e" },
+    { url = "http://localhost:3141/root/pypi/+f/502/753043567491d/coverage-7.6.1-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:502753043567491d3ff6d08629270127e0c31d4184c4c8d98f92c26f65019962" },
+    { url = "http://localhost:3141/root/pypi/+f/6a8/9ecca80709d40/coverage-7.6.1-cp313-cp313t-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6a89ecca80709d4076b95f89f308544ec8f7b4727e8a547913a35f16717856cb" },
+    { url = "http://localhost:3141/root/pypi/+f/a31/8d68e92e80af8/coverage-7.6.1-cp313-cp313t-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:a318d68e92e80af8b00fa99609796fdbcdfef3629c77c6283566c6f02c6d6704" },
+    { url = "http://localhost:3141/root/pypi/+f/13b/0a73a0896988f/coverage-7.6.1-cp313-cp313t-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:13b0a73a0896988f053e4fbb7de6d93388e6dd292b0d87ee51d106f2c11b465b" },
+    { url = "http://localhost:3141/root/pypi/+f/442/1712dbfc55621/coverage-7.6.1-cp313-cp313t-musllinux_1_2_aarch64.whl", hash = "sha256:4421712dbfc5562150f7554f13dde997a2e932a6b5f352edcce948a815efee6f" },
+    { url = "http://localhost:3141/root/pypi/+f/166/811d20dfea725/coverage-7.6.1-cp313-cp313t-musllinux_1_2_i686.whl", hash = "sha256:166811d20dfea725e2e4baa71fffd6c968a958577848d2131f39b60043400223" },
+    { url = "http://localhost:3141/root/pypi/+f/225/667980479a17d/coverage-7.6.1-cp313-cp313t-musllinux_1_2_x86_64.whl", hash = "sha256:225667980479a17db1048cb2bf8bfb39b8e5be8f164b8f6628b64f78a72cf9d3" },
+    { url = "http://localhost:3141/root/pypi/+f/170/d444ab4058529/coverage-7.6.1-cp313-cp313t-win32.whl", hash = "sha256:170d444ab405852903b7d04ea9ae9b98f98ab6d7e63e1115e82620807519797f" },
+    { url = "http://localhost:3141/root/pypi/+f/b9f/222de8cded79c/coverage-7.6.1-cp313-cp313t-win_amd64.whl", hash = "sha256:b9f222de8cded79c49bf184bdbc06630d4c58eec9459b939b4a690c82ed05657" },
+]
+
+[[package]]
 name = "iniconfig"
 version = "2.0.0"
 source = { registry = "http://localhost:3141/root/pypi/+simple/" }
@@ -89,6 +127,19 @@ wheels = [
 ]
 
 [[package]]
+name = "pytest-cov"
+version = "5.0.0"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+dependencies = [
+    { name = "coverage" },
+    { name = "pytest" },
+]
+sdist = { url = "http://localhost:3141/root/pypi/+f/583/7b58e9f6ebd33/pytest-cov-5.0.0.tar.gz", hash = "sha256:5837b58e9f6ebd335b0f8060eecce69b662415b16dc503883a02f45dfeb14857" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/4f0/764a1219df532/pytest_cov-5.0.0-py3-none-any.whl", hash = "sha256:4f0764a1219df53214206bf1feea4633c3b558a2925c8b59f144f682861ce652" },
+]
+
+[[package]]
 name = "tlaplus-dot-utils"
 version = "0.1.0"
 source = { editable = "." }
@@ -104,6 +155,7 @@ d2 = [
 dev = [
     { name = "mypy" },
     { name = "pytest" },
+    { name = "pytest-cov" },
 ]
 
 [package.metadata]
@@ -117,6 +169,7 @@ requires-dist = [
 dev = [
     { name = "mypy", specifier = ">=1.11.2" },
     { name = "pytest", specifier = ">=8.3.2" },
+    { name = "pytest-cov", specifier = ">=5.0.0" },
 ]
 
 [[package]]

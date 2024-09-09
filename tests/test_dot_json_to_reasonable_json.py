@@ -29,7 +29,7 @@ def test_example_against_reference(
   # Run
   reasonable = dot_jsonish_to_reasonable_jsonish(example_dot_json)
 
-  # Uncomment to regenerate:
+  # Uncomment to regenerate, then run jq over the result:
   # from pathlib import Path
   # Path("tests/data/expected-dot-json-example-to-reasonable.json").write_text(
   # json.dumps(reasonable)
