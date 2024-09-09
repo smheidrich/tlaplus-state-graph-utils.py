@@ -91,7 +91,8 @@ def parse_and_write_d2(
       from tlaplus_dot_utils.state_to_d2 import dataclasses_state_to_d2
 
       state_boxes = dataclasses_state_to_d2(
-        tlaplus_state_to_dataclasses(state.label_tlaplus)
+        tlaplus_state_to_dataclasses(state.label_tlaplus),
+        simple_values_inline=simple_values_inline,
       )
       writeln(
         dedent(
