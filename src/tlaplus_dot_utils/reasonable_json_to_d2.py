@@ -1,43 +1,29 @@
 import json
 from collections import defaultdict
 from collections.abc import Callable
-from dataclasses import dataclass
 from os import getenv
 from sys import stdin
 from textwrap import dedent, indent
 from typing import IO, Any
 
+from .model import State, Step
+
 latex: bool = bool(getenv("TLAPLUS_D2_LATEX", False))
 state_as_boxes: bool = bool(getenv("TLAPLUS_D2_STATE_AS_BOXES", True))
 
 
-@dataclass
-class State:
-  id: int
-  label_tlaplus: str
-
-  @property
-  def label_latex(self) -> str:
-    # TODO Surely there is a way to use TLA+'s own LaTeX-output
-    #  programmatically somehow so we don't have to do this?
-    return (
-      self.label_tlaplus.replace("/\\", "\\land")
-      .replace(r"\/", "\\lor")
-      .replace("|->", "\\mapsto")
-      .replace("\n", " \\\\ ")
-      .replace("FALSE", "\\mathrm{FALSE}")
-      .replace("TRUE", "\\mathrm{TRUE}")
-      .replace('"', '\\text{"}')  # these look like garbage otherwise
-    )
-
-
-@dataclass
-class Step:
-  id: int
-  action_name: str
-  from_state_id: int
-  to_state_id: int
-  color_id: str
+def state_label_to_latex(state: State) -> str:
+  # TODO Surely there is a way to use TLA+'s own LaTeX-output
+  #  programmatically somehow so we don't have to do this?
+  return (
+    state.label_tlaplus.replace("/\\", "\\land")
+    .replace(r"\/", "\\lor")
+    .replace("|->", "\\mapsto")
+    .replace("\n", " \\\\ ")
+    .replace("FALSE", "\\mathrm{FALSE}")
+    .replace("TRUE", "\\mathrm{TRUE}")
+    .replace('"', '\\text{"}')  # these look like garbage otherwise
+  )
 
 
 def parse_and_write_d2(infile: IO[Any], outfile: IO[str]) -> None:
@@ -83,7 +69,7 @@ def parse_and_write_d2(infile: IO[Any], outfile: IO[str]) -> None:
   for state in states:
     # States
     if latex:
-      label = repr(state.label_latex)[1:-1]
+      label = repr(state_label_to_latex(state))[1:-1]
       writeln(
         dedent(
           f"""\
