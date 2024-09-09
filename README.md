@@ -1,20 +1,24 @@
 # tlaplus-dot-utils.py
 
-Python scripts for transforming GraphViz dot files produced by TLA+
+Python utilities for transforming GraphViz dot files produced by TLA+
 
-## How to run these
+## Installing and running the CLI
 
-So far, all scripts in this repository have no dependencies other than a
-recent (3.9+) Python version, so you should be able to just download and run
-them using a matching Python interpreter.
+The easiest way to install the CLI into an automatically-created venv (so it's
+isolated from your global or user Python libs) is using a tool like
+[pipx](https://pipx.pypa.io/), e.g.:
 
-But if you don't like to have scripts lying around on your system, you can also
-use a tool like e.g. [pipx](https://pipx.pypa.io/) or
-[fades](https://github.com/PyAr/) to run them without needing to download them
-manually. Refer to the relevant documentation of these tools.
+```bash
+pipx install https://github.com/smheidrich/tlaplus-dot-utils.py.git
+```
 
+You should then be able to run `tlaplus-dot-utils.py` from anywhere.
 
-## tlaplus-dot-json-to-reasonable-json.py
+## CLI commands
+
+The CLI bundles multiple separate functionalities as different subcommands.
+
+### dot-json-to-reasonable-json
 
 This is mainly a workaround for TLA+ being as yet unable to output its state
 graph in some kind of JSON format - see
@@ -30,7 +34,7 @@ Usage is normally going to look something like this:
 
 ```bash
 # In your TLA+ Model directory:
-dot -Tjson Model_1.json | tlaplus-dot-json-to-reasonable-json.py
+dot -Tjson Model_1.json | tlaplus-dot-utils.py dot-json-to-reasonable-json
 ```
 
 This writes compact JSON to standard output. Refer to the `--help` text for
@@ -66,7 +70,10 @@ The JSON's structure looks like this:
 }
 ```
 
-## tlaplus-dot-reasonable-json-to-d2.py
+### reasonable-json-to-d2
+
+This needs the `d2` extra to be installed. Refer to the documentation of the
+relevant package installer (e.g. `pipx` or `pip`) for how to install extras.
 
 This transforms the "reasonable" JSON format output by the previous script
 into a [D2](https://d2lang.com/) graph with LaTeX formatting for the TLA+
@@ -79,8 +86,8 @@ like this:
 ```bash
 # In your TLA+ Model directory:
 dot -Tjson Model_1.json \
-| tlaplus-dot-json-to-reasonable-json.py \
-| tlaplus-dot-reasonable-json-to-d2.py
+| tlaplus-dot-utils.py dot-json-to-reasonable-json \
+| tlaplus-dot-utils.py reasonable-json-to-d2
 ```
 
 As before, this writes to standard output and you can refer to the `--help`
@@ -93,8 +100,8 @@ optimal results:
 ```bash
 # In your TLA+ Model directory:
 dot -Tjson Model_1.json \
-| tlaplus-dot-json-to-reasonable-json.py \
-| tlaplus-dot-reasonable-json-to-d2.py
+| tlaplus-dot-utils.py dot-json-to-reasonable-json \
+| tlaplus-dot-utils.py reasonable-json-to-d2 \
 | D2_LAYOUT=elk d2 - > Model_1.svg
 ```
 

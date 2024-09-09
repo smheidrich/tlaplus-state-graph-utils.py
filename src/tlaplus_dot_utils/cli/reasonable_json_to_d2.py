@@ -3,20 +3,23 @@
 # /// script
 # requires-python = ">=3.9,<4"
 # ///
-from collections.abc import Callable
 import json
-from argparse import ArgumentParser, FileType
+from argparse import FileType
 from collections import defaultdict
+from collections.abc import Callable
 from dataclasses import dataclass
 from os import getenv
 from sys import stdin
 from textwrap import dedent, indent
 from typing import IO, Any
 
+from .root import subparsers
+
 __version__ = "0.1.0"
 
 
-latex: bool = bool(getenv("TLAPLUS_D2_LATEX", True))
+latex: bool = bool(getenv("TLAPLUS_D2_LATEX", False))
+state_as_boxes: bool = bool(getenv("TLAPLUS_D2_STATE_AS_BOXES", True))
 
 
 # Core
@@ -110,6 +113,22 @@ def parse_and_write_d2(infile: IO[Any], outfile: IO[str]) -> None:
             """
         )
       )
+    elif state_as_boxes:
+      from tlaplus_dot_utils.state_parsing import tlaplus_state_to_dataclasses
+      from tlaplus_dot_utils.state_to_d2 import dataclasses_state_to_d2
+
+      state_boxes = dataclasses_state_to_d2(
+        tlaplus_state_to_dataclasses(state.label_tlaplus)
+      )
+      writeln(
+        dedent(
+          f"""\
+            state{state.id}: "" {{
+                {indent(state_boxes, "    ")}
+            }}
+            """
+        )
+      )
     else:
       label = repr(state.label_tlaplus).replace('"', '\\"')
       label = f'"{label[1:-1]}"'
@@ -143,10 +162,10 @@ def parse_and_write_d2(infile: IO[Any], outfile: IO[str]) -> None:
 
 # CLI
 
-
-arg_parser = ArgumentParser(
+arg_parser = subparsers.add_parser(
+  name="reasonable-json-to-d2",
   description='convert "reasonable TLA+ state graph dot file JSON" '
-  "(cf. other script) to D2 (https://d2lang.com/)"
+  "(cf. other script) to D2 (https://d2lang.com/)",
 )
 arg_parser.add_argument(
   "input",
@@ -167,11 +186,21 @@ arg_parser.add_argument(
 )
 
 
-def run_cli() -> None:
-  args = arg_parser.parse_args()
-
+def run_for_cli_args(args: Any) -> None:
   parse_and_write_d2(args.input, args.output)
 
 
-if __name__ == "__main__":
+arg_parser.set_defaults(func=run_for_cli_args)
+
+
+def run_cli() -> None:
+  args = arg_parser.parse_args()
+  run_for_cli_args(args)
+
+
+def main() -> None:
   run_cli()
+
+
+if __name__ == "__main__":
+  main()

@@ -4,9 +4,11 @@
 # requires-python = ">=3.9,<4"
 # ///
 import json
-from argparse import ArgumentParser, FileType
+from argparse import FileType
 from dataclasses import dataclass
 from typing import IO, Any
+
+from .root import subparsers
 
 __version__ = "0.1.0"
 
@@ -98,9 +100,10 @@ def parse_and_return_jsonish(file: IO[Any]) -> dict[str, Any]:
 # CLI
 
 
-arg_parser = ArgumentParser(
+arg_parser = subparsers.add_parser(
+  name="dot-json-to-reasonable-json",
   description='convert JSON produced from TLA+ dot files to "reasonable" '
-  "JSON that is easier to work with"
+  "JSON that is easier to work with",
 )
 arg_parser.add_argument(
   "input",
@@ -126,9 +129,7 @@ arg_parser.add_argument(
 )
 
 
-def run_cli() -> None:
-  args = arg_parser.parse_args()
-
+def run_for_cli_args(args: Any) -> None:
   jsonish = parse_and_return_jsonish(args.input)
 
   if args.pretty:
@@ -137,5 +138,17 @@ def run_cli() -> None:
     json.dump(jsonish, args.output)
 
 
-if __name__ == "__main__":
+arg_parser.set_defaults(func=run_for_cli_args)
+
+
+def run_cli() -> None:
+  args = arg_parser.parse_args()
+  run_for_cli_args(args)
+
+
+def main() -> None:
   run_cli()
+
+
+if __name__ == "__main__":
+  main()

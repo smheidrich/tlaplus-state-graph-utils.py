@@ -1,0 +1,159 @@
+version = 1
+requires-python = ">=3.12"
+
+[[package]]
+name = "colorama"
+version = "0.4.6"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+sdist = { url = "http://localhost:3141/root/pypi/+f/086/95f5cb7ed6e05/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/4f1/d9991f5acc0ca/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6" },
+]
+
+[[package]]
+name = "iniconfig"
+version = "2.0.0"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+sdist = { url = "http://localhost:3141/root/pypi/+f/2d9/1e135bf72d31a/iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/b6a/85871a79d2e3b/iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374" },
+]
+
+[[package]]
+name = "mypy"
+version = "1.11.2"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+dependencies = [
+    { name = "mypy-extensions" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "http://localhost:3141/root/pypi/+f/7f9/993ad3e0ffdc9/mypy-1.11.2.tar.gz", hash = "sha256:7f9993ad3e0ffdc95c2a14b66dee63729f021968bff8ad911867579c65d13a79" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/e89/60dbbbf36906c/mypy-1.11.2-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:e8960dbbbf36906c5c0b7f4fbf2f0c7ffb20f4898e6a879fcf56a41a08b0d318" },
+    { url = "http://localhost:3141/root/pypi/+f/06d/26c277962f3fb/mypy-1.11.2-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:06d26c277962f3fb50e13044674aa10553981ae514288cb7d0a738f495550b36" },
+    { url = "http://localhost:3141/root/pypi/+f/6e7/184632d89d677/mypy-1.11.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:6e7184632d89d677973a14d00ae4d03214c8bc301ceefcdaf5c474866814c987" },
+    { url = "http://localhost:3141/root/pypi/+f/3a6/6169b92452f72/mypy-1.11.2-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:3a66169b92452f72117e2da3a576087025449018afc2d8e9bfe5ffab865709ca" },
+    { url = "http://localhost:3141/root/pypi/+f/969/ea3ef09617aff/mypy-1.11.2-cp312-cp312-win_amd64.whl", hash = "sha256:969ea3ef09617aff826885a22ece0ddef69d95852cdad2f60c8bb06bf1f71f70" },
+    { url = "http://localhost:3141/root/pypi/+f/b49/9bc07dbdcd3de/mypy-1.11.2-py3-none-any.whl", hash = "sha256:b499bc07dbdcd3de92b0a8b29fdf592c111276f6a12fe29c30f6c417dd546d12" },
+]
+
+[[package]]
+name = "mypy-extensions"
+version = "1.0.0"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+sdist = { url = "http://localhost:3141/root/pypi/+f/75d/bf8955dc00442/mypy_extensions-1.0.0.tar.gz", hash = "sha256:75dbf8955dc00442a438fc4d0666508a9a97b6bd41aa2f0ffe9d2f2725af0782" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/439/2f6c0eb8a5668/mypy_extensions-1.0.0-py3-none-any.whl", hash = "sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d" },
+]
+
+[[package]]
+name = "packaging"
+version = "24.1"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+sdist = { url = "http://localhost:3141/root/pypi/+f/026/ed72c8ed3fcce/packaging-24.1.tar.gz", hash = "sha256:026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/5b8/f2217dbdbd2f7/packaging-24.1-py3-none-any.whl", hash = "sha256:5b8f2217dbdbd2f7f384c41c628544e6d52f2d0f53c6d0c3ea61aa5d1d7ff124" },
+]
+
+[[package]]
+name = "pluggy"
+version = "1.5.0"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+sdist = { url = "http://localhost:3141/root/pypi/+f/2cf/fa88e94fdc978/pluggy-1.5.0.tar.gz", hash = "sha256:2cffa88e94fdc978c4c574f15f9e59b7f4201d439195c3715ca9e2486f1d0cf1" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/44e/1ad92c8ca002d/pluggy-1.5.0-py3-none-any.whl", hash = "sha256:44e1ad92c8ca002de6377e165f3e0f1be63266ab4d554740532335b9d75ea669" },
+]
+
+[[package]]
+name = "py-d2"
+version = "1.0.1"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+sdist = { url = "http://localhost:3141/root/pypi/+f/36b/1a81f9acf3b21/py_d2-1.0.1.tar.gz", hash = "sha256:36b1a81f9acf3b21923a359439c5ed631768c54eee7c9740ca270bd0ee08874b" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/730/a17e1527767b3/py_d2-1.0.1-py3-none-any.whl", hash = "sha256:730a17e1527767b3ade14f48a185d9456a4ced90731d49689c7ed99038400eda" },
+]
+
+[[package]]
+name = "pytest"
+version = "8.3.2"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "iniconfig" },
+    { name = "packaging" },
+    { name = "pluggy" },
+]
+sdist = { url = "http://localhost:3141/root/pypi/+f/c13/2345d12ce5512/pytest-8.3.2.tar.gz", hash = "sha256:c132345d12ce551242c87269de812483f5bcc87cdbb4722e48487ba194f9fdce" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/4ba/08f9ae7dcf84d/pytest-8.3.2-py3-none-any.whl", hash = "sha256:4ba08f9ae7dcf84ded419494d229b48d0903ea6407b030eaec46df5e6a73bba5" },
+]
+
+[[package]]
+name = "tlaplus-dot-utils"
+version = "0.1.0"
+source = { editable = "." }
+
+[package.optional-dependencies]
+d2 = [
+    { name = "py-d2" },
+    { name = "tree-sitter" },
+    { name = "tree-sitter-tlaplus" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "mypy" },
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "py-d2", marker = "extra == 'd2'", specifier = ">=1.0.1" },
+    { name = "tree-sitter", marker = "extra == 'd2'", specifier = ">=0.23.0" },
+    { name = "tree-sitter-tlaplus", marker = "extra == 'd2'", specifier = ">=1.3.6" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "mypy", specifier = ">=1.11.2" },
+    { name = "pytest", specifier = ">=8.3.2" },
+]
+
+[[package]]
+name = "tree-sitter"
+version = "0.23.0"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+sdist = { url = "http://localhost:3141/root/pypi/+f/4c0/d186f262a6b18/tree-sitter-0.23.0.tar.gz", hash = "sha256:4c0d186f262a6b186e155a327150064abbf02b5659f7bc580eb965374025f2c2" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/b40/e3c961fe1df76/tree_sitter-0.23.0-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:b40e3c961fe1df761b62869a4fcb3949e00906633420684df6d7ba503869b854" },
+    { url = "http://localhost:3141/root/pypi/+f/3df/65a4cd2e2d091/tree_sitter-0.23.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:3df65a4cd2e2d091097ae84a3f96828c0906c698684fdc1f7985b5a452d1045e" },
+    { url = "http://localhost:3141/root/pypi/+f/e62/f810b7c4d65e1/tree_sitter-0.23.0-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e62f810b7c4d65e1901dae3aea432c8de32ce7a35d63296f70cc99e84d1986d2" },
+    { url = "http://localhost:3141/root/pypi/+f/eaf/21159e0f07fe6/tree_sitter-0.23.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:eaf21159e0f07fe6307e096b81a92afcf5deb0ce95655d29b065d5a6c41f78b3" },
+    { url = "http://localhost:3141/root/pypi/+f/2a0/e26f59749e748/tree_sitter-0.23.0-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:2a0e26f59749e748accba04cf48287c463d2ff803156586d1d797c1b786f14ab" },
+    { url = "http://localhost:3141/root/pypi/+f/c7b/873dbc077eb29/tree_sitter-0.23.0-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:c7b873dbc077eb295df921e47a82197b87a0d27275534ffb063cea5ec6ee0f5e" },
+    { url = "http://localhost:3141/root/pypi/+f/13e/b219538cf3b24/tree_sitter-0.23.0-cp312-cp312-win_amd64.whl", hash = "sha256:13eb219538cf3b24228aba891c8ab029490c821d8dc3bc8bc45e06a2cdc78ec5" },
+    { url = "http://localhost:3141/root/pypi/+f/9ce/17115a637793c/tree_sitter-0.23.0-cp312-cp312-win_arm64.whl", hash = "sha256:9ce17115a637793cf7313bfb336519b1803a263f3b1174faa259e52d7a778665" },
+]
+
+[[package]]
+name = "tree-sitter-tlaplus"
+version = "1.3.6"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/423/e50db0f068430/tree_sitter_tlaplus-1.3.6-cp38-abi3-macosx_10_9_x86_64.whl", hash = "sha256:423e50db0f0684305ead30c2ad1cefaa26cc4fc9ca10b8f8d81f921950fde2cf" },
+    { url = "http://localhost:3141/root/pypi/+f/4e2/78e65d0f2d38e/tree_sitter_tlaplus-1.3.6-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:4e278e65d0f2d38e021da629bd3733af71f29d9ebb43e5253a68138100417831" },
+    { url = "http://localhost:3141/root/pypi/+f/00a/ef723fc29a6e4/tree_sitter_tlaplus-1.3.6-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:00aef723fc29a6e497e03a4227673071d7285a141b4cd6946d1082c53fd618f2" },
+    { url = "http://localhost:3141/root/pypi/+f/aa0/6b9f7989959e2/tree_sitter_tlaplus-1.3.6-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:aa06b9f7989959e2e88c9df3bdc0cc2d77d1d4ff61e74391b2e74255762ff299" },
+    { url = "http://localhost:3141/root/pypi/+f/3c0/5f017aff43e36/tree_sitter_tlaplus-1.3.6-cp38-abi3-musllinux_1_1_aarch64.whl", hash = "sha256:3c05f017aff43e3625c2a242e226d8f617ee1c34e90dc8f49fe5d985aca7498c" },
+    { url = "http://localhost:3141/root/pypi/+f/fbb/9219bfb9332f5/tree_sitter_tlaplus-1.3.6-cp38-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:fbb9219bfb9332f5d528631b4f57d8b2cf20376f950f02208bd7815e2d1e196e" },
+    { url = "http://localhost:3141/root/pypi/+f/eef/dbb9f3afa0bab/tree_sitter_tlaplus-1.3.6-cp38-abi3-win_amd64.whl", hash = "sha256:eefdbb9f3afa0babe2bffaa8ded0c62a61b1a5cdc8f51cc512f93a7fde5a84c9" },
+]
+
+[[package]]
+name = "typing-extensions"
+version = "4.12.2"
+source = { registry = "http://localhost:3141/root/pypi/+simple/" }
+sdist = { url = "http://localhost:3141/root/pypi/+f/1a7/ead55c7e559dd/typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8" }
+wheels = [
+    { url = "http://localhost:3141/root/pypi/+f/04e/5ca0351e0f3f8/typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d" },
+]
