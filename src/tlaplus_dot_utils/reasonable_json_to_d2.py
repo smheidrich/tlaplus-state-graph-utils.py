@@ -2,7 +2,6 @@ import json
 from collections import defaultdict
 from collections.abc import Callable
 from os import getenv
-from sys import stdin
 from textwrap import dedent, indent
 from typing import IO, Any
 
@@ -26,7 +25,9 @@ def state_label_to_latex(state: State) -> str:
   )
 
 
-def parse_and_write_d2(infile: IO[Any], outfile: IO[str]) -> None:
+def parse_and_write_d2(
+  infile: IO[Any], outfile: IO[str], simple_values_inline: bool = True
+) -> None:
   # Shortcut:
   writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
 

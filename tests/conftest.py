@@ -24,9 +24,18 @@ def long_example_reasonable_json(data_files: Traversable) -> dict[str, Any]:
 
 
 @pytest.fixture
-def long_example_d2_boxes_inline_simple_values(data_files: Traversable) -> str:
+def long_example_d2_boxes_simple_values_inline(data_files: Traversable) -> str:
   return (
-    data_files / "long-example/boxes-inline-simple-values.d2"
+    data_files / "long-example/boxes-simple-values-inline.d2"
+  ).read_text()
+
+
+@pytest.fixture
+def long_example_d2_boxes_simple_values_not_inline(
+  data_files: Traversable,
+) -> str:
+  return (
+    data_files / "long-example/boxes-simple-values-not-inline.d2"
   ).read_text()
 
 
