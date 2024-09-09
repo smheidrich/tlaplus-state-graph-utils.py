@@ -28,3 +28,8 @@ def long_example_d2_boxes_inline_simple_values(data_files: Traversable) -> str:
   return (
     data_files / "long-example/boxes-inline-simple-values.d2"
   ).read_text()
+
+
+@pytest.fixture
+def long_example_d2_latex(data_files: Traversable) -> str:
+  return (data_files / "long-example/latex.d2").read_text()
