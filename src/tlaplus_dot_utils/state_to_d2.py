@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+from abc import ABC, abstractmethod
 from collections.abc import Mapping
 from typing import assert_never
 
@@ -5,78 +7,154 @@ from py_d2 import D2Diagram, D2Shape  # type: ignore
 
 from .state_parsing import FunctionMerge, Record, SealedValue, SimpleValue
 
-inline_value_newline: bool = False
 
-
-def dataclasses_state_to_d2(
-  var_name_to_dc: Mapping[bytes, SealedValue | bytes],
-  simple_values_inline: bool = True,
-) -> str:
-  diag = D2Diagram(
-    shapes=_dataclasses_state_to_d2_recursive(
-      var_name_to_dc, simple_values_inline=simple_values_inline
+@dataclass
+class BaseStateToD2Renderer(ABC):
+  def __call__(
+    self, var_name_to_dc: Mapping[bytes, SealedValue | bytes]
+  ) -> str:
+    diag = D2Diagram(
+      shapes=self._dataclasses_state_to_d2_recursive(var_name_to_dc)
     )
-  )
-  return str(diag)
+    return str(diag)
+
+  def _dataclasses_state_to_d2_recursive(
+    self,
+    var_name_to_dc: Mapping[bytes, SealedValue | bytes],
+  ) -> list[D2Shape]:
+    shapes = [
+      self._dataclass_state_to_d2_recursive(var_name, dc, i)
+      for i, (var_name, dc) in enumerate(var_name_to_dc.items())
+    ]
+
+    return shapes
+
+  @abstractmethod
+  def _dataclass_state_to_d2_recursive(
+    self,
+    var_name: bytes,
+    dc: SealedValue | bytes,
+    i: int,
+  ) -> D2Shape:
+    ...
 
 
-def _dataclasses_state_to_d2_recursive(
-  var_name_to_dc: Mapping[bytes, SealedValue | bytes],
-  simple_values_inline: bool,
-) -> list[D2Shape]:
-  shapes = [
-    _dataclass_state_to_d2_recursive(
-      var_name, dc, i, simple_values_inline=simple_values_inline
-    )
-    for i, (var_name, dc) in enumerate(var_name_to_dc.items())
-  ]
-
-  return shapes
-
-
-def _dataclass_state_to_d2_recursive(
-  var_name: bytes,
-  dc: SealedValue | bytes,
-  i: int,
-  simple_values_inline: bool,
-) -> D2Shape:
-  subshapes = []
-  simple_value = ""
-  match dc:
-    case Record(fields=fields):
-      subshapes = _dataclasses_state_to_d2_recursive(
-        {
-          f"{field.key.decode('utf-8')} |->".encode("utf-8"): field.value
-          for field in fields
-        },
-        simple_values_inline=simple_values_inline,
-      )
-    case FunctionMerge(functions=functions):
-      subshapes = _dataclasses_state_to_d2_recursive(
-        {
-          f"{function.elem.decode('utf-8')} :>".encode("utf-8"): function.value
-          for function in functions
-        },
-        simple_values_inline=simple_values_inline,
-      )
-    case SimpleValue(value=value):
-      if simple_values_inline:
-        simple_value = f" {value.decode('utf-8')}"
-      else:
+class BoxesStateToD2Renderer(BaseStateToD2Renderer):
+  def _dataclass_state_to_d2_recursive(
+    self, var_name: bytes, dc: SealedValue | bytes, i: int
+  ) -> D2Shape:
+    subshapes = []
+    match dc:
+      case Record(fields=fields):
+        subshapes = self._dataclasses_state_to_d2_recursive(
+          {
+            f"{field.key.decode('utf-8')} |->".encode("utf-8"): field.value
+            for field in fields
+          },
+        )
+      case FunctionMerge(functions=functions):
+        subshapes = self._dataclasses_state_to_d2_recursive(
+          {
+            f"{function.elem.decode('utf-8')} :>".encode(
+              "utf-8"
+            ): function.value
+            for function in functions
+          },
+        )
+      case SimpleValue(value=value):
         subshapes = [D2Shape(name="value", label=f"{value.decode('utf-8')!r}")]
-    case bytes() as value:
-      if simple_values_inline:
-        simple_value = f" {value.decode('utf-8')}"
-      else:
+      case bytes() as value:
         subshapes = [D2Shape(name="value", label=f"{value.decode('utf-8')!r}")]
-    case _ as unreachable:
-      assert_never(unreachable)
+      case _ as unreachable:
+        assert_never(unreachable)
 
-  nl = "\\n" if inline_value_newline else ""
-  label = f"{var_name.decode('utf-8') + nl + simple_value}"
-  label = '"' + label.strip("'").replace('"', '\\"') + '"'
-  shape = D2Shape(name=f"var{i}", label=label)
-  for subshape in subshapes:
-    shape.add_shape(subshape)
+    label = f"{var_name.decode('utf-8')}"
+    label = '"' + label.strip("'").replace('"', '\\"') + '"'
+    shape = D2Shape(name=f"var{i}", label=label)
+    for subshape in subshapes:
+      shape.add_shape(subshape)
 
-  return shape
+    return shape
+
+
+class BoxesSimpleValuesInlineStateToD2Renderer(BaseStateToD2Renderer):
+  def _dataclass_state_to_d2_recursive(
+    self, var_name: bytes, dc: SealedValue | bytes, i: int
+  ) -> D2Shape:
+    subshapes = []
+    simple_value = ""
+    match dc:
+      case Record(fields=fields):
+        subshapes = self._dataclasses_state_to_d2_recursive(
+          {
+            f"{field.key.decode('utf-8')} |->".encode("utf-8"): field.value
+            for field in fields
+          },
+        )
+      case FunctionMerge(functions=functions):
+        subshapes = self._dataclasses_state_to_d2_recursive(
+          {
+            f"{function.elem.decode('utf-8')} :>".encode(
+              "utf-8"
+            ): function.value
+            for function in functions
+          },
+        )
+      case SimpleValue(value=value):
+        simple_value = f" {value.decode('utf-8')}"
+      case bytes() as value:
+        simple_value = f" {value.decode('utf-8')}"
+      case _ as unreachable:
+        assert_never(unreachable)
+
+    label = f"{var_name.decode('utf-8') + simple_value}"
+    label = '"' + label.strip("'").replace('"', '\\"') + '"'
+    shape = D2Shape(name=f"var{i}", label=label)
+    for subshape in subshapes:
+      shape.add_shape(subshape)
+
+    return shape
+
+
+class BoxesSimpleValuesInlineNewlineSepStateToD2Renderer(
+  BaseStateToD2Renderer
+):
+  def _dataclass_state_to_d2_recursive(
+    self,
+    var_name: bytes,
+    dc: SealedValue | bytes,
+    i: int,
+  ) -> D2Shape:
+    subshapes = []
+    simple_value = ""
+    match dc:
+      case Record(fields=fields):
+        subshapes = self._dataclasses_state_to_d2_recursive(
+          {
+            f"{field.key.decode('utf-8')} |->".encode("utf-8"): field.value
+            for field in fields
+          },
+        )
+      case FunctionMerge(functions=functions):
+        subshapes = self._dataclasses_state_to_d2_recursive(
+          {
+            f"{function.elem.decode('utf-8')} :>".encode(
+              "utf-8"
+            ): function.value
+            for function in functions
+          },
+        )
+      case SimpleValue(value=value):
+        simple_value = f" {value.decode('utf-8')}"
+      case bytes() as value:
+        simple_value = f" {value.decode('utf-8')}"
+      case _ as unreachable:
+        assert_never(unreachable)
+
+    label = f"{var_name.decode('utf-8')}\\n{simple_value}"
+    label = '"' + label.strip("'").replace('"', '\\"') + '"'
+    shape = D2Shape(name=f"var{i}", label=label)
+    for subshape in subshapes:
+      shape.add_shape(subshape)
+
+    return shape

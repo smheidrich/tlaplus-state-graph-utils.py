@@ -6,9 +6,9 @@ from textwrap import dedent, indent
 from typing import IO, Any
 
 from .model import State, Step
+from .state_to_d2 import BaseStateToD2Renderer
 
 latex: bool = bool(getenv("TLAPLUS_D2_LATEX", False))
-state_as_boxes: bool = bool(getenv("TLAPLUS_D2_STATE_AS_BOXES", True))
 
 
 def state_label_to_latex(state: State) -> str:
@@ -26,7 +26,9 @@ def state_label_to_latex(state: State) -> str:
 
 
 def parse_and_write_d2(
-  infile: IO[Any], outfile: IO[str], simple_values_inline: bool = True
+  infile: IO[Any],
+  outfile: IO[str],
+  box_state_render_cls: type[BaseStateToD2Renderer] | None = None,
 ) -> None:
   # Shortcut:
   writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
@@ -86,13 +88,12 @@ def parse_and_write_d2(
             """
         )
       )
-    elif state_as_boxes:
+    elif box_state_render_cls is not None:
       from tlaplus_dot_utils.state_parsing import tlaplus_state_to_dataclasses
-      from tlaplus_dot_utils.state_to_d2 import dataclasses_state_to_d2
 
-      state_boxes = dataclasses_state_to_d2(
-        tlaplus_state_to_dataclasses(state.label_tlaplus),
-        simple_values_inline=simple_values_inline,
+      box_renderer = box_state_render_cls()
+      state_boxes = box_renderer(
+        tlaplus_state_to_dataclasses(state.label_tlaplus)
       )
       writeln(
         dedent(

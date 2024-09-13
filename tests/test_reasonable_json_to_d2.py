@@ -5,6 +5,11 @@ from typing import Any
 from unittest.mock import patch
 
 from tlaplus_dot_utils.reasonable_json_to_d2 import parse_and_write_d2
+from tlaplus_dot_utils.state_to_d2 import (
+  BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
+  BoxesSimpleValuesInlineStateToD2Renderer,
+  BoxesStateToD2Renderer,
+)
 
 
 def format_d2(d2: str) -> str:
@@ -20,7 +25,11 @@ def test_long_example_boxes_simple_values_inline_against_reference(
 ) -> None:
   # Run
   out = StringIO()
-  parse_and_write_d2(StringIO(json.dumps(long_example_reasonable_json)), out)
+  parse_and_write_d2(
+    StringIO(json.dumps(long_example_reasonable_json)),
+    out,
+    box_state_render_cls=BoxesSimpleValuesInlineStateToD2Renderer,
+  )
   out.seek(0)
   d2 = format_d2(out.read())
 
@@ -32,14 +41,17 @@ def test_long_example_boxes_simple_values_inline_against_reference(
   assert d2 == long_example_d2_boxes_simple_values_inline
 
 
-@patch("tlaplus_dot_utils.state_to_d2.inline_value_newline", True)
 def test_long_example_boxes_simple_values_inline_newline_against_reference(
   long_example_reasonable_json: dict[str, Any],
   long_example_d2_boxes_simple_values_inline_newline: str,
 ) -> None:
   # Run
   out = StringIO()
-  parse_and_write_d2(StringIO(json.dumps(long_example_reasonable_json)), out)
+  parse_and_write_d2(
+    StringIO(json.dumps(long_example_reasonable_json)),
+    out,
+    box_state_render_cls=BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
+  )
   out.seek(0)
   d2 = format_d2(out.read())
 
@@ -62,7 +74,7 @@ def test_long_example_boxes_simple_values_not_inline_against_reference(
   parse_and_write_d2(
     StringIO(json.dumps(long_example_reasonable_json)),
     out,
-    simple_values_inline=False,
+    box_state_render_cls=BoxesStateToD2Renderer,
   )
   out.seek(0)
   d2 = format_d2(out.read())
@@ -78,7 +90,6 @@ def test_long_example_boxes_simple_values_not_inline_against_reference(
 
 
 @patch("tlaplus_dot_utils.reasonable_json_to_d2.latex", True)
-@patch("tlaplus_dot_utils.reasonable_json_to_d2.latex", False)
 def test_long_example_latex_against_reference(
   long_example_reasonable_json: dict[str, Any],
   long_example_d2_latex: str,

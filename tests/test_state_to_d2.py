@@ -1,7 +1,10 @@
 from textwrap import dedent
 
 from tlaplus_dot_utils.state_parsing import tlaplus_state_to_dataclasses
-from tlaplus_dot_utils.state_to_d2 import dataclasses_state_to_d2
+from tlaplus_dot_utils.state_to_d2 import (
+  BoxesSimpleValuesInlineStateToD2Renderer,
+  BoxesStateToD2Renderer,
+)
 
 
 def test_state_as_d2() -> None:
@@ -13,11 +16,10 @@ def test_state_as_d2() -> None:
     /\ f = ( G :> "H" @@ I :> "J" )
     """
   )
+  renderer = BoxesStateToD2Renderer()
 
   # Run
-  d2 = dataclasses_state_to_d2(
-    tlaplus_state_to_dataclasses(state_as_tlaplus), simple_values_inline=False
-  )
+  d2 = renderer(tlaplus_state_to_dataclasses(state_as_tlaplus))
 
   # Check
   print(d2)
@@ -54,11 +56,10 @@ def test_state_as_d2_simple_values_inline() -> None:
     /\ f = ( G :> "H" @@ I :> "J" )
     """
   )
+  renderer = BoxesSimpleValuesInlineStateToD2Renderer()
 
   # Run
-  d2 = dataclasses_state_to_d2(
-    tlaplus_state_to_dataclasses(state_as_tlaplus), simple_values_inline=True
-  )
+  d2 = renderer(tlaplus_state_to_dataclasses(state_as_tlaplus))
 
   # Check
   print(d2)
