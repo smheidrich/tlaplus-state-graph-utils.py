@@ -106,3 +106,22 @@ def test_long_example_latex_against_reference(
 
   # Check
   assert d2 == long_example_d2_latex
+
+
+@patch("tlaplus_dot_utils.reasonable_json_to_d2.latex", False)
+def test_long_example_non_latex_against_reference(
+  long_example_reasonable_json: dict[str, Any],
+  long_example_d2_non_latex: str,
+) -> None:
+  # Run
+  out = StringIO()
+  parse_and_write_d2(StringIO(json.dumps(long_example_reasonable_json)), out)
+  out.seek(0)
+  d2 = format_d2(out.read())
+
+  # Uncomment to regenerate:
+  # from pathlib import Path
+  # Path("tests/data/long-example/non-latex.d2").write_text(d2)
+
+  # Check
+  assert d2 == long_example_d2_non_latex

@@ -51,3 +51,8 @@ def long_example_d2_boxes_simple_values_not_inline(
 @pytest.fixture
 def long_example_d2_latex(data_files: Traversable) -> str:
   return (data_files / "long-example/latex.d2").read_text()
+
+
+@pytest.fixture
+def long_example_d2_non_latex(data_files: Traversable) -> str:
+  return (data_files / "long-example/non-latex.d2").read_text()
