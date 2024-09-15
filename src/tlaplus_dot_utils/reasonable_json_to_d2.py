@@ -6,7 +6,7 @@ from textwrap import dedent, indent
 from typing import IO, Any
 
 from py_d2 import D2Shape  # type: ignore[import-untyped]
-from py_d2 import D2Connection, D2Style, D2Text
+from py_d2 import D2Connection, D2Diagram, D2Style, D2Text
 
 from .model import State, Step, TransitionDiagram
 from .state_parsing import tlaplus_state_to_dataclasses
@@ -78,7 +78,16 @@ def parse_and_write_d2(
   # Shortcut:
   writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
 
-  # Output as D2
+  writeln(
+    str(to_d2_diagram(diagram, box_state_render_cls=box_state_render_cls))
+  )
+
+
+def to_d2_diagram(
+  diagram: TransitionDiagram,
+  box_state_render_cls: type[BaseStateToD2Renderer] | None,
+) -> D2Diagram:
+  shapes = []
   for state in diagram.states:
     # States
     if latex:
@@ -111,9 +120,7 @@ def parse_and_write_d2(
       label = repr(state.label_tlaplus).replace('"', '\\"')
       label = f'"{label[1:-1]}"'
       shape = D2Shape(name=f"state{state.id}", label=label)
-    writeln(str(shape) + "\n")
-
-  writeln("")
+    shapes.append(shape)
 
   # Steps
   color_id_to_color = defaultdict(
@@ -127,6 +134,7 @@ def parse_and_write_d2(
       "5": "cyan",
     },
   )
+  connections = []
   for step in diagram.steps:
     label = repr(step.action_name)
     label = f'"{label[1:-1]}"'
@@ -136,7 +144,9 @@ def parse_and_write_d2(
       label,
       style=D2Style(stroke=color_id_to_color[step.color_id]),
     )
-    writeln(str(conn))
+    connections.append(conn)
+
+  return D2Diagram(shapes=shapes, connections=connections)
 
 
 # TODO Remove once this is implemented in py-d2 itself:
