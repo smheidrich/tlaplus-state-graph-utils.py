@@ -28,7 +28,7 @@ def test_long_example_boxes_simple_values_inline_against_reference(
   parse_and_write_d2(
     StringIO(json.dumps(long_example_reasonable_json)),
     out,
-    box_state_render_cls=BoxesSimpleValuesInlineStateToD2Renderer,
+    box_state_renderer=BoxesSimpleValuesInlineStateToD2Renderer(),
   )
   out.seek(0)
   d2 = format_d2(out.read())
@@ -50,7 +50,7 @@ def test_long_example_boxes_simple_values_inline_newline_against_reference(
   parse_and_write_d2(
     StringIO(json.dumps(long_example_reasonable_json)),
     out,
-    box_state_render_cls=BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
+    box_state_renderer=BoxesSimpleValuesInlineNewlineSepStateToD2Renderer(),
   )
   out.seek(0)
   d2 = format_d2(out.read())
@@ -74,7 +74,7 @@ def test_long_example_boxes_simple_values_not_inline_against_reference(
   parse_and_write_d2(
     StringIO(json.dumps(long_example_reasonable_json)),
     out,
-    box_state_render_cls=BoxesStateToD2Renderer,
+    box_state_renderer=BoxesStateToD2Renderer(),
   )
   out.seek(0)
   d2 = format_d2(out.read())

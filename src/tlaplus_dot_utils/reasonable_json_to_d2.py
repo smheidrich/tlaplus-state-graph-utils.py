@@ -73,7 +73,7 @@ def parse_from_reasonable_json_file(infile: IO[Any]) -> TransitionDiagram:
 def parse_and_write_d2(
   infile: IO[Any],
   outfile: IO[str],
-  box_state_render_cls: type[BaseStateToD2Renderer] | None = None,
+  box_state_renderer: BaseStateToD2Renderer | None = None,
 ) -> None:
   diagram = parse_from_reasonable_json_file(infile)
 
@@ -81,8 +81,8 @@ def parse_and_write_d2(
   writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
 
   renderer: BaseDiagramToD2Renderer
-  if box_state_render_cls:
-    renderer = BoxesStateDiagramToD2Renderer(box_state_render_cls())
+  if box_state_renderer:
+    renderer = BoxesStateDiagramToD2Renderer(box_state_renderer)
   elif latex:
     renderer = LatexStateDiagramToD2Renderer()
   else:

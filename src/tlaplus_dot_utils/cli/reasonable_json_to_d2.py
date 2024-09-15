@@ -41,7 +41,7 @@ def run_for_cli_args(args: Any) -> None:
   parse_and_write_d2(
     args.input,
     args.output,
-    box_state_render_cls=BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
+    box_state_renderer=BoxesSimpleValuesInlineNewlineSepStateToD2Renderer(),
   )
 
 
