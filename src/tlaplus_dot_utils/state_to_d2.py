@@ -1,6 +1,6 @@
-from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from collections.abc import Mapping
+from dataclasses import dataclass
 from typing import assert_never
 
 from py_d2 import D2Diagram, D2Shape  # type: ignore
@@ -13,14 +13,16 @@ class BaseStateToD2Renderer(ABC):
   def __call__(
     self, var_name_to_dc: Mapping[bytes, SealedValue | bytes]
   ) -> str:
-    diag = D2Diagram(
-      shapes=self._dataclasses_state_to_d2_recursive(var_name_to_dc)
-    )
+    diag = D2Diagram(shapes=self.to_d2_shapes(var_name_to_dc))
     return str(diag)
 
+  def to_d2_shapes(
+    self, var_name_to_dc: Mapping[bytes, SealedValue | bytes]
+  ) -> list[D2Shape]:
+    return self._dataclasses_state_to_d2_recursive(var_name_to_dc)
+
   def _dataclasses_state_to_d2_recursive(
-    self,
-    var_name_to_dc: Mapping[bytes, SealedValue | bytes],
+    self, var_name_to_dc: Mapping[bytes, SealedValue | bytes]
   ) -> list[D2Shape]:
     shapes = [
       self._dataclass_state_to_d2_recursive(var_name, dc, i)
@@ -31,10 +33,7 @@ class BaseStateToD2Renderer(ABC):
 
   @abstractmethod
   def _dataclass_state_to_d2_recursive(
-    self,
-    var_name: bytes,
-    dc: SealedValue | bytes,
-    i: int,
+    self, var_name: bytes, dc: SealedValue | bytes, i: int
   ) -> D2Shape:
     ...
 
@@ -120,10 +119,7 @@ class BoxesSimpleValuesInlineNewlineSepStateToD2Renderer(
   BaseStateToD2Renderer
 ):
   def _dataclass_state_to_d2_recursive(
-    self,
-    var_name: bytes,
-    dc: SealedValue | bytes,
-    i: int,
+    self, var_name: bytes, dc: SealedValue | bytes, i: int
   ) -> D2Shape:
     subshapes = []
     simple_value = ""

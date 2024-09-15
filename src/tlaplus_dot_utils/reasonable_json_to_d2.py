@@ -5,7 +5,11 @@ from os import getenv
 from textwrap import dedent, indent
 from typing import IO, Any
 
+from py_d2 import D2Shape  # type: ignore[import-untyped]
+from py_d2 import D2Connection, D2Style, D2Text
+
 from .model import State, Step
+from .state_parsing import tlaplus_state_to_dataclasses
 from .state_to_d2 import BaseStateToD2Renderer
 
 latex: bool = bool(getenv("TLAPLUS_D2_LATEX", False))
@@ -73,41 +77,35 @@ def parse_and_write_d2(
     # States
     if latex:
       label = repr(state_label_to_latex(state))[1:-1]
-      writeln(
-        dedent(
-          f"""\
-            state{state.id}: "" {{
-                equation: |latex
-                    \\\\displaylines {{
-                        {indent(label, "    ")}
-                    }}
-                    % add some spacing (otherwise it messes up)
-                    \\\\ \\\\ \\\\ \\\\ \\\\ \\\\
-                |
-            }}
-            """
-        )
+      shape = D2Shape(
+        name=f"state{state.id}",
+        label='""',
+        equation=D2Text(
+          dedent(
+            f"""\
+           \\\\displaylines {{
+               {indent(label, "    ")}
+           }}
+           % add some spacing (otherwise it messes up)
+           \\\\ \\\\ \\\\ \\\\ \\\\ \\\\
+           """.rstrip(),
+          ),
+          "latex",
+        ),
       )
     elif box_state_render_cls is not None:
-      from tlaplus_dot_utils.state_parsing import tlaplus_state_to_dataclasses
-
       box_renderer = box_state_render_cls()
-      state_boxes = box_renderer(
+      state_boxes = box_renderer.to_d2_shapes(
         tlaplus_state_to_dataclasses(state.label_tlaplus)
       )
-      writeln(
-        dedent(
-          f"""\
-            state{state.id}: "" {{
-                {indent(state_boxes, "    ")}
-            }}
-            """
-        )
-      )
+      shape = D2Shape(name=f"state{state.id}", label='""')
+      for subshape in state_boxes:
+        shape.add_shape(subshape)
     else:
       label = repr(state.label_tlaplus).replace('"', '\\"')
       label = f'"{label[1:-1]}"'
-      writeln(f"state{state.id}: {label}")
+      shape = D2Shape(name=f"state{state.id}", label=label)
+    writeln(str(shape) + "\n")
 
   writeln("")
 
@@ -126,10 +124,31 @@ def parse_and_write_d2(
   for step in steps:
     label = repr(step.action_name)
     label = f'"{label[1:-1]}"'
-    writeln(
-      f"state{step.from_state_id} -> state{step.to_state_id}: {label} {{"
+    conn = CustomD2Connection(
+      f"state{step.from_state_id}",
+      f"state{step.to_state_id}",
+      label,
+      style=D2Style(stroke=color_id_to_color[step.color_id]),
     )
-    writeln("  style: {")
-    writeln(f"     stroke: {color_id_to_color[step.color_id]}")
-    writeln("  }")
-    writeln("}")
+    writeln(str(conn))
+
+
+# TODO Remove once this is implemented in py-d2 itself:
+#   https://github.com/MrBlenny/py-d2/issues/22
+class CustomD2Connection(D2Connection):  # type: ignore[misc]
+  style: D2Style
+
+  def __init__(self, *args: Any, **kwargs: Any) -> None:
+    if "style" in kwargs:
+      self.style = kwargs.pop("style")
+    else:
+      self.style = None
+    super().__init__(*args, **kwargs)
+
+  def lines(self) -> list[str]:
+    lines = super().lines()
+    if self.style is not None:
+      lines[0] = f"{lines[0]} {{"
+      lines.extend(self.style.lines())
+      lines.append("}")
+    return lines  # type: ignore[no-any-return]
