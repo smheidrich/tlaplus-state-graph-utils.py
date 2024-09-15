@@ -14,3 +14,9 @@ class Step:
   from_state_id: int
   to_state_id: int
   color_id: str
+
+
+@dataclass
+class TransitionDiagram:
+  states: list[State]
+  steps: list[Step]

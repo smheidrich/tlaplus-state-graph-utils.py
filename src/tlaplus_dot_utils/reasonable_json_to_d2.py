@@ -8,7 +8,7 @@ from typing import IO, Any
 from py_d2 import D2Shape  # type: ignore[import-untyped]
 from py_d2 import D2Connection, D2Style, D2Text
 
-from .model import State, Step
+from .model import State, Step, TransitionDiagram
 from .state_parsing import tlaplus_state_to_dataclasses
 from .state_to_d2 import BaseStateToD2Renderer
 
@@ -29,14 +29,7 @@ def state_label_to_latex(state: State) -> str:
   )
 
 
-def parse_and_write_d2(
-  infile: IO[Any],
-  outfile: IO[str],
-  box_state_render_cls: type[BaseStateToD2Renderer] | None = None,
-) -> None:
-  # Shortcut:
-  writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
-
+def parse_from_reasonable_json_file(infile: IO[Any]) -> TransitionDiagram:
   # Parse JSON
   d = json.load(infile)
 
@@ -72,8 +65,21 @@ def parse_and_write_d2(
     for step_d in d["steps"]
   ]
 
+  return TransitionDiagram(states, steps)
+
+
+def parse_and_write_d2(
+  infile: IO[Any],
+  outfile: IO[str],
+  box_state_render_cls: type[BaseStateToD2Renderer] | None = None,
+) -> None:
+  diagram = parse_from_reasonable_json_file(infile)
+
+  # Shortcut:
+  writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
+
   # Output as D2
-  for state in states:
+  for state in diagram.states:
     # States
     if latex:
       label = repr(state_label_to_latex(state))[1:-1]
@@ -121,7 +127,7 @@ def parse_and_write_d2(
       "5": "cyan",
     },
   )
-  for step in steps:
+  for step in diagram.steps:
     label = repr(step.action_name)
     label = f'"{label[1:-1]}"'
     conn = CustomD2Connection(
