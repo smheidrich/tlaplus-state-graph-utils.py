@@ -1,6 +1,8 @@
 import json
+from abc import ABC, abstractmethod
 from collections import defaultdict
 from collections.abc import Callable
+from dataclasses import dataclass
 from os import getenv
 from textwrap import dedent, indent
 from typing import IO, Any
@@ -78,75 +80,99 @@ def parse_and_write_d2(
   # Shortcut:
   writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
 
-  writeln(
-    str(to_d2_diagram(diagram, box_state_render_cls=box_state_render_cls))
-  )
+  renderer: BaseDiagramToD2Renderer
+  if box_state_render_cls:
+    renderer = BoxesStateDiagramToD2Renderer(box_state_render_cls())
+  elif latex:
+    renderer = LatexStateDiagramToD2Renderer()
+  else:
+    renderer = SimpleStateDiagramToD2Renderer()
+  writeln(str(renderer(diagram)))
 
 
-def to_d2_diagram(
-  diagram: TransitionDiagram,
-  box_state_render_cls: type[BaseStateToD2Renderer] | None,
-) -> D2Diagram:
-  shapes = []
-  for state in diagram.states:
-    # States
-    if latex:
-      label = repr(state_label_to_latex(state))[1:-1]
-      shape = D2Shape(
-        name=f"state{state.id}",
-        label='""',
-        equation=D2Text(
-          dedent(
-            f"""\
+class BaseDiagramToD2Renderer(ABC):
+  def __call__(self, diagram: TransitionDiagram) -> D2Diagram:
+    shapes = []
+    for state in diagram.states:
+      self._render_state(state)
+      # States
+      shape = self._render_state(state)
+      shapes.append(shape)
+
+    # Steps
+    color_id_to_color = defaultdict(
+      lambda: "black",
+      {
+        "0": "red",
+        "1": "blue",
+        "2": "green",
+        "3": "orange",
+        "4": "purple",
+        "5": "cyan",
+      },
+    )
+    connections = []
+    for step in diagram.steps:
+      label = repr(step.action_name)
+      label = f'"{label[1:-1]}"'
+      conn = CustomD2Connection(
+        f"state{step.from_state_id}",
+        f"state{step.to_state_id}",
+        label,
+        style=D2Style(stroke=color_id_to_color[step.color_id]),
+      )
+      connections.append(conn)
+
+    return D2Diagram(shapes=shapes, connections=connections)
+
+  @abstractmethod
+  def _render_state(self, state: State) -> D2Shape:
+    ...
+
+
+class LatexStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
+  def _render_state(self, state: State) -> D2Shape:
+    label = repr(state_label_to_latex(state))[1:-1]
+    shape = D2Shape(
+      name=f"state{state.id}",
+      label='""',
+      equation=D2Text(
+        dedent(
+          f"""\
            \\\\displaylines {{
                {indent(label, "    ")}
            }}
            % add some spacing (otherwise it messes up)
            \\\\ \\\\ \\\\ \\\\ \\\\ \\\\
            """.rstrip(),
-          ),
-          "latex",
         ),
-      )
-    elif box_state_render_cls is not None:
-      box_renderer = box_state_render_cls()
-      state_boxes = box_renderer.to_d2_shapes(
-        tlaplus_state_to_dataclasses(state.label_tlaplus)
-      )
-      shape = D2Shape(name=f"state{state.id}", label='""')
-      for subshape in state_boxes:
-        shape.add_shape(subshape)
-    else:
-      label = repr(state.label_tlaplus).replace('"', '\\"')
-      label = f'"{label[1:-1]}"'
-      shape = D2Shape(name=f"state{state.id}", label=label)
-    shapes.append(shape)
-
-  # Steps
-  color_id_to_color = defaultdict(
-    lambda: "black",
-    {
-      "0": "red",
-      "1": "blue",
-      "2": "green",
-      "3": "orange",
-      "4": "purple",
-      "5": "cyan",
-    },
-  )
-  connections = []
-  for step in diagram.steps:
-    label = repr(step.action_name)
-    label = f'"{label[1:-1]}"'
-    conn = CustomD2Connection(
-      f"state{step.from_state_id}",
-      f"state{step.to_state_id}",
-      label,
-      style=D2Style(stroke=color_id_to_color[step.color_id]),
+        "latex",
+      ),
     )
-    connections.append(conn)
+    return shape
 
-  return D2Diagram(shapes=shapes, connections=connections)
+
+@dataclass
+class BoxesStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
+  box_state_render: BaseStateToD2Renderer
+
+  def _render_state(self, state: State) -> D2Shape:
+    box_renderer = self.box_state_render
+    state_boxes = box_renderer.to_d2_shapes(
+      tlaplus_state_to_dataclasses(state.label_tlaplus)
+    )
+    shape = D2Shape(name=f"state{state.id}", label='""')
+    for subshape in state_boxes:
+      shape.add_shape(subshape)
+    return shape
+
+
+class SimpleStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
+  def _render_state(self, state: State) -> D2Shape:
+    label = repr(state.label_tlaplus).replace('"', '\\"')
+    label = f'"{label[1:-1]}"'
+    shape = D2Shape(name=f"state{state.id}", label=label)
+    return shape
 
 
 # TODO Remove once this is implemented in py-d2 itself:
