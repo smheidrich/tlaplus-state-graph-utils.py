@@ -1,9 +1,7 @@
 import json
 from abc import ABC, abstractmethod
 from collections import defaultdict
-from collections.abc import Callable
 from dataclasses import dataclass
-from os import getenv
 from textwrap import dedent, indent
 from typing import IO, Any
 
@@ -13,8 +11,6 @@ from py_d2 import D2Connection, D2Diagram, D2Style, D2Text
 from .model import State, Step, TransitionDiagram
 from .state_parsing import tlaplus_state_to_dataclasses
 from .state_to_d2 import BaseStateToD2Renderer
-
-latex: bool = bool(getenv("TLAPLUS_D2_LATEX", False))
 
 
 def state_label_to_latex(state: State) -> str:
@@ -70,24 +66,14 @@ def parse_from_reasonable_json_file(infile: IO[Any]) -> TransitionDiagram:
   return TransitionDiagram(states, steps)
 
 
-def parse_and_write_d2(
-  infile: IO[Any],
-  outfile: IO[str],
-  box_state_renderer: BaseStateToD2Renderer | None = None,
-) -> None:
+def parse_and_render_d2(
+  infile: IO[Any], renderer: "BaseDiagramToD2Renderer"
+) -> str:
   diagram = parse_from_reasonable_json_file(infile)
 
-  # Shortcut:
-  writeln: Callable[[str], Any] = lambda s: outfile.write(f"{s}\n")
+  rendered_as_d2 = renderer(diagram)
 
-  renderer: BaseDiagramToD2Renderer
-  if box_state_renderer:
-    renderer = BoxesStateDiagramToD2Renderer(box_state_renderer)
-  elif latex:
-    renderer = LatexStateDiagramToD2Renderer()
-  else:
-    renderer = SimpleStateDiagramToD2Renderer()
-  writeln(str(renderer(diagram)))
+  return str(rendered_as_d2) + "\n"
 
 
 class BaseDiagramToD2Renderer(ABC):

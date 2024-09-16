@@ -6,7 +6,10 @@
 from argparse import FileType
 from typing import Any
 
-from ..reasonable_json_to_d2 import parse_and_write_d2
+from ..reasonable_json_to_d2 import (
+  BoxesStateDiagramToD2Renderer,
+  parse_and_render_d2,
+)
 from ..state_to_d2 import BoxesSimpleValuesInlineNewlineSepStateToD2Renderer
 from .root import subparsers
 
@@ -38,10 +41,13 @@ arg_parser.add_argument(
 
 
 def run_for_cli_args(args: Any) -> None:
-  parse_and_write_d2(
-    args.input,
-    args.output,
-    box_state_renderer=BoxesSimpleValuesInlineNewlineSepStateToD2Renderer(),
+  args.output.write(
+    parse_and_render_d2(
+      args.input,
+      renderer=BoxesStateDiagramToD2Renderer(
+        BoxesSimpleValuesInlineNewlineSepStateToD2Renderer()
+      ),
+    )
   )
 
 
