@@ -1,10 +1,10 @@
 from textwrap import dedent
 
-from tlaplus_dot_utils.state_parsing import tlaplus_state_to_dataclasses
-from tlaplus_dot_utils.state_to_d2 import (
+from tlaplus_dot_utils.d2.state import (
   BoxesSimpleValuesInlineStateToD2Renderer,
   BoxesStateToD2Renderer,
 )
+from tlaplus_dot_utils.state_parsing import tlaplus_state_to_dataclasses
 
 
 def test_state_as_d2() -> None:

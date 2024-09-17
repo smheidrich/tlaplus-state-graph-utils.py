@@ -8,9 +8,9 @@ from typing import IO, Any
 from py_d2 import D2Shape  # type: ignore[import-untyped]
 from py_d2 import D2Connection, D2Diagram, D2Style, D2Text
 
-from .model import State, Step, TransitionDiagram
-from .state_parsing import tlaplus_state_to_dataclasses
-from .state_to_d2 import BaseStateToD2Renderer
+from ..model import State, Step, TransitionDiagram
+from ..state_parsing import tlaplus_state_to_dataclasses
+from .state import BaseStateToD2Renderer
 
 
 def state_label_to_latex(state: State) -> str:

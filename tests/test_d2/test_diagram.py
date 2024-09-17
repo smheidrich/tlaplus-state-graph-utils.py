@@ -3,13 +3,13 @@ import subprocess as sp
 from io import StringIO
 from typing import Any
 
-from tlaplus_dot_utils.reasonable_json_to_d2 import (
+from tlaplus_dot_utils.d2.diagram import (
   BoxesStateDiagramToD2Renderer,
   LatexStateDiagramToD2Renderer,
   SimpleStateDiagramToD2Renderer,
   parse_and_render_d2,
 )
-from tlaplus_dot_utils.state_to_d2 import (
+from tlaplus_dot_utils.d2.state import (
   BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
   BoxesSimpleValuesInlineStateToD2Renderer,
   BoxesStateToD2Renderer,
