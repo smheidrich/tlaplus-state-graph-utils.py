@@ -1,40 +1,18 @@
-from dataclasses import dataclass
 from string import Template
 from textwrap import dedent, indent
-from typing import TypeAlias, cast
+from typing import cast
 
 import tree_sitter_tlaplus as tstla
 from tree_sitter import Language, Node, Parser, Tree
 
-
-@dataclass
-class RecordField:
-  key: bytes
-  value: bytes
-
-
-@dataclass
-class Record:
-  fields: list[RecordField]
-
-
-@dataclass
-class SingleElemDomainFunction:
-  elem: bytes
-  value: "SealedValue"
-
-
-@dataclass
-class FunctionMerge:
-  functions: list[SingleElemDomainFunction]
-
-
-@dataclass
-class SimpleValue:
-  value: bytes
-
-
-SealedValue: TypeAlias = Record | FunctionMerge | SimpleValue
+from .model import (
+  FunctionMerge,
+  Record,
+  RecordField,
+  SealedValue,
+  SimpleValue,
+  SingleElemDomainFunction,
+)
 
 
 def pretty_print_tree_sitter_tree(tree: Tree) -> None:

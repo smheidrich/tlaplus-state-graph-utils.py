@@ -6,8 +6,13 @@
 from argparse import FileType
 from typing import Any
 
-from ..d2.diagram import BoxesStateDiagramToD2Renderer, parse_and_render_d2
-from ..d2.state import BoxesSimpleValuesInlineNewlineSepStateToD2Renderer
+from ..graph.model_to_d2 import (
+  BoxesStateDiagramToD2Renderer,
+  parse_and_render_d2,
+)
+from ..state.model_to_d2 import (
+  BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
+)
 from .root import subparsers
 
 __version__ = "0.1.0"

@@ -5,7 +5,7 @@ from typing import assert_never
 
 from py_d2 import D2Diagram, D2Shape  # type: ignore
 
-from ..state_parsing import FunctionMerge, Record, SealedValue, SimpleValue
+from .model import FunctionMerge, Record, SealedValue, SimpleValue
 
 
 @dataclass

@@ -8,23 +8,10 @@ from typing import IO, Any
 from py_d2 import D2Shape  # type: ignore[import-untyped]
 from py_d2 import D2Connection, D2Diagram, D2Style, D2Text
 
-from ..model import State, Step, TransitionDiagram
-from ..state_parsing import tlaplus_state_to_dataclasses
-from .state import BaseStateToD2Renderer
-
-
-def state_label_to_latex(state: State) -> str:
-  # TODO Surely there is a way to use TLA+'s own LaTeX-output
-  #  programmatically somehow so we don't have to do this?
-  return (
-    state.label_tlaplus.replace("/\\", "\\land")
-    .replace(r"\/", "\\lor")
-    .replace("|->", "\\mapsto")
-    .replace("\n", " \\\\ ")
-    .replace("FALSE", "\\mathrm{FALSE}")
-    .replace("TRUE", "\\mathrm{TRUE}")
-    .replace('"', '\\text{"}')  # these look like garbage otherwise
-  )
+from ..state.model_to_d2 import BaseStateToD2Renderer
+from ..state.tlaplus_to_latex import state_label_to_latex
+from ..state.tlaplus_to_model import tlaplus_state_to_dataclasses
+from .model import State, Step, TransitionDiagram
 
 
 def parse_from_reasonable_json_file(infile: IO[Any]) -> TransitionDiagram:

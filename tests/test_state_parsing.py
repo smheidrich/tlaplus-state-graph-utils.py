@@ -1,11 +1,13 @@
 from textwrap import dedent
 
-from tlaplus_dot_utils.state_parsing import (
+from tlaplus_dot_utils.state.model import (
   FunctionMerge,
   Record,
   RecordField,
   SimpleValue,
   SingleElemDomainFunction,
+)
+from tlaplus_dot_utils.state.tlaplus_to_model import (
   tlaplus_state_to_dataclasses,
 )
 

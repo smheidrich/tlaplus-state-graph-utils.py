@@ -7,7 +7,9 @@ import json
 from argparse import FileType
 from typing import Any
 
-from ..dot_json_to_reasonable_json import dot_jsonish_to_reasonable_jsonish
+from ..graph.dot_json_to_reasonable_json import (
+  dot_jsonish_to_reasonable_jsonish,
+)
 from .root import subparsers
 
 __version__ = "0.1.0"

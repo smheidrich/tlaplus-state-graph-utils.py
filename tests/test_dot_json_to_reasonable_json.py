@@ -1,6 +1,6 @@
 from typing import Any
 
-from tlaplus_dot_utils.dot_json_to_reasonable_json import (
+from tlaplus_dot_utils.graph.dot_json_to_reasonable_json import (
   dot_jsonish_to_reasonable_jsonish,
 )
 
