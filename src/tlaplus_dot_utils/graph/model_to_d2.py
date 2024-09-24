@@ -9,7 +9,7 @@ from py_d2 import D2Shape  # type: ignore[import-untyped]
 from py_d2 import D2Connection, D2Diagram, D2Style, D2Text
 
 from ..state.model_to_d2 import BaseStateToD2Renderer
-from ..state.tlaplus_to_latex import state_label_to_latex
+from ..state.tlaplus_to_latex import state_tlaplus_to_latex
 from ..state.tlaplus_to_model import tlaplus_state_to_dataclasses
 from .model import State, Step, TransitionDiagram
 
@@ -105,7 +105,7 @@ class BaseDiagramToD2Renderer(ABC):
 
 class LatexStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
   def _render_state(self, state: State) -> D2Shape:
-    label = repr(state_label_to_latex(state))[1:-1]
+    label = repr(state_tlaplus_to_latex(state.label_tlaplus))[1:-1]
     shape = D2Shape(
       name=f"state{state.id}",
       label='""',
