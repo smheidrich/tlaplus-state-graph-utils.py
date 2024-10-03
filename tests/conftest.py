@@ -4,6 +4,8 @@ from importlib.resources.abc import Traversable
 from typing import Any
 
 import pytest
+from tlaplus_dot_utils.graph.dot_json_to_model import dot_jsonish_to_model
+from tlaplus_dot_utils.graph.model import TransitionDiagram
 
 
 @pytest.fixture
@@ -12,22 +14,53 @@ def data_files() -> Traversable:
 
 
 @pytest.fixture
-def long_example_dot_json(data_files: Traversable) -> dict[str, Any]:
-  with (data_files / "long-example/dot.json").open() as f:
+def long_example_dot_json_traversable(data_files: Traversable) -> Traversable:
+  return data_files / "long-example/dot.json"
+
+
+@pytest.fixture
+def long_example_dot_json(
+  long_example_dot_json_traversable: Traversable,
+) -> dict[str, Any]:
+  with long_example_dot_json_traversable.open() as f:
     return json.load(f)  # type: ignore[no-any-return]
 
 
 @pytest.fixture
-def long_example_reasonable_json(data_files: Traversable) -> dict[str, Any]:
-  with (data_files / "long-example/reasonable.json").open() as f:
+def long_example_model(
+  long_example_dot_json: dict[str, Any],
+) -> TransitionDiagram:
+  # TODO Again, shouldn't have to do this...
+  return TransitionDiagram(*dot_jsonish_to_model(long_example_dot_json))
+
+
+@pytest.fixture
+def long_example_reasonable_json_traversable(
+  data_files: Traversable,
+) -> Traversable:
+  return data_files / "long-example/reasonable.json"
+
+
+@pytest.fixture
+def long_example_reasonable_json(
+  long_example_reasonable_json_traversable: Traversable,
+) -> dict[str, Any]:
+  with long_example_reasonable_json_traversable.open() as f:
     return json.load(f)  # type: ignore[no-any-return]
 
 
 @pytest.fixture
-def long_example_d2_boxes_simple_values_inline(data_files: Traversable) -> str:
-  return (
-    data_files / "long-example/boxes-simple-values-inline.d2"
-  ).read_text()
+def long_example_d2_boxes_simple_values_inline_traversable(
+  data_files: Traversable,
+) -> Traversable:
+  return data_files / "long-example/boxes-simple-values-inline.d2"
+
+
+@pytest.fixture
+def long_example_d2_boxes_simple_values_inline(
+  long_example_d2_boxes_simple_values_inline_traversable: Traversable,
+) -> str:
+  return long_example_d2_boxes_simple_values_inline_traversable.read_text()
 
 
 @pytest.fixture

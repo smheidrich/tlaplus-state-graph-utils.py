@@ -3,6 +3,7 @@ from argparse import FileType
 from typing import Any
 
 from ..format_determination import GraphFormat, guess_graph_file_format
+from ..graph.any_to_model import any_file_to_model
 from ..graph.dot_json_to_model import dot_jsonish_to_model
 from ..graph.model import TransitionDiagram
 from ..graph.model_to_d2 import SimpleStateDiagramToD2Renderer
@@ -37,7 +38,7 @@ arg_parser.add_argument(
   type=str,
   default=None,
   choices=["reasonable-json", "tlaplus-dot-json"],
-  help="input format (guessed from extension if not given)",
+  help="input format (guessed from extension & content if not given)",
   dest="input_format",
 )
 arg_parser.add_argument(
@@ -57,6 +58,7 @@ arg_parser.add_argument(
 
 
 def run_for_cli_args(args: Any) -> None:
+  input_format: GraphFormat | None
   match args.input_format:
     case "reasonable-json":
       input_format = GraphFormat.reasonable_json
@@ -71,7 +73,13 @@ def run_for_cli_args(args: Any) -> None:
     case "d2":
       output_format = GraphFormat.d2
     case _:
-      output_format = guess_graph_file_format(args.output)
+      guessed_output_format = guess_graph_file_format(args.output)
+      if guessed_output_format is None:
+        raise ValueError(
+          "Could not guess output format. Please specify it explicitly or "
+          "ensure your output filename makes it unambiguous."
+        )
+      output_format = guessed_output_format
 
   match input_format:
     case GraphFormat.tlaplus_dot_json:
@@ -80,6 +88,8 @@ def run_for_cli_args(args: Any) -> None:
       model = TransitionDiagram(*dot_jsonish_to_model(d))
     case GraphFormat.reasonable_json:
       model = parse_from_reasonable_json_file(args.input)
+    case None:
+      model = any_file_to_model(args.input)
     case _ as other:
       raise NotImplementedError(
         f"Input in format {other} is not currently supported."
