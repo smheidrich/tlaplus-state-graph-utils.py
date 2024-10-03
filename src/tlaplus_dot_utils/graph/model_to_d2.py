@@ -1,4 +1,3 @@
-import json
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
@@ -11,46 +10,8 @@ from py_d2 import D2Connection, D2Diagram, D2Style, D2Text
 from ..state.model_to_d2 import BaseStateToD2Renderer
 from ..state.tlaplus_to_latex import state_tlaplus_to_latex
 from ..state.tlaplus_to_model import tlaplus_state_to_dataclasses
-from .model import State, Step, TransitionDiagram
-
-
-def parse_from_reasonable_json_file(infile: IO[Any]) -> TransitionDiagram:
-  # Parse JSON
-  d = json.load(infile)
-
-  # Check metadata version
-  try:
-    version_str = d["metadata"]["format"]["version"]
-    version = tuple(int(x) for x in version_str.split("."))
-    if len(version) < 3:
-      version = (*version, 0)
-  except Exception as e:
-    raise ValueError(
-      "Couldn't determine format version (see errors above)"
-    ) from e
-  if not (0, 1, 0) <= version < (0, 2, 0):
-    raise ValueError(f"Can't handle format version {version_str}")
-
-  # Construct dataclass instances
-  states = [
-    State(
-      id=state_d["id"],
-      label_tlaplus=state_d["labelTlaPlus"],
-    )
-    for state_d in d["states"]
-  ]
-  steps = [
-    Step(
-      id=step_d["id"],
-      action_name=step_d["actionName"],
-      from_state_id=step_d["fromStateId"],
-      to_state_id=step_d["toStateId"],
-      color_id=step_d["colorId"],
-    )
-    for step_d in d["steps"]
-  ]
-
-  return TransitionDiagram(states, steps)
+from .model import State, TransitionDiagram
+from .reasonable_json_to_model import parse_from_reasonable_json_file
 
 
 def parse_and_render_d2(
