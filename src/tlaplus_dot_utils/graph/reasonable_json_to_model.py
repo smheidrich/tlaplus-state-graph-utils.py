@@ -4,10 +4,9 @@ from typing import IO, Any
 from .model import State, Step, TransitionDiagram
 
 
-# TODO: Rename to match naming convention of other functions
-def parse_from_reasonable_json_file(infile: IO[Any]) -> TransitionDiagram:
+def reasonable_json_file_to_model(file: IO[Any]) -> TransitionDiagram:
   # Parse JSON
-  d = json.load(infile)
+  d = json.load(file)
 
   # Check metadata version
   try:

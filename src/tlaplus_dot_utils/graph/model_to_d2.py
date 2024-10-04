@@ -11,13 +11,14 @@ from ..state.model_to_d2 import BaseStateToD2Renderer
 from ..state.tlaplus_to_latex import state_tlaplus_to_latex
 from ..state.tlaplus_to_model import tlaplus_state_to_dataclasses
 from .model import State, TransitionDiagram
-from .reasonable_json_to_model import parse_from_reasonable_json_file
+from .reasonable_json_to_model import reasonable_json_file_to_model
 
 
+# TODO This shouldn't exist
 def parse_and_render_d2(
   infile: IO[Any], renderer: "BaseDiagramToD2Renderer"
 ) -> str:
-  diagram = parse_from_reasonable_json_file(infile)
+  diagram = reasonable_json_file_to_model(infile)
 
   rendered_as_d2 = renderer(diagram)
 

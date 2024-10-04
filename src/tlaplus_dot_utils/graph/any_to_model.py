@@ -4,7 +4,7 @@ from typing import IO, Any
 from ..format_determination import GraphFormat, guess_graph_file_format
 from .dot_json_to_model import dot_json_file_to_model
 from .model import TransitionDiagram
-from .reasonable_json_to_model import parse_from_reasonable_json_file
+from .reasonable_json_to_model import reasonable_json_file_to_model
 
 
 def any_file_to_model(file: IO[Any]) -> TransitionDiagram:
@@ -13,7 +13,7 @@ def any_file_to_model(file: IO[Any]) -> TransitionDiagram:
     case GraphFormat.tlaplus_dot_json:
       return dot_json_file_to_model(file)
     case GraphFormat.reasonable_json:
-      return parse_from_reasonable_json_file(file)
+      return reasonable_json_file_to_model(file)
     case _:
       # TODO Refactor w/r/t to ^
       # Fall back to guessing based on content, which we do by just trying one
@@ -25,7 +25,7 @@ def any_file_to_model(file: IO[Any]) -> TransitionDiagram:
       except Exception:
         file.seek(start_pos)  # rewind & move on
       try:
-        return parse_from_reasonable_json_file(file)
+        return reasonable_json_file_to_model(file)
       except Exception:
         file.seek(start_pos)  # rewind & move on
       # We've exhausted all options, so give up:
