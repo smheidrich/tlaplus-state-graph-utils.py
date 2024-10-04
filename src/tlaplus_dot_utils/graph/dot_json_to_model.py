@@ -1,6 +1,12 @@
-from typing import Any
+import json
+from typing import IO, Any
 
 from .model import State, Step, TransitionDiagram
+
+
+def dot_json_file_to_model(file: IO[Any]) -> TransitionDiagram:
+  "Convenience function to parse file as JSON & call `dot_jsonish_to_model`."
+  return dot_jsonish_to_model(json.load(file))
 
 
 def dot_jsonish_to_model(d: dict[str, Any]) -> TransitionDiagram:

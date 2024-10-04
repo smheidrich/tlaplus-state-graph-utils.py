@@ -4,7 +4,7 @@ from typing import Any
 
 from ..format_determination import GraphFormat, guess_graph_file_format
 from ..graph.any_to_model import any_file_to_model
-from ..graph.dot_json_to_model import dot_jsonish_to_model
+from ..graph.dot_json_to_model import dot_json_file_to_model
 from ..graph.model_to_d2 import SimpleStateDiagramToD2Renderer
 from ..graph.model_to_reasonable_json import model_to_reasonable_jsonish
 from ..graph.reasonable_json_to_model import parse_from_reasonable_json_file
@@ -82,8 +82,7 @@ def run_for_cli_args(args: Any) -> None:
 
   match input_format:
     case GraphFormat.tlaplus_dot_json:
-      d = json.load(args.input)
-      model = dot_jsonish_to_model(d)
+      model = dot_json_file_to_model(args.input)
     case GraphFormat.reasonable_json:
       model = parse_from_reasonable_json_file(args.input)
     case None:
