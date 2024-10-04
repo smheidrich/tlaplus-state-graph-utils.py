@@ -57,6 +57,7 @@ arg_parser.add_argument(
 
 
 def run_for_cli_args(args: Any) -> None:
+  # Normalize input_format arg:
   input_format: GraphFormat | None
   match args.input_format:
     case "reasonable-json":
@@ -64,7 +65,7 @@ def run_for_cli_args(args: Any) -> None:
     case "tlaplus-dot-json":
       input_format = GraphFormat.tlaplus_dot_json
     case _:
-      input_format = guess_graph_file_format(args.input)
+      input_format = None
 
   match args.output_format:
     case "reasonable-json":
