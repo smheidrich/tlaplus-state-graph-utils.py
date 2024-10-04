@@ -30,8 +30,7 @@ def long_example_dot_json(
 def long_example_model(
   long_example_dot_json: dict[str, Any],
 ) -> TransitionDiagram:
-  # TODO Again, shouldn't have to do this...
-  return TransitionDiagram(*dot_jsonish_to_model(long_example_dot_json))
+  return dot_jsonish_to_model(long_example_dot_json)
 
 
 @pytest.fixture

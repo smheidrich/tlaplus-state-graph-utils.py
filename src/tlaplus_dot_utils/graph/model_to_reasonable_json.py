@@ -1,11 +1,9 @@
 from typing import Any
 
-from .model import State, Step
+from .model import TransitionDiagram
 
 
-def model_to_reasonable_jsonish(
-  states: list[State], steps: list[Step]
-) -> dict[str, Any]:
+def model_to_reasonable_jsonish(model: TransitionDiagram) -> dict[str, Any]:
   return {
     "metadata": {
       "format": {
@@ -18,7 +16,7 @@ def model_to_reasonable_jsonish(
         "id": state.id,
         "labelTlaPlus": state.label_tlaplus,
       }
-      for state in states
+      for state in model.states
     ],
     "steps": [
       {
@@ -28,6 +26,6 @@ def model_to_reasonable_jsonish(
         "toStateId": step.to_state_id,
         "colorId": step.color_id,
       }
-      for step in steps
+      for step in model.steps
     ],
   }

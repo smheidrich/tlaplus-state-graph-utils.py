@@ -13,8 +13,7 @@ def any_file_to_model(file: IO[Any]) -> TransitionDiagram:
   match input_format:
     case GraphFormat.tlaplus_dot_json:
       d = json.load(file)
-      # TODO Shouldn't have to convert to TransitionDiagram here
-      return TransitionDiagram(*dot_jsonish_to_model(d))
+      return dot_jsonish_to_model(d)
     case GraphFormat.reasonable_json:
       return parse_from_reasonable_json_file(file)
     case _:
@@ -26,8 +25,7 @@ def any_file_to_model(file: IO[Any]) -> TransitionDiagram:
       start_pos = file.tell()  # remember current position for rewinding
       try:
         d = json.load(file)
-        # TODO Shouldn't have to convert to TransitionDiagram here
-        return TransitionDiagram(*dot_jsonish_to_model(d))
+        return dot_jsonish_to_model(d)
       except Exception:
         file.seek(start_pos)  # rewind & move on
       try:

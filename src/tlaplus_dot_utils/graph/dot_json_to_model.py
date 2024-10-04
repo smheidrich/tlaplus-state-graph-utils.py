@@ -1,9 +1,9 @@
 from typing import Any
 
-from .model import State, Step
+from .model import State, Step, TransitionDiagram
 
 
-def dot_jsonish_to_model(d: dict[str, Any]) -> tuple[list[State], list[Step]]:
+def dot_jsonish_to_model(d: dict[str, Any]) -> TransitionDiagram:
   # Extract relevant parts
   edge_ds, object_ds = d["edges"], d["objects"]
   state_object_ds = [
@@ -37,4 +37,4 @@ def dot_jsonish_to_model(d: dict[str, Any]) -> tuple[list[State], list[Step]]:
     )
     for d in edge_ds
   ]
-  return states, steps
+  return TransitionDiagram(states, steps)

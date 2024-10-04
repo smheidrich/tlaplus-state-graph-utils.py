@@ -5,7 +5,6 @@ from typing import Any
 from ..format_determination import GraphFormat, guess_graph_file_format
 from ..graph.any_to_model import any_file_to_model
 from ..graph.dot_json_to_model import dot_jsonish_to_model
-from ..graph.model import TransitionDiagram
 from ..graph.model_to_d2 import SimpleStateDiagramToD2Renderer
 from ..graph.model_to_reasonable_json import model_to_reasonable_jsonish
 from ..graph.reasonable_json_to_model import parse_from_reasonable_json_file
@@ -84,8 +83,7 @@ def run_for_cli_args(args: Any) -> None:
   match input_format:
     case GraphFormat.tlaplus_dot_json:
       d = json.load(args.input)
-      # TODO Shouldn't have to convert to TransitionDiagram here
-      model = TransitionDiagram(*dot_jsonish_to_model(d))
+      model = dot_jsonish_to_model(d)
     case GraphFormat.reasonable_json:
       model = parse_from_reasonable_json_file(args.input)
     case None:
@@ -97,8 +95,7 @@ def run_for_cli_args(args: Any) -> None:
 
   match output_format:
     case GraphFormat.reasonable_json:
-      # TODO Shouldn't have to destructure
-      jsonish = model_to_reasonable_jsonish(model.states, model.steps)
+      jsonish = model_to_reasonable_jsonish(model)
       if args.pretty:
         json.dump(jsonish, args.output, indent=2)
       else:

@@ -5,5 +5,5 @@ from .model_to_reasonable_json import model_to_reasonable_jsonish
 
 
 def dot_jsonish_to_reasonable_jsonish(d: dict[str, Any]) -> dict[str, Any]:
-  states, steps = dot_jsonish_to_model(d)
-  return model_to_reasonable_jsonish(states, steps)
+  model = dot_jsonish_to_model(d)
+  return model_to_reasonable_jsonish(model)
