@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
 from textwrap import dedent, indent
-from typing import IO, Any
+from typing import Any
 
 from py_d2 import D2Shape  # type: ignore[import-untyped]
 from py_d2 import D2Connection, D2Diagram, D2Style, D2Text
@@ -11,16 +11,12 @@ from ..state.model_to_d2 import BaseStateToD2Renderer
 from ..state.tlaplus_to_latex import state_tlaplus_to_latex
 from ..state.tlaplus_to_model import tlaplus_state_to_dataclasses
 from .model import State, TransitionDiagram
-from .reasonable_json_to_model import reasonable_json_file_to_model
 
 
-# TODO This shouldn't exist
-def parse_and_render_d2(
-  infile: IO[Any], renderer: "BaseDiagramToD2Renderer"
+def model_to_d2_str(
+  model: TransitionDiagram, renderer: "BaseDiagramToD2Renderer"
 ) -> str:
-  diagram = reasonable_json_file_to_model(infile)
-
-  rendered_as_d2 = renderer(diagram)
+  rendered_as_d2 = renderer(model)
 
   return str(rendered_as_d2) + "\n"
 

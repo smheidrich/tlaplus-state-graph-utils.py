@@ -1,13 +1,11 @@
-import json
 import subprocess as sp
-from io import StringIO
-from typing import Any
 
+from tlaplus_dot_utils.graph.model import TransitionDiagram
 from tlaplus_dot_utils.graph.model_to_d2 import (
   BoxesStateDiagramToD2Renderer,
   LatexStateDiagramToD2Renderer,
   SimpleStateDiagramToD2Renderer,
-  parse_and_render_d2,
+  model_to_d2_str,
 )
 from tlaplus_dot_utils.state.model_to_d2 import (
   BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
@@ -24,13 +22,13 @@ def format_d2(d2: str) -> str:
 
 
 def test_long_example_boxes_simple_values_inline_against_reference(
-  long_example_reasonable_json: dict[str, Any],
+  long_example_model: TransitionDiagram,
   long_example_d2_boxes_simple_values_inline: str,
 ) -> None:
   # Run
   d2 = format_d2(
-    parse_and_render_d2(
-      StringIO(json.dumps(long_example_reasonable_json)),
+    model_to_d2_str(
+      long_example_model,
       renderer=BoxesStateDiagramToD2Renderer(
         BoxesSimpleValuesInlineStateToD2Renderer()
       ),
@@ -46,13 +44,13 @@ def test_long_example_boxes_simple_values_inline_against_reference(
 
 
 def test_long_example_boxes_simple_values_inline_newline_against_reference(
-  long_example_reasonable_json: dict[str, Any],
+  long_example_model: TransitionDiagram,
   long_example_d2_boxes_simple_values_inline_newline: str,
 ) -> None:
   # Run
   d2 = format_d2(
-    parse_and_render_d2(
-      StringIO(json.dumps(long_example_reasonable_json)),
+    model_to_d2_str(
+      long_example_model,
       renderer=BoxesStateDiagramToD2Renderer(
         BoxesSimpleValuesInlineNewlineSepStateToD2Renderer()
       ),
@@ -70,13 +68,13 @@ def test_long_example_boxes_simple_values_inline_newline_against_reference(
 
 
 def test_long_example_boxes_simple_values_not_inline_against_reference(
-  long_example_reasonable_json: dict[str, Any],
+  long_example_model: TransitionDiagram,
   long_example_d2_boxes_simple_values_not_inline: str,
 ) -> None:
   # Run
   d2 = format_d2(
-    parse_and_render_d2(
-      StringIO(json.dumps(long_example_reasonable_json)),
+    model_to_d2_str(
+      long_example_model,
       renderer=BoxesStateDiagramToD2Renderer(BoxesStateToD2Renderer()),
     )
   )
@@ -92,14 +90,13 @@ def test_long_example_boxes_simple_values_not_inline_against_reference(
 
 
 def test_long_example_latex_against_reference(
-  long_example_reasonable_json: dict[str, Any],
+  long_example_model: TransitionDiagram,
   long_example_d2_latex: str,
 ) -> None:
   # Run
   d2 = format_d2(
-    parse_and_render_d2(
-      StringIO(json.dumps(long_example_reasonable_json)),
-      renderer=LatexStateDiagramToD2Renderer(),
+    model_to_d2_str(
+      long_example_model, renderer=LatexStateDiagramToD2Renderer()
     )
   )
 
@@ -112,14 +109,13 @@ def test_long_example_latex_against_reference(
 
 
 def test_long_example_non_latex_against_reference(
-  long_example_reasonable_json: dict[str, Any],
+  long_example_model: TransitionDiagram,
   long_example_d2_non_latex: str,
 ) -> None:
   # Run
   d2 = format_d2(
-    parse_and_render_d2(
-      StringIO(json.dumps(long_example_reasonable_json)),
-      renderer=SimpleStateDiagramToD2Renderer(),
+    model_to_d2_str(
+      long_example_model, renderer=SimpleStateDiagramToD2Renderer()
     )
   )
 
