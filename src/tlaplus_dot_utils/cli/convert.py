@@ -5,9 +5,19 @@ from typing import Any
 from ..format_determination import GraphFormat, guess_graph_file_format
 from ..graph.any_to_model import any_file_to_model
 from ..graph.dot_json_to_model import dot_json_file_to_model
-from ..graph.model_to_d2 import SimpleStateDiagramToD2Renderer
+from ..graph.model_to_d2 import (
+  BaseDiagramToD2Renderer,
+  BoxesStateDiagramToD2Renderer,
+  LatexStateDiagramToD2Renderer,
+  SimpleStateDiagramToD2Renderer,
+)
 from ..graph.model_to_reasonable_json import model_to_reasonable_jsonish
 from ..graph.reasonable_json_to_model import reasonable_json_file_to_model
+from ..state.model_to_d2 import (
+  BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
+  BoxesSimpleValuesInlineStateToD2Renderer,
+  BoxesStateToD2Renderer,
+)
 from .root import subparsers
 
 arg_parser = subparsers.add_parser(
@@ -53,6 +63,31 @@ arg_parser.add_argument(
   "--pretty",
   action="store_true",
   help="produce pretty-printed rather than compact output",
+)
+
+# Options only relevant for D2 output:
+d2_arg_parser = arg_parser.add_argument_group(
+  "D2 options", description="options relevant when outputting in D2 format"
+)
+d2_arg_parser.add_argument(
+  "--d2-output-state-as",
+  choices=[
+    "label",
+    "latex",
+    "nested-containers",
+    "nested-containers-simple-values-inline",
+    "nested-containers-simple-values-inline-newline",
+  ],
+  default="label",
+  help="how to represent individual states in the D2 output: "
+  "label: without modification as a D2 node label; "
+  "latex: as a LaTeX equation which D2 will render; "
+  "nested-containers: as nested containers, one per variable, record, etc.; "
+  "nested-containers-simple-values-inline: as above but with terminal/simple "
+  "values not getting their own container; "
+  "nested-containers-simple-values-inline-newline: as above but with keys "
+  "and terminal values separated by newlines",
+  metavar="D2_OUTPUT_STATE_AS",
 )
 
 
@@ -101,8 +136,28 @@ def run_for_cli_args(args: Any) -> None:
       else:
         json.dump(jsonish, args.output)
     case GraphFormat.d2:
-      # TODO Other renderers depending on CLI opts
-      renderer = SimpleStateDiagramToD2Renderer()
+      renderer: BaseDiagramToD2Renderer
+      match args.d2_output_state_as:
+        case "label":
+          renderer = SimpleStateDiagramToD2Renderer()
+        case "latex":
+          renderer = LatexStateDiagramToD2Renderer()
+        case "nested-containers":
+          renderer = BoxesStateDiagramToD2Renderer(
+            box_state_render=BoxesStateToD2Renderer()
+          )
+        case "nested-containers-simple-values-inline":
+          renderer = BoxesStateDiagramToD2Renderer(
+            box_state_render=BoxesSimpleValuesInlineStateToD2Renderer()
+          )
+        case "nested-containers-simple-values-inline-newline":
+          renderer = BoxesStateDiagramToD2Renderer(
+            box_state_render=(
+              BoxesSimpleValuesInlineNewlineSepStateToD2Renderer()
+            )
+          )
+        case _ as other:
+          raise ValueError(f"Unsupported --d2-output-state-as option: {other}")
       d2_diag = renderer(model)
       args.output.write(str(d2_diag))
     case _ as other:
