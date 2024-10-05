@@ -2,15 +2,15 @@ import subprocess as sp
 
 from tlaplus_dot_utils.graph.model import TransitionDiagram
 from tlaplus_dot_utils.graph.model_to_d2 import (
-  BoxesStateDiagramToD2Renderer,
+  ContainersStateDiagramToD2Renderer,
   LatexStateDiagramToD2Renderer,
   SimpleStateDiagramToD2Renderer,
   model_to_d2_str,
 )
 from tlaplus_dot_utils.state.model_to_d2 import (
-  BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
-  BoxesSimpleValuesInlineStateToD2Renderer,
-  BoxesStateToD2Renderer,
+  ContainersSimpleValuesInlineNewlineSepStateToD2Renderer,
+  ContainersSimpleValuesInlineStateToD2Renderer,
+  ContainersStateToD2Renderer,
 )
 
 
@@ -21,38 +21,38 @@ def format_d2(d2: str) -> str:
   return cp.stdout
 
 
-def test_long_example_boxes_simple_values_inline_against_reference(
+def test_long_example_containers_simple_values_inline_against_reference(
   long_example_model: TransitionDiagram,
-  long_example_d2_boxes_simple_values_inline: str,
+  long_example_d2_containers_simple_values_inline: str,
 ) -> None:
   # Run
   d2 = format_d2(
     model_to_d2_str(
       long_example_model,
-      renderer=BoxesStateDiagramToD2Renderer(
-        BoxesSimpleValuesInlineStateToD2Renderer()
+      renderer=ContainersStateDiagramToD2Renderer(
+        ContainersSimpleValuesInlineStateToD2Renderer()
       ),
     )
   )
 
   # Uncomment to regenerate:
   # from pathlib import Path
-  # Path("tests/data/long-example/boxes-simple-values-inline.d2").write_text(d2)
+  # Path("tests/data/long-example/containers-simple-values-inline.d2").write_text(d2)
 
   # Check
-  assert d2 == long_example_d2_boxes_simple_values_inline
+  assert d2 == long_example_d2_containers_simple_values_inline
 
 
-def test_long_example_boxes_simple_values_inline_newline_against_reference(
+def test_long_example_containers_simple_values_inline_newline_against_reference(
   long_example_model: TransitionDiagram,
-  long_example_d2_boxes_simple_values_inline_newline: str,
+  long_example_d2_containers_simple_values_inline_newline: str,
 ) -> None:
   # Run
   d2 = format_d2(
     model_to_d2_str(
       long_example_model,
-      renderer=BoxesStateDiagramToD2Renderer(
-        BoxesSimpleValuesInlineNewlineSepStateToD2Renderer()
+      renderer=ContainersStateDiagramToD2Renderer(
+        ContainersSimpleValuesInlineNewlineSepStateToD2Renderer()
       ),
     )
   )
@@ -60,33 +60,35 @@ def test_long_example_boxes_simple_values_inline_newline_against_reference(
   # Uncomment to regenerate:
   # from pathlib import Path
   # Path(
-  # "tests/data/long-example/boxes-simple-values-inline-newline.d2"
+  # "tests/data/long-example/containers-simple-values-inline-newline.d2"
   # ).write_text(d2)
 
   # Check
-  assert d2 == long_example_d2_boxes_simple_values_inline_newline
+  assert d2 == long_example_d2_containers_simple_values_inline_newline
 
 
-def test_long_example_boxes_simple_values_not_inline_against_reference(
+def test_long_example_containers_simple_values_not_inline_against_reference(
   long_example_model: TransitionDiagram,
-  long_example_d2_boxes_simple_values_not_inline: str,
+  long_example_d2_containers_simple_values_not_inline: str,
 ) -> None:
   # Run
   d2 = format_d2(
     model_to_d2_str(
       long_example_model,
-      renderer=BoxesStateDiagramToD2Renderer(BoxesStateToD2Renderer()),
+      renderer=ContainersStateDiagramToD2Renderer(
+        ContainersStateToD2Renderer()
+      ),
     )
   )
 
   # Uncomment to regenerate:
   # from pathlib import Path
-  # Path("tests/data/long-example/boxes-simple-values-not-inline.d2").write_text(
+  # Path("tests/data/long-example/containers-simple-values-not-inline.d2").write_text(
   # d2
   # )
 
   # Check
-  assert d2 == long_example_d2_boxes_simple_values_not_inline
+  assert d2 == long_example_d2_containers_simple_values_not_inline
 
 
 def test_long_example_latex_against_reference(

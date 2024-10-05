@@ -50,7 +50,7 @@ class BaseStateToD2Renderer(ABC):
     ...
 
 
-class BoxesStateToD2Renderer(BaseStateToD2Renderer):
+class ContainersStateToD2Renderer(BaseStateToD2Renderer):
   def _dataclass_state_to_d2_recursive(
     self, var_name: bytes, dc: SealedValue | bytes, i: int
   ) -> D2Shape:
@@ -88,7 +88,7 @@ class BoxesStateToD2Renderer(BaseStateToD2Renderer):
     return shape
 
 
-class BoxesSimpleValuesInlineStateToD2Renderer(BaseStateToD2Renderer):
+class ContainersSimpleValuesInlineStateToD2Renderer(BaseStateToD2Renderer):
   def _dataclass_state_to_d2_recursive(
     self, var_name: bytes, dc: SealedValue | bytes, i: int
   ) -> D2Shape:
@@ -127,7 +127,7 @@ class BoxesSimpleValuesInlineStateToD2Renderer(BaseStateToD2Renderer):
     return shape
 
 
-class BoxesSimpleValuesInlineNewlineSepStateToD2Renderer(
+class ContainersSimpleValuesInlineNewlineSepStateToD2Renderer(
   BaseStateToD2Renderer
 ):
   def _dataclass_state_to_d2_recursive(

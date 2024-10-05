@@ -98,16 +98,16 @@ class LatexStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
 
 
 @dataclass
-class BoxesStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
+class ContainersStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
   box_state_render: BaseStateToD2Renderer
 
   def _render_state(self, state: State) -> D2Shape:
     box_renderer = self.box_state_render
-    state_boxes = box_renderer.to_d2_shapes(
+    state_containers = box_renderer.to_d2_shapes(
       tlaplus_state_to_dataclasses(state.label_tlaplus)
     )
     shape = D2Shape(name=f"state{state.id}", label='""')
-    for subshape in state_boxes:
+    for subshape in state_containers:
       shape.add_shape(subshape)
     return shape
 

@@ -5,12 +5,14 @@
 
 ## Soon
 
-[ ] Rename `Boxes~` -> `[Nested]Container~` to match CLI opt
+[ ] Update README with new commands
+[ ] Add examples for every output style to README (probably just generate from
+    tests?)
+[ ] Allow users to define conditional styling based on predicates on the states
+    (distinguish "happy path", highlight "errors" etc.)
 
 ## Later
 
-[ ] Allow users to define conditional styling based on predicates on the states
-    (distinguish "happy path", highlight "errors" etc.)
 [ ] Switch to a reasonable CLI library once one exists. argparse pain points:
     - No way for `choices` to be an enum
     - No way for `choices` to be reasonably formatted in help, or more
@@ -18,8 +20,7 @@
     - No way to specify default subcommand
 [ ] Make tests cover 100% of CLI, but with everything behind the CLI mocked
 [ ] ... and/or just move more stuff out of CLI into core and add tests for that
-[ ] Update README with new commands
-[ ] Add examples for every output style to README
+[ ] Clean up container rendering stuff (separate modules, refactor more)
 [ ] 'rg TODO' and resolve remaining issues
 
 After https://github.com/pypa/packaging.python.org/issues/1605 PR is done

@@ -11,16 +11,16 @@ from ..graph.any_to_model import (
 from ..graph.dot_json_to_model import dot_json_file_to_model
 from ..graph.model_to_d2 import (
   BaseDiagramToD2Renderer,
-  BoxesStateDiagramToD2Renderer,
+  ContainersStateDiagramToD2Renderer,
   LatexStateDiagramToD2Renderer,
   SimpleStateDiagramToD2Renderer,
 )
 from ..graph.model_to_reasonable_json import model_to_reasonable_jsonish
 from ..graph.reasonable_json_to_model import reasonable_json_file_to_model
 from ..state.model_to_d2 import (
-  BoxesSimpleValuesInlineNewlineSepStateToD2Renderer,
-  BoxesSimpleValuesInlineStateToD2Renderer,
-  BoxesStateToD2Renderer,
+  ContainersSimpleValuesInlineNewlineSepStateToD2Renderer,
+  ContainersSimpleValuesInlineStateToD2Renderer,
+  ContainersStateToD2Renderer,
 )
 from .root import subparsers
 
@@ -162,17 +162,17 @@ def run_for_cli_args(args: Any) -> None:
         case "latex":
           renderer = LatexStateDiagramToD2Renderer()
         case "nested-containers":
-          renderer = BoxesStateDiagramToD2Renderer(
-            box_state_render=BoxesStateToD2Renderer()
+          renderer = ContainersStateDiagramToD2Renderer(
+            box_state_render=ContainersStateToD2Renderer()
           )
         case "nested-containers-simple-values-inline":
-          renderer = BoxesStateDiagramToD2Renderer(
-            box_state_render=BoxesSimpleValuesInlineStateToD2Renderer()
+          renderer = ContainersStateDiagramToD2Renderer(
+            box_state_render=ContainersSimpleValuesInlineStateToD2Renderer()
           )
         case "nested-containers-simple-values-inline-newline":
-          renderer = BoxesStateDiagramToD2Renderer(
+          renderer = ContainersStateDiagramToD2Renderer(
             box_state_render=(
-              BoxesSimpleValuesInlineNewlineSepStateToD2Renderer()
+              ContainersSimpleValuesInlineNewlineSepStateToD2Renderer()
             )
           )
         case _ as other:  # should never happen => exception fine

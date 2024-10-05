@@ -7,9 +7,11 @@ from .dot_json_to_model import dot_json_file_to_model
 from .model import TransitionDiagram
 from .reasonable_json_to_model import reasonable_json_file_to_model
 
+
 @dataclass
 class CouldNotDetermineInputFormatError(Exception):
   file: IO[Any]
+
 
 def any_file_to_model(file: IO[Any]) -> TransitionDiagram:
   """

@@ -49,34 +49,36 @@ def long_example_reasonable_json(
 
 
 @pytest.fixture
-def long_example_d2_boxes_simple_values_inline_traversable(
+def long_example_d2_containers_simple_values_inline_traversable(
   data_files: Traversable,
 ) -> Traversable:
-  return data_files / "long-example/boxes-simple-values-inline.d2"
+  return data_files / "long-example/containers-simple-values-inline.d2"
 
 
 @pytest.fixture
-def long_example_d2_boxes_simple_values_inline(
-  long_example_d2_boxes_simple_values_inline_traversable: Traversable,
+def long_example_d2_containers_simple_values_inline(
+  long_example_d2_containers_simple_values_inline_traversable: Traversable,
 ) -> str:
-  return long_example_d2_boxes_simple_values_inline_traversable.read_text()
+  return (
+    long_example_d2_containers_simple_values_inline_traversable.read_text()
+  )
 
 
 @pytest.fixture
-def long_example_d2_boxes_simple_values_inline_newline(
+def long_example_d2_containers_simple_values_inline_newline(
   data_files: Traversable,
 ) -> str:
   return (
-    data_files / "long-example/boxes-simple-values-inline-newline.d2"
+    data_files / "long-example/containers-simple-values-inline-newline.d2"
   ).read_text()
 
 
 @pytest.fixture
-def long_example_d2_boxes_simple_values_not_inline(
+def long_example_d2_containers_simple_values_not_inline(
   data_files: Traversable,
 ) -> str:
   return (
-    data_files / "long-example/boxes-simple-values-not-inline.d2"
+    data_files / "long-example/containers-simple-values-not-inline.d2"
   ).read_text()
 
 

@@ -28,10 +28,10 @@ def test_reasonable_json(
 
 
 def test_d2_unsupported(
-  long_example_d2_boxes_simple_values_inline_traversable: Traversable,
+  long_example_d2_containers_simple_values_inline_traversable: Traversable,
   long_example_model: TransitionDiagram,
 ) -> None:
-  with long_example_d2_boxes_simple_values_inline_traversable.open() as f, (
+  with long_example_d2_containers_simple_values_inline_traversable.open() as f, (
     pytest.raises(CouldNotDetermineInputFormatError)
   ):
     any_file_to_model(f)

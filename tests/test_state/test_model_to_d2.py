@@ -1,8 +1,8 @@
 from textwrap import dedent
 
 from tlaplus_dot_utils.state.model_to_d2 import (
-  BoxesSimpleValuesInlineStateToD2Renderer,
-  BoxesStateToD2Renderer,
+  ContainersSimpleValuesInlineStateToD2Renderer,
+  ContainersStateToD2Renderer,
 )
 from tlaplus_dot_utils.state.tlaplus_to_model import (
   tlaplus_state_to_dataclasses,
@@ -18,7 +18,7 @@ def test_state_as_d2() -> None:
     /\ f = ( G :> "H" @@ I :> "J" )
     """
   )
-  renderer = BoxesStateToD2Renderer()
+  renderer = ContainersStateToD2Renderer()
 
   # Run
   d2 = renderer(tlaplus_state_to_dataclasses(state_as_tlaplus))
@@ -58,7 +58,7 @@ def test_state_as_d2_simple_values_inline() -> None:
     /\ f = ( G :> "H" @@ I :> "J" )
     """
   )
-  renderer = BoxesSimpleValuesInlineStateToD2Renderer()
+  renderer = ContainersSimpleValuesInlineStateToD2Renderer()
 
   # Run
   d2 = renderer(tlaplus_state_to_dataclasses(state_as_tlaplus))
