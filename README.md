@@ -147,10 +147,6 @@ the package's `d2` extra needs to be installed:
 pip install 'https://github.com/smheidrich/tlaplus-dot-utils.py.git[d2]'
 ```
 
-There are many different ways to represent the *contents* of each state (i.e.
-the set of variables and their values) in D2, which can be configured via
-the `--d2-output-state-as` option.
-
 Here is an example showing how to go from a `dot` file produced by TLA+ to
 a graph rendered using D2 in one shell command:
 
@@ -161,11 +157,29 @@ dot -Tjson Model_1.dot \
 | D2_LAYOUT=elk d2 - > Model_1.svg
 ```
 
-This writes the rendered graph into an SVG file named `Model_1.svg`.
+There are many different ways to represent the *contents* of each state (i.e.
+the set of variables and their values) in D2, which can be configured via
+the `--d2-output-state-as` option:
 
-Here is an example of what a rendered graph looks like:
+##### `label`
 
-![Example TLA+ state graph rendered with D2](https://github.com/user-attachments/assets/21b5406f-408b-4cd5-9370-fbcb66c032be)
+<img src="./tests/data/long-example/non-latex.svg" width="400px">
+
+##### `latex`
+
+<img src="./tests/data/long-example/latex.svg" width="400px">
+
+##### `nested-containers`
+
+<img src="./tests/data/long-example/containers-simple-values-not-inline.svg" width="400px">
+
+##### `nested-containers-simple-values-inline`
+
+<img src="./tests/data/long-example/containers-simple-values-inline.svg" width="400px">
+
+##### `nested-containers-simple-values-inline-newline`
+
+<img src="./tests/data/long-example/containers-simple-values-inline-newline.svg" width="400px">
 
 
 ## Use as a library
