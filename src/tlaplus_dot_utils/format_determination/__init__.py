@@ -4,7 +4,6 @@ from .formats import GraphFormat
 from .utils.io import get_file_filename
 
 
-# TODO Rename to ~_from_filename & adjust params
 def guess_graph_file_format(file: IO[Any]) -> GraphFormat | None:
   filename = get_file_filename(file)
   if filename is None:
