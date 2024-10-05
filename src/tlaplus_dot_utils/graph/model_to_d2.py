@@ -4,8 +4,22 @@ from dataclasses import dataclass
 from textwrap import dedent, indent
 from typing import Any
 
-from py_d2 import D2Shape  # type: ignore[import-untyped]
-from py_d2 import D2Connection, D2Diagram, D2Style, D2Text
+from ..utils.package_extras import RequiredExtraNotInstalled
+
+try:
+  from py_d2 import D2Shape  # type: ignore[import-untyped]
+  from py_d2 import D2Connection, D2Diagram, D2Style, D2Text
+except ModuleNotFoundError as e:
+  e2 = e
+
+  class RaiseD2MissingIfUsed:
+    def __init__(self, *a: Any, **kw: Any) -> None:
+      raise RequiredExtraNotInstalled("py_d2", "D2", "d2") from e2
+
+  D2Shape = RaiseD2MissingIfUsed
+  D2Connection = RaiseD2MissingIfUsed
+  D2Diagram = RaiseD2MissingIfUsed
+  D2Style = RaiseD2MissingIfUsed
 
 from ..state.model_to_d2 import BaseStateToD2Renderer
 from ..state.tlaplus_to_latex import state_tlaplus_to_latex

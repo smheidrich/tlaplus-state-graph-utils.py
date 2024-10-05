@@ -5,7 +5,8 @@
 
 ## Soon
 
-[ ] Ensure human-readable error msg when py_d2 (via d2 extra) not installed
+[ ] Make tree-sitter extra (for state parsing) separate from D2
+[ ] Ensure human-readable error msg when tree-sitter not installed
 [ ] 'rg TODO' and resolve remaining issues
 [ ] Make tests pkg structure match src
 

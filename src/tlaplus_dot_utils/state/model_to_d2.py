@@ -1,9 +1,21 @@
 from abc import ABC, abstractmethod
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import assert_never
+from typing import Any, assert_never
 
-from py_d2 import D2Diagram, D2Shape  # type: ignore
+from ..utils.package_extras import RequiredExtraNotInstalled
+
+try:
+  from py_d2 import D2Diagram, D2Shape  # type: ignore
+except ModuleNotFoundError as e:
+  e2 = e
+
+  class RaiseD2MissingIfUsed:
+    def __init__(self, *a: Any, **kw: Any) -> None:
+      raise RequiredExtraNotInstalled("py_d2", "D2", "d2") from e2
+
+  D2Diagram = RaiseD2MissingIfUsed
+  D2Shape = RaiseD2MissingIfUsed
 
 from .model import FunctionMerge, Record, SealedValue, SimpleValue
 
