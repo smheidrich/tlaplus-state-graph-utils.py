@@ -5,7 +5,6 @@
 
 ## Soon
 
-[ ] Update README with new commands
 [ ] Add examples for every output style to README (probably just generate from
     tests?)
 [ ] Allow users to define conditional styling based on predicates on the states

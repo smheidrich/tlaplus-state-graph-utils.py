@@ -2,45 +2,113 @@
 
 Python utilities for transforming GraphViz dot files produced by TLA+
 
-## Installing and running the CLI
-
-The easiest way to install the CLI into an automatically-created venv (so it's
-isolated from your global or user Python libs) is using a tool like
-[pipx](https://pipx.pypa.io/), e.g.:
+## Installation
 
 ```bash
-pipx install https://github.com/smheidrich/tlaplus-dot-utils.py.git
+pip install https://github.com/smheidrich/tlaplus-dot-utils.py.git
 ```
 
-You should then be able to run `tlaplus-dot-utils.py` from anywhere.
+## Using the CLI
 
-## CLI commands
+Installing the package puts a CLI program named `tlaplus-dot-utils.py` in your
+`PATH`. Here is its `--help` text:
 
-The CLI bundles multiple separate functionalities as different subcommands.
+```
+usage: tlaplus-dot-utils.py [-h] [--version] COMMAND ...
 
-### dot-json-to-reasonable-json
+utilities for transforming TLA+-produced GraphViz dot files
 
-This is mainly a workaround for TLA+ being as yet unable to output its state
-graph in some kind of JSON format - see
-[TLA+ GitHub issue #639](https://github.com/tlaplus/tlaplus/issues/639).
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
 
-What we do instead is parse output produced by GraphViz dot in JSON-output
-mode (`dot -Tjson`), as was suggested in
-[a comment](https://github.com/tlaplus/tlaplus/issues/639#issuecomment-1003163720)
-on the aforementioned issue, and transform it into another JSON representation
-that is easier to work with than the GraphViz-specific one.
+subcommands:
+  COMMAND     description
+    convert   convert between state graph formats
+```
 
-Usage is normally going to look something like this:
+It currently has only one subcommand called `convert` which can be used to
+convert between different representations of TLA+ state graphs. Here is its
+`--help` text:
+
+```
+usage: tlaplus-dot-utils.py convert [-h] [--output OUTPUT]
+                                    [--from {reasonable-json,tlaplus-dot-json}]
+                                    [--to {reasonable-json,d2}] [--pretty]
+                                    [--d2-output-state-as D2_OUTPUT_STATE_AS]
+                                    [input]
+
+convert between TLA+ state graph formats/representations
+
+positional arguments:
+  input                 input file path or '-' to use stdin (the default)
+
+options:
+  -h, --help            show this help message and exit
+  --output OUTPUT, -o OUTPUT
+                        output file path or '-' to use stdout (the default)
+  --from {reasonable-json,tlaplus-dot-json}, -f {reasonable-json,tlaplus-dot-json}
+                        input format (guessed from extension & content if not
+                        given)
+  --to {reasonable-json,d2}, -t {reasonable-json,d2}
+                        output format (if not given, defaults to reasonable-
+                        json when outputting to stdout, otherwise guessed from
+                        extension)
+  --pretty              produce pretty-printed rather than compact output
+
+D2 options:
+  options relevant when outputting in D2 format
+
+  --d2-output-state-as D2_OUTPUT_STATE_AS
+                        how to represent individual states in the D2 output:
+                        label: without modification as a D2 node label; latex:
+                        as a LaTeX equation which D2 will render; nested-
+                        containers: as nested containers, one per variable,
+                        record, etc.; nested-containers-simple-values-inline:
+                        as above but with terminal/simple values not getting
+                        their own container; nested-containers-simple-values-
+                        inline-newline: as above but with keys and terminal
+                        values separated by newlines
+```
+
+For instance, this converts a GraphViz dot file produced by TLA+'s state
+diagram output into a "reasonable" JSON format that's easier to work with:
 
 ```bash
 # In your TLA+ Model directory:
-dot -Tjson Model_1.json | tlaplus-dot-utils.py dot-json-to-reasonable-json
+dot -Tjson Model_1.dot | tlaplus-dot-utils.py convert -t reasonable-json
 ```
 
-This writes compact JSON to standard output. Refer to the `--help` text for
-other options.
+The following sections go into more details about the supported input and
+output formats.
 
-The JSON's structure looks like this:
+### Input formats
+
+#### dot JSON
+
+TLA+ does not currently have a "canonical" format for state graphs (see
+[TLA+ GitHub issue #639](https://github.com/tlaplus/tlaplus/issues/639)) and
+so the only halfway convenient way to get this information out of TLA+ is to
+process the GraphViz `dot` files it produces.
+
+In particular, as suggested in
+[a comment](https://github.com/tlaplus/tlaplus/issues/639#issuecomment-1003163720)
+on the aforementioned issue, `dot` itself can convert these into a JSON
+representation (`dot -Tjson`), which can then by read in by this utility (it
+automatically considers filenames ending in `.dot.json` to be such files).
+
+#### Reasonable JSON
+
+Another possible input format is the "reasonable JSON" format produced by this
+tool itself - it is explained in more detail in the *Output formats* section
+below.
+
+### Output formats
+
+#### "Reasonable JSON"
+
+The aforementioned "reasonable JSON" format is meant to make it easier for
+other tools to work with TLA+ state graphs. It looks like this:
 
 ```json
 {
@@ -70,38 +138,26 @@ The JSON's structure looks like this:
 }
 ```
 
-### reasonable-json-to-d2
+#### D2
 
-This needs the `d2` extra to be installed. Refer to the documentation of the
-relevant package installer (e.g. `pipx` or `pip`) for how to install extras.
-
-This transforms the "reasonable" JSON format output by the previous script
-into a [D2](https://d2lang.com/) graph with LaTeX formatting for the TLA+
-states, which might look a bit nicer than the regular ASCII representation in
-TLA+'s native state graph.
-
-Most commonly, this will have the output of the previous script piped into it
-like this:
+Another supported output format is [D2](https://d2lang.com/), but to use it,
+the package's `d2` extra needs to be installed:
 
 ```bash
-# In your TLA+ Model directory:
-dot -Tjson Model_1.json \
-| tlaplus-dot-utils.py dot-json-to-reasonable-json \
-| tlaplus-dot-utils.py reasonable-json-to-d2
+pip install 'https://github.com/smheidrich/tlaplus-dot-utils.py.git[d2]'
 ```
 
-As before, this writes to standard output and you can refer to the `--help`
-text for other options.
+There are many different ways to represent the *contents* of each state (i.e.
+the set of variables and their values) in D2, which can be configured via
+the `--d2-output-state-as` option.
 
-You can pipe this output into `d2` in turn to render the graph.
-I recommend using the Elk layout engine rather than the default (Dagre) for
-optimal results:
+Here is an example showing how to go from a `dot` file produced by TLA+ to
+a graph rendered using D2 in one shell command:
 
 ```bash
 # In your TLA+ Model directory:
-dot -Tjson Model_1.json \
-| tlaplus-dot-utils.py dot-json-to-reasonable-json \
-| tlaplus-dot-utils.py reasonable-json-to-d2 \
+dot -Tjson Model_1.dot \
+| tlaplus-dot-utils.py convert -t d2 \
 | D2_LAYOUT=elk d2 - > Model_1.svg
 ```
 
@@ -110,3 +166,11 @@ This writes the rendered graph into an SVG file named `Model_1.svg`.
 Here is an example of what a rendered graph looks like:
 
 ![Example TLA+ state graph rendered with D2](https://github.com/user-attachments/assets/21b5406f-408b-4cd5-9370-fbcb66c032be)
+
+
+## Use as a library
+
+I'm too lazy to write this or set up automated API docs, especially considering
+nobody is going to use it.
+If you want to use this as a library, please just open an issue saying so and
+I'll get started (and maybe clean things up a little).
