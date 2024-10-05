@@ -11,3 +11,7 @@ wheels/
 
 # coverage
 .coverage
+htmlcov
+
+# Rope
+.ropeproject
