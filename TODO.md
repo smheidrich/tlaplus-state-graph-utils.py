@@ -5,20 +5,20 @@
 
 ## Soon
 
-[ ] Add examples for every output style to README (probably just generate from
-    tests?)
 [ ] Allow users to define conditional styling based on predicates on the states
     (distinguish "happy path", highlight "errors" etc.)
 
 ## Later
 
+[ ] Make tests cover 100% of CLI, but with everything behind the CLI mocked
+[ ] ... and/or just move more stuff out of CLI into core and add tests for that
+[ ] Think about how to allow custom D2 global styles (maybe just D2 includes
+    or `(cat output.d2 && cat custom.d2)` and no further action needed?)
 [ ] Switch to a reasonable CLI library once one exists. argparse pain points:
     - No way for `choices` to be an enum
     - No way for `choices` to be reasonably formatted in help, or more
       generally to have exceptions from auto-formatting/wrapping
     - No way to specify default subcommand
-[ ] Make tests cover 100% of CLI, but with everything behind the CLI mocked
-[ ] ... and/or just move more stuff out of CLI into core and add tests for that
 [ ] Clean up container rendering stuff (separate modules, refactor more)
 [ ] 'rg TODO' and resolve remaining issues
 
