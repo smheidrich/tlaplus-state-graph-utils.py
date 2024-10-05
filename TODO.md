@@ -5,7 +5,6 @@
 
 ## Soon
 
-[ ] Translate unknown file format exceptions into readable CLI errors
 [ ] Ensure human-readable error msg when py_d2 (via d2 extra) not installed
 [ ] 'rg TODO' and resolve remaining issues
 [ ] Make tests pkg structure match src
@@ -21,3 +20,4 @@
       generally to have exceptions from auto-formatting/wrapping
     - No way to specify default subcommand
 [ ] Make tests cover 100% of CLI, but with everything behind the CLI mocked
+[ ] ... and/or just move more stuff out of CLI into core and add tests for that

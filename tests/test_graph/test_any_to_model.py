@@ -2,7 +2,10 @@ from importlib.abc import Traversable
 from io import StringIO
 
 import pytest
-from tlaplus_dot_utils.graph.any_to_model import any_file_to_model
+from tlaplus_dot_utils.graph.any_to_model import (
+  CouldNotDetermineInputFormatError,
+  any_file_to_model,
+)
 from tlaplus_dot_utils.graph.model import TransitionDiagram
 
 
@@ -28,8 +31,8 @@ def test_d2_unsupported(
   long_example_d2_boxes_simple_values_inline_traversable: Traversable,
   long_example_model: TransitionDiagram,
 ) -> None:
-  with long_example_d2_boxes_simple_values_inline_traversable.open() as f, pytest.raises(
-    ValueError, match="Could not determine format"
+  with long_example_d2_boxes_simple_values_inline_traversable.open() as f, (
+    pytest.raises(CouldNotDetermineInputFormatError)
   ):
     any_file_to_model(f)
 
@@ -37,5 +40,5 @@ def test_d2_unsupported(
 def test_random_garbage_unsupported(
   long_example_model: TransitionDiagram,
 ) -> None:
-  with pytest.raises(ValueError, match="Could not determine format"):
+  with pytest.raises(CouldNotDetermineInputFormatError):
     any_file_to_model(StringIO("nonsense"))

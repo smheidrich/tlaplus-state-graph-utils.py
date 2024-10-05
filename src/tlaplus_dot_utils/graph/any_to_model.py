@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from io import StringIO
 from typing import IO, Any
 
@@ -6,8 +7,16 @@ from .dot_json_to_model import dot_json_file_to_model
 from .model import TransitionDiagram
 from .reasonable_json_to_model import reasonable_json_file_to_model
 
+@dataclass
+class CouldNotDetermineInputFormatError(Exception):
+  file: IO[Any]
 
 def any_file_to_model(file: IO[Any]) -> TransitionDiagram:
+  """
+  Raises:
+    CouldNotDetermineInputFormatError: If the format of `file` could not be
+      determined from its name and contents.
+  """
   input_format = guess_graph_file_format(file)
   match input_format:
     case GraphFormat.tlaplus_dot_json:
@@ -29,6 +38,4 @@ def any_file_to_model(file: IO[Any]) -> TransitionDiagram:
       except Exception:
         file.seek(start_pos)  # rewind & move on
       # We've exhausted all options, so give up:
-      raise ValueError(
-        f"Could not determine format of input file {file} from either name or contents - giving up."
-      )
+      raise CouldNotDetermineInputFormatError(file)

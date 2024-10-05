@@ -1,9 +1,13 @@
 import json
 from argparse import FileType
+from sys import stdout
 from typing import Any
 
 from ..format_determination import GraphFormat, guess_graph_file_format
-from ..graph.any_to_model import any_file_to_model
+from ..graph.any_to_model import (
+  CouldNotDetermineInputFormatError,
+  any_file_to_model,
+)
 from ..graph.dot_json_to_model import dot_json_file_to_model
 from ..graph.model_to_d2 import (
   BaseDiagramToD2Renderer,
@@ -54,9 +58,10 @@ arg_parser.add_argument(
   "--to",
   "-t",
   type=str,
-  default="reasonable-json",
+  default=None,
   choices=["reasonable-json", "d2"],
-  help="output format (guessed from extension if not given)",
+  help="output format (if not given, defaults to reasonable-json when "
+  "outputting to stdout, otherwise guessed from extension)",
   dest="output_format",
 )
 arg_parser.add_argument(
@@ -108,13 +113,18 @@ def run_for_cli_args(args: Any) -> None:
     case "d2":
       output_format = GraphFormat.d2
     case _:
-      guessed_output_format = guess_graph_file_format(args.output)
-      if guessed_output_format is None:
-        raise ValueError(
-          "Could not guess output format. Please specify it explicitly or "
-          "ensure your output filename makes it unambiguous."
-        )
-      output_format = guessed_output_format
+      if args.output == stdout:
+        output_format = GraphFormat.reasonable_json
+      else:
+        guessed_output_format = guess_graph_file_format(args.output)
+        if guessed_output_format is None:
+          arg_parser.exit(
+            status=1,
+            message="ERROR: Could not guess output format from filename or "
+            "contents.\nPlease specify it explicitly with --to/-t or use "
+            "an output filename that makes it unambiguous.\n",
+          )
+        output_format = guessed_output_format
 
   match input_format:
     case GraphFormat.tlaplus_dot_json:
@@ -122,10 +132,19 @@ def run_for_cli_args(args: Any) -> None:
     case GraphFormat.reasonable_json:
       model = reasonable_json_file_to_model(args.input)
     case None:
-      model = any_file_to_model(args.input)
+      try:
+        model = any_file_to_model(args.input)
+      except CouldNotDetermineInputFormatError:
+        arg_parser.exit(
+          status=1,
+          message="ERROR: Could not guess input format from filename or "
+          "contents.\nPlease specify it explicitly with --from/-f or use "
+          "an input filename that makes it unambiguous.\n",
+        )
     case _ as other:
-      raise NotImplementedError(
-        f"Input in format {other} is not currently supported."
+      arg_parser.exit(
+        status=1,
+        message=f"ERROR: Input in format {other} is not currently supported.",
       )
 
   match output_format:
@@ -156,11 +175,11 @@ def run_for_cli_args(args: Any) -> None:
               BoxesSimpleValuesInlineNewlineSepStateToD2Renderer()
             )
           )
-        case _ as other:
+        case _ as other:  # should never happen => exception fine
           raise ValueError(f"Unsupported --d2-output-state-as option: {other}")
       d2_diag = renderer(model)
       args.output.write(str(d2_diag))
-    case _ as other:
+    case _ as other:  # should never happen => exception fine
       raise NotImplementedError(
         f"Output in format {other} is not currently supported."
       )
