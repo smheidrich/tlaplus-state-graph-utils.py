@@ -7,6 +7,16 @@
 
 [ ] Allow users to define conditional styling based on predicates on the states
     (distinguish "happy path", highlight "errors" etc.)
+[ ] ^ Better idea: If the state is completely represented as JSON, users can
+    make simple modifications based on predicates themselves using `jq`
+    (relevant parts of its syntax: assignment-update operator `|=` and
+    conditionals/if-then-else-end); not as powerful and convenient as
+    predicates themselves written in TLA+, but oh well.
+[ ] ^ Requirement 1: Allow outputting JSON-ified state in reasonable JSON (CLI
+    flag)
+[ ] ^ Requirement 2: Allow some basic/universal styling options (classes?) in
+    reasonable JSON
+[ ] Document jq approach in README
 
 ## Later
 
