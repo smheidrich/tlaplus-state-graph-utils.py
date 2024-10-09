@@ -80,6 +80,12 @@ reasonable_json_arg_parser.add_argument(
   action="store_true",
   help="include state contents represented as structured JSON",
 )
+reasonable_json_arg_parser.add_argument(
+  "--reasonable-json-itf-state",
+  action="store_true",
+  help="include state contents represented in ITF state format "
+  "(see: https://apalache-mc.org/docs/adr/015adr-trace.html)",
+)
 
 # Options only relevant for D2 output:
 d2_arg_parser = arg_parser.add_argument_group(
@@ -161,7 +167,9 @@ def run_for_cli_args(args: Any) -> None:
   match output_format:
     case GraphFormat.reasonable_json:
       jsonish = model_to_reasonable_jsonish(
-        model, args.reasonable_json_structured_state
+        model,
+        args.reasonable_json_structured_state,
+        args.reasonable_json_itf_state,
       )
       if args.pretty:
         json.dump(jsonish, args.output, indent=2)

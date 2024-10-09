@@ -23,6 +23,8 @@
 [ ] Document jq approach in README
 [ ] Document styleClass
 [ ] Document structured state
+[ ] Document ITF state
+[ ] Fix bug re: bools in state not being parsed as such
 
 ## Later
 

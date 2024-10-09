@@ -1,5 +1,6 @@
 from typing import Any
 
+from ..state.model_to_itf import model_to_itf_state_jsonish
 from ..state.model_to_reasonable_json import (
   model_to_reasonable_jsonish as state_model_to_reasonable_jsonish,
 )
@@ -7,8 +8,11 @@ from ..state.tlaplus_to_model import tlaplus_state_to_dataclasses
 from .model import TransitionDiagram
 
 
+# TODO Instead of N booleans for N possible state outputs, come up with system
+#   that allows a list of outputters here (which each define their own key, so
+#   maybe a dict?)
 def model_to_reasonable_jsonish(
-  model: TransitionDiagram, structured_state: bool
+  model: TransitionDiagram, structured_state: bool, itf_state: bool
 ) -> dict[str, Any]:
   return {
     "metadata": {
@@ -28,6 +32,15 @@ def model_to_reasonable_jsonish(
             )
           }
           if structured_state
+          else {}
+        ),
+        **(
+          {
+            "itfState": model_to_itf_state_jsonish(
+              tlaplus_state_to_dataclasses(state.label_tlaplus)
+            )
+          }
+          if itf_state
           else {}
         ),
       }
