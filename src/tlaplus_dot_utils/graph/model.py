@@ -6,6 +6,9 @@ class State:
   id: int
   label_tlaplus: str
 
+  # styling
+  style_class: str | None
+
 
 @dataclass
 class Step:

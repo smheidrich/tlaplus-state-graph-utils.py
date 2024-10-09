@@ -26,6 +26,7 @@ def reasonable_json_file_to_model(file: IO[Any]) -> TransitionDiagram:
     State(
       id=state_d["id"],
       label_tlaplus=state_d["labelTlaPlus"],
+      style_class=state_d.get("styleClass"),
     )
     for state_d in d["states"]
   ]

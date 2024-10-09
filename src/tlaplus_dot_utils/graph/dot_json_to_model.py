@@ -30,6 +30,7 @@ def dot_jsonish_to_model(d: dict[str, Any]) -> TransitionDiagram:
       .replace("\\\\", "\\")
       .replace("\\n", "\n")
       .replace("\\\\", "\\"),
+      style_class=None,
     )
     for d in state_object_ds
   ]

@@ -117,6 +117,8 @@ class SimpleStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
     label = repr(state.label_tlaplus).replace('"', '\\"')
     label = f'"{label[1:-1]}"'
     shape = D2Shape(name=f"state{state.id}", label=label)
+    if state.style_class is not None:
+      shape.add_shape(D2Shape(name="class", label=state.style_class))
     return shape
 
 
