@@ -9,6 +9,9 @@ from .model import (
   SingleElemDomainFunction,
 )
 
+# TODO Move to model_to_structured_json or sth. b/c this is not strictly part
+# of the reasonable-json format
+
 
 def model_to_reasonable_jsonish(
   model: dict[bytes, SealedValue]

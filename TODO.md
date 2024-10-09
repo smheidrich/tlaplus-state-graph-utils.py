@@ -14,15 +14,16 @@
     predicates themselves written in TLA+, but oh well.
 [x] ^ Requirement 1: Allow outputting JSON-ified state in reasonable JSON (CLI
     flag)
-[ ] ^ Requirement 1.5: Allow outputting JSON-ified state in a simplified form
+[x] ^ Requirement 1.5: Allow outputting JSON-ified state in a simplified form
     (--...-simple?) that represents record keys and function inputs as
     dictionary keys directly (irregular form or whatever) => easier to process
     with jq
-[ ] ^ Requirement 2: Allow some basic/universal styling options (classes?) in
+[x] ^ Requirement 2: Allow some basic/universal styling options (classes?) in
     reasonable JSON
 [ ] Document jq approach in README
 [ ] Document styleClass
 [ ] Document structured state
+[ ] Document simple structured state
 [ ] Document ITF state
 [ ] Fix bug re: bools in state not being parsed as such
 

@@ -65,6 +65,21 @@ def long_example_reasonable_json_structured_state(
 
 
 @pytest.fixture
+def long_example_reasonable_json_simple_structured_state_traversable(
+  data_files: Traversable,
+) -> Traversable:
+  return data_files / "long-example/reasonable-simple-structured-state.json"
+
+
+@pytest.fixture
+def long_example_reasonable_json_simple_structured_state(
+  long_example_reasonable_json_simple_structured_state_traversable: Traversable,
+) -> dict[str, Any]:
+  with long_example_reasonable_json_simple_structured_state_traversable.open() as f:
+    return json.load(f)  # type: ignore[no-any-return]
+
+
+@pytest.fixture
 def long_example_reasonable_json_itf_state_traversable(
   data_files: Traversable,
 ) -> Traversable:

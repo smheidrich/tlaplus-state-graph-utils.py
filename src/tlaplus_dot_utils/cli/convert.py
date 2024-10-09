@@ -81,6 +81,12 @@ reasonable_json_arg_parser.add_argument(
   help="include state contents represented as structured JSON",
 )
 reasonable_json_arg_parser.add_argument(
+  "--reasonable-json-simple-structured-state",
+  action="store_true",
+  help="include state contents represented as simplified structured JSON "
+  "(lossy, i.e. doesn't encode all details of TLA+, but easy to work with)",
+)
+reasonable_json_arg_parser.add_argument(
   "--reasonable-json-itf-state",
   action="store_true",
   help="include state contents represented in ITF state format "
@@ -169,6 +175,7 @@ def run_for_cli_args(args: Any) -> None:
       jsonish = model_to_reasonable_jsonish(
         model,
         args.reasonable_json_structured_state,
+        args.reasonable_json_simple_structured_state,
         args.reasonable_json_itf_state,
       )
       if args.pretty:
