@@ -70,6 +70,17 @@ arg_parser.add_argument(
   help="produce pretty-printed rather than compact output",
 )
 
+# Options only relevant for reasonable-json output:
+reasonable_json_arg_parser = arg_parser.add_argument_group(
+  "reasonable-json options",
+  description="options relevant when outputting in reasonable-json format",
+)
+reasonable_json_arg_parser.add_argument(
+  "--reasonable-json-structured-state",
+  action="store_true",
+  help="include state contents represented as structured JSON",
+)
+
 # Options only relevant for D2 output:
 d2_arg_parser = arg_parser.add_argument_group(
   "D2 options", description="options relevant when outputting in D2 format"
@@ -149,7 +160,9 @@ def run_for_cli_args(args: Any) -> None:
 
   match output_format:
     case GraphFormat.reasonable_json:
-      jsonish = model_to_reasonable_jsonish(model)
+      jsonish = model_to_reasonable_jsonish(
+        model, args.reasonable_json_structured_state
+      )
       if args.pretty:
         json.dump(jsonish, args.output, indent=2)
       else:

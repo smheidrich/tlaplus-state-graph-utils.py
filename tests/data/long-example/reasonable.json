@@ -2,7 +2,7 @@
   "metadata": {
     "format": {
       "name": "reasonable-tlaplus-state-graph-json",
-      "version": "0.1"
+      "version": "0.1.1"
     }
   },
   "states": [

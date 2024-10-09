@@ -12,7 +12,7 @@
     (relevant parts of its syntax: assignment-update operator `|=` and
     conditionals/if-then-else-end); not as powerful and convenient as
     predicates themselves written in TLA+, but oh well.
-[ ] ^ Requirement 1: Allow outputting JSON-ified state in reasonable JSON (CLI
+[x] ^ Requirement 1: Allow outputting JSON-ified state in reasonable JSON (CLI
     flag)
 [ ] ^ Requirement 2: Allow some basic/universal styling options (classes?) in
     reasonable JSON
@@ -20,6 +20,8 @@
 
 ## Later
 
+[ ] Allow parsing structured state in reasonable-json
+[ ] ^ Use some kind of library, Pydantic or Marshmallow or whatever...
 [ ] Make tests cover 100% of CLI, but with everything behind the CLI mocked
 [ ] ... and/or just move more stuff out of CLI into core and add tests for that
 [ ] Think about how to allow custom D2 global styles (maybe just D2 includes

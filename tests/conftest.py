@@ -4,6 +4,7 @@ from importlib.resources.abc import Traversable
 from typing import Any
 
 import pytest
+
 from tlaplus_dot_utils.graph.dot_json_to_model import dot_jsonish_to_model
 from tlaplus_dot_utils.graph.model import TransitionDiagram
 
@@ -45,6 +46,21 @@ def long_example_reasonable_json(
   long_example_reasonable_json_traversable: Traversable,
 ) -> dict[str, Any]:
   with long_example_reasonable_json_traversable.open() as f:
+    return json.load(f)  # type: ignore[no-any-return]
+
+
+@pytest.fixture
+def long_example_reasonable_json_structured_state_traversable(
+  data_files: Traversable,
+) -> Traversable:
+  return data_files / "long-example/reasonable-structured-state.json"
+
+
+@pytest.fixture
+def long_example_reasonable_json_structured_state(
+  long_example_reasonable_json_structured_state_traversable: Traversable,
+) -> dict[str, Any]:
+  with long_example_reasonable_json_structured_state_traversable.open() as f:
     return json.load(f)  # type: ignore[no-any-return]
 
 

@@ -5,7 +5,7 @@ from typing import TypeAlias
 @dataclass
 class RecordField:
   key: bytes
-  value: bytes
+  value: bytes  # TODO! Nested model instead of bytes
 
 
 @dataclass
