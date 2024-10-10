@@ -2,46 +2,40 @@
 
 ## Next
 
+[ ] State: Move bytes to str conversion to the parsing (completely insane to
+    have this be part of the output...)
 
 ## Soon
 
-[ ] Allow users to define conditional styling based on predicates on the states
-    (distinguish "happy path", highlight "errors" etc.)
-[ ] ^ Better idea: If the state is completely represented as JSON, users can
-    make simple modifications based on predicates themselves using `jq`
-    (relevant parts of its syntax: assignment-update operator `|=` and
-    conditionals/if-then-else-end); not as powerful and convenient as
-    predicates themselves written in TLA+, but oh well.
-[x] ^ Requirement 1: Allow outputting JSON-ified state in reasonable JSON (CLI
-    flag)
-[x] ^ Requirement 1.5: Allow outputting JSON-ified state in a simplified form
-    (--...-simple?) that represents record keys and function inputs as
-    dictionary keys directly (irregular form or whatever) => easier to process
-    with jq
-[x] ^ Requirement 2: Allow some basic/universal styling options (classes?) in
-    reasonable JSON
-[x] Document jq approach in README
-[x] Document styleClass
-[x] Document structured state
-[x] Document simple structured state
-[x] Document ITF state
 [ ] Fix bug re: bools in state not being parsed as such
+[ ] Allow nested records
 
 ## Later
 
-[ ] Allow parsing structured state in reasonable-json
+[ ] Allow parsing of various structured state formats in reasonable-json
 [ ] ^ Use some kind of library, Pydantic or Marshmallow or whatever...
+[ ] ^ Error if mismatch between different reprs (TLA+, own structured, ITF)
 [ ] Make tests cover 100% of CLI, but with everything behind the CLI mocked
 [ ] ... and/or just move more stuff out of CLI into core and add tests for that
-[ ] Think about how to allow custom D2 global styles (maybe just D2 includes
-    or `(cat output.d2 && cat custom.d2)` and no further action needed?)
+[ ] Clean up container rendering stuff (separate modules, refactor more)
+[ ] 'rg TODO' and resolve remaining issues
+[ ] Option to include D2 preamable? Not really needed b/c
+    `(cat preamble.d2 && ...)` does the trick just fine, but might be
+    convenient
+
+## Much later
+
 [ ] Switch to a reasonable CLI library once one exists. argparse pain points:
     - No way for `choices` to be an enum
     - No way for `choices` to be reasonably formatted in help, or more
       generally to have exceptions from auto-formatting/wrapping
     - No way to specify default subcommand
-[ ] Clean up container rendering stuff (separate modules, refactor more)
-[ ] 'rg TODO' and resolve remaining issues
+[ ] Add built-in support for styleClass conditional on predicates on the states
+    (easier-to-use alternative to cookbook approach via `jq`)
+    [ ] Alternative: Write completely separate tool reminiscient of `jq` but
+        for TLA+ states; but how to add `styleClass` specifically with that?
+
+## Conditional on other developments
 
 After https://github.com/pypa/packaging.python.org/issues/1605 PR is done
 (either in the Packaging Guide or elsewhere) and I know what the actual best
