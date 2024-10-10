@@ -94,6 +94,8 @@ class LatexStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
         "latex",
       ),
     )
+    if state.style_class is not None:
+      shape.add_shape(D2Shape(name="class", label=state.style_class))
     return shape
 
 
@@ -107,6 +109,8 @@ class ContainersStateDiagramToD2Renderer(BaseDiagramToD2Renderer):
       tlaplus_state_to_dataclasses(state.label_tlaplus)
     )
     shape = D2Shape(name=f"state{state.id}", label='""')
+    if state.style_class is not None:
+      shape.add_shape(D2Shape(name="class", label=state.style_class))
     for subshape in state_containers:
       shape.add_shape(subshape)
     return shape
