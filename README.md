@@ -143,6 +143,8 @@ other tools to work with TLA+ state graphs. It looks like this:
       "structuredState": ...,
       "simpleStructuredState": ...,
       "itfState": ...
+      // optional, if added by user:
+      styleClass: "someclass"
     },
     ...
   ],
@@ -159,6 +161,8 @@ other tools to work with TLA+ state graphs. It looks like this:
 }
 ```
 
+##### Structured state
+
 If present, the optional fields `structuredState`, `simpleStructuredState` and
 `itfState` contain different JSON representations of each state's
 "content" (i.e. the set of variables and their values for that state).
@@ -174,6 +178,12 @@ The ITF state format is the same as that used in traces output by the
 [Apalache model checker](https://apalache-mc.org/) and described in the "State
 object" section of its
 [ADR-015](https://apalache-mc.org/docs/adr/015adr-trace.html).
+
+##### Style class
+
+The optional field `styleClass` represents a "class" of styling options to
+apply to the state in question and will be included in output formats that
+support such a "class" concept (e.g. D2 - see below).
 
 #### D2
 
@@ -217,6 +227,41 @@ the `--d2-output-state-as` option:
 ##### `nested-containers-simple-values-inline-newline`
 
 <img src="./tests/data/long-example/containers-simple-values-inline-newline.svg" width="400px">
+
+
+### Cookbook / advanced techniques
+
+#### Conditional styling
+
+While there is no built-in support for making `styleClass` dependent on the
+TLA+ state contents (yet?), it's possible to hack something together using
+structured/JSON state output and the [`jq`](https://jqlang.github.io/jq/) JSON
+processing tool, e.g.:
+
+```bash
+tlaplus-dot-utils.py convert --reasonable-json-simple-structured-state \
+| jq '.states[] |= (.styleClass =
+if .someKey == "some-value" then
+  "class1"
+elif .someKey == "some-other-value" then
+  "class2"
+else
+  .styleClass
+end
+)'
+```
+
+This overwrites the `styleClass` attribute of each state (adding it if it
+doesn't exist) depending on the value of the `someKey` variable in it.
+
+It is recommended to use the `simple-structured-state` format for such kinds of
+processing because it's designed to be easy to work with in `jq`.
+
+`styleClass` is included in e.g. the D2 output, making it possible to create
+graphs like this with this technique (see `dev/render-test-examples.sh` for the
+full script to generate this one):
+
+<img src="./tests/data/long-example/conditional-styling-cookbook.svg" width="400px">
 
 
 ## Use as a library

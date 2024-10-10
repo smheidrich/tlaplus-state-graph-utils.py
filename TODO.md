@@ -20,11 +20,11 @@
     with jq
 [x] ^ Requirement 2: Allow some basic/universal styling options (classes?) in
     reasonable JSON
-[ ] Document jq approach in README
-[ ] Document styleClass
-[ ] Document structured state
-[ ] Document simple structured state
-[ ] Document ITF state
+[x] Document jq approach in README
+[x] Document styleClass
+[x] Document structured state
+[x] Document simple structured state
+[x] Document ITF state
 [ ] Fix bug re: bools in state not being parsed as such
 
 ## Later
