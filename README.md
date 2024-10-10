@@ -35,6 +35,9 @@ convert between different representations of TLA+ state graphs. Here is its
 usage: tlaplus-dot-utils.py convert [-h] [--output OUTPUT]
                                     [--from {reasonable-json,tlaplus-dot-json}]
                                     [--to {reasonable-json,d2}] [--pretty]
+                                    [--reasonable-json-structured-state]
+                                    [--reasonable-json-simple-structured-state]
+                                    [--reasonable-json-itf-state]
                                     [--d2-output-state-as D2_OUTPUT_STATE_AS]
                                     [input]
 
@@ -55,6 +58,20 @@ options:
                         json when outputting to stdout, otherwise guessed from
                         extension)
   --pretty              produce pretty-printed rather than compact output
+
+reasonable-json options:
+  options relevant when outputting in reasonable-json format
+
+  --reasonable-json-structured-state
+                        include state contents represented as structured JSON
+  --reasonable-json-simple-structured-state
+                        include state contents represented as simplified
+                        structured JSON (lossy, i.e. doesn't encode all
+                        details of TLA+, but easy to work with)
+  --reasonable-json-itf-state
+                        include state contents represented in ITF state format
+                        (see: https://apalache-mc.org/docs/adr/015adr-
+                        trace.html)
 
 D2 options:
   options relevant when outputting in D2 format
@@ -110,18 +127,22 @@ below.
 The aforementioned "reasonable JSON" format is meant to make it easier for
 other tools to work with TLA+ state graphs. It looks like this:
 
-```json
+```json5
 {
   "metadata": {
     "format": {
       "name": "reasonable-tlaplus-state-graph-json",
-      "version": "0.1"
+      "version": "0.1.1"
     }
   },
   "states": [
     {
       "id": 1,
-      "labelTlaPlus": "/\\ a = 1 /\\ b = 2 \n ..."
+      "labelTlaPlus": "/\\ a = 1 /\\ b = 2 \n ...",
+      // optional, if requested:
+      "structuredState": ...,
+      "simpleStructuredState": ...,
+      "itfState": ...
     },
     ...
   ],
@@ -137,6 +158,22 @@ other tools to work with TLA+ state graphs. It looks like this:
   ]
 }
 ```
+
+If present, the optional fields `structuredState`, `simpleStructuredState` and
+`itfState` contain different JSON representations of each state's
+"content" (i.e. the set of variables and their values for that state).
+They can be switched on independently of one another via the
+`--reasonable-json-structured-state`,
+`--reasonable-json-simple-structured-state`, and
+`--reasonable-json-simple-structured-state` CLI flags.
+
+The "structured" and "simple-structured" formats are ad-hoc formats defined by
+this tool (if you need docs for this please open an issue).
+
+The ITF state format is the same as that used in traces output by the
+[Apalache model checker](https://apalache-mc.org/) and described in the "State
+object" section of its
+[ADR-015](https://apalache-mc.org/docs/adr/015adr-trace.html).
 
 #### D2
 
