@@ -1,5 +1,3 @@
-from typing import Any
-
 from ..state.model_to_itf import model_to_itf_state_jsonish
 from ..state.model_to_reasonable_json import (
   model_to_reasonable_jsonish as state_model_to_reasonable_jsonish,
@@ -8,6 +6,7 @@ from ..state.model_to_simple_structured_json import (
   model_to_simple_structured_state_jsonish,
 )
 from ..state.tlaplus_to_model import tlaplus_state_to_dataclasses
+from ..utils.jsonish import Jsonish
 from .model import TransitionDiagram
 
 
@@ -19,7 +18,7 @@ def model_to_reasonable_jsonish(
   structured_state: bool,
   simple_structured_state: bool,
   itf_state: bool,
-) -> dict[str, Any]:
+) -> Jsonish:
   return {
     "metadata": {
       "format": {

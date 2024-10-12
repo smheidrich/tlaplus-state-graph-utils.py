@@ -1,13 +1,12 @@
-from typing import Any
-
 from tlaplus_dot_utils.graph.dot_json_to_reasonable_json import (
   dot_jsonish_to_reasonable_jsonish,
 )
+from tlaplus_dot_utils.utils.jsonish import Jsonish
 
 
 def test_example_against_reference(
-  long_example_dot_json: dict[str, Any],
-  long_example_reasonable_json: dict[str, Any],
+  long_example_dot_json: Jsonish,
+  long_example_reasonable_json: Jsonish,
 ) -> None:
   # Run
   reasonable = dot_jsonish_to_reasonable_jsonish(
@@ -26,8 +25,8 @@ def test_example_against_reference(
 
 
 def test_example_against_reference_structured_state(
-  long_example_dot_json: dict[str, Any],
-  long_example_reasonable_json_structured_state: dict[str, Any],
+  long_example_dot_json: Jsonish,
+  long_example_reasonable_json_structured_state: Jsonish,
 ) -> None:
   # Run
   reasonable = dot_jsonish_to_reasonable_jsonish(
@@ -46,8 +45,8 @@ def test_example_against_reference_structured_state(
 
 
 def test_example_against_reference_simple_structured_state(
-  long_example_dot_json: dict[str, Any],
-  long_example_reasonable_json_simple_structured_state: dict[str, Any],
+  long_example_dot_json: Jsonish,
+  long_example_reasonable_json_simple_structured_state: Jsonish,
 ) -> None:
   # Run
   reasonable = dot_jsonish_to_reasonable_jsonish(
@@ -66,8 +65,8 @@ def test_example_against_reference_simple_structured_state(
 
 
 def test_example_against_reference_itf_state(
-  long_example_dot_json: dict[str, Any],
-  long_example_reasonable_json_itf_state: dict[str, Any],
+  long_example_dot_json: Jsonish,
+  long_example_reasonable_json_itf_state: Jsonish,
 ) -> None:
   # Run
   reasonable = dot_jsonish_to_reasonable_jsonish(

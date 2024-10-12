@@ -1,12 +1,12 @@
 import importlib.resources
 import json
 from importlib.resources.abc import Traversable
-from typing import Any
 
 import pytest
 
 from tlaplus_dot_utils.graph.dot_json_to_model import dot_jsonish_to_model
 from tlaplus_dot_utils.graph.model import TransitionDiagram
+from tlaplus_dot_utils.utils.jsonish import Jsonish
 
 
 @pytest.fixture
@@ -22,14 +22,14 @@ def long_example_dot_json_traversable(data_files: Traversable) -> Traversable:
 @pytest.fixture
 def long_example_dot_json(
   long_example_dot_json_traversable: Traversable,
-) -> dict[str, Any]:
+) -> Jsonish:
   with long_example_dot_json_traversable.open() as f:
     return json.load(f)  # type: ignore[no-any-return]
 
 
 @pytest.fixture
 def long_example_model(
-  long_example_dot_json: dict[str, Any],
+  long_example_dot_json: Jsonish,
 ) -> TransitionDiagram:
   return dot_jsonish_to_model(long_example_dot_json)
 
@@ -44,7 +44,7 @@ def long_example_reasonable_json_traversable(
 @pytest.fixture
 def long_example_reasonable_json(
   long_example_reasonable_json_traversable: Traversable,
-) -> dict[str, Any]:
+) -> Jsonish:
   with long_example_reasonable_json_traversable.open() as f:
     return json.load(f)  # type: ignore[no-any-return]
 
@@ -59,7 +59,7 @@ def long_example_reasonable_json_structured_state_traversable(
 @pytest.fixture
 def long_example_reasonable_json_structured_state(
   long_example_reasonable_json_structured_state_traversable: Traversable,
-) -> dict[str, Any]:
+) -> Jsonish:
   with long_example_reasonable_json_structured_state_traversable.open() as f:
     return json.load(f)  # type: ignore[no-any-return]
 
@@ -74,7 +74,7 @@ def long_example_reasonable_json_simple_structured_state_traversable(
 @pytest.fixture
 def long_example_reasonable_json_simple_structured_state(
   long_example_reasonable_json_simple_structured_state_traversable: Traversable,
-) -> dict[str, Any]:
+) -> Jsonish:
   with long_example_reasonable_json_simple_structured_state_traversable.open() as f:
     return json.load(f)  # type: ignore[no-any-return]
 
@@ -89,7 +89,7 @@ def long_example_reasonable_json_itf_state_traversable(
 @pytest.fixture
 def long_example_reasonable_json_itf_state(
   long_example_reasonable_json_itf_state_traversable: Traversable,
-) -> dict[str, Any]:
+) -> Jsonish:
   with long_example_reasonable_json_itf_state_traversable.open() as f:
     return json.load(f)  # type: ignore[no-any-return]
 

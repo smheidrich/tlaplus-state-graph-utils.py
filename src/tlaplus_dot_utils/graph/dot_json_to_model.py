@@ -1,6 +1,7 @@
 import json
 from typing import IO, Any
 
+from ..utils.jsonish import Jsonish
 from .model import State, Step, TransitionDiagram
 
 
@@ -9,15 +10,19 @@ def dot_json_file_to_model(file: IO[Any]) -> TransitionDiagram:
   return dot_jsonish_to_model(json.load(file))
 
 
-def dot_jsonish_to_model(d: dict[str, Any]) -> TransitionDiagram:
+def dot_jsonish_to_model(d: Jsonish) -> TransitionDiagram:
+  # There is little point getting static types right for dynamically loaded
+  # data - if something is wrong here, an exception gets raised. So:
+  d_: Any = d
   # Extract relevant parts
-  edge_ds, object_ds = d["edges"], d["objects"]
+  edge_ds = d_["edges"]
+  object_ds = d_["objects"]
   state_object_ds = [
-    d
-    for d in object_ds
-    if d["label"]
-    and d.get("shape") != "record"
-    and d.get("name") != "cluster_legend"
+    o
+    for o in object_ds
+    if o["label"]
+    and o.get("shape") != "record"
+    and o.get("name") != "cluster_legend"
   ]
   legend_ds = [d for d in object_ds if d.get("shape") == "record"]
   legend_color_to_action_name = {d["fillcolor"]: d["name"] for d in legend_ds}

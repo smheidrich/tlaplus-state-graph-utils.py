@@ -2,11 +2,10 @@
 
 ## Next
 
-[ ] Use proper "Jsonish" type instead of `dict[str, Any]`
+[ ] Allow nested records
 
 ## Soon
 
-[ ] Allow nested records
 [ ] Add any kind of test for styleClass parsing (reasonable JSON)
 [ ] Add any kind of test for styleClass output (D2)
 [ ] Fix bug re: bools in state not being parsed as such

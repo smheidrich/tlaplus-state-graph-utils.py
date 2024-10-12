@@ -1,5 +1,4 @@
-from typing import Any
-
+from ..utils.jsonish import Jsonish
 from .model import (
   FunctionMerge,
   Record,
@@ -12,7 +11,7 @@ from .model import (
 
 def model_to_simple_structured_state_jsonish(
   model: dict[str, SealedValue]
-) -> dict[str, Any]:
+) -> Jsonish:
   return {
     key: _sealed_value_to_reasonable_jsonish(value)
     for key, value in model.items()
@@ -21,7 +20,7 @@ def model_to_simple_structured_state_jsonish(
 
 def _sealed_value_to_reasonable_jsonish(
   model: SealedValue,
-) -> dict[str, Any] | str:
+) -> Jsonish | str:
   match model:
     case Record(fields):
       return dict(_record_field_to_key_value_tuple(rf) for rf in fields)
@@ -33,13 +32,15 @@ def _sealed_value_to_reasonable_jsonish(
       return value
 
 
-def _record_field_to_key_value_tuple(model: RecordField) -> tuple[str, Any]:
+def _record_field_to_key_value_tuple(
+  model: RecordField,
+) -> tuple[str, Jsonish]:
   return (model.key, model.value)
 
 
 def _single_elem_domain_function_to_key_value_tuple(
   model: SingleElemDomainFunction,
-) -> tuple[str, Any]:
+) -> tuple[str, Jsonish]:
   return (
     model.elem,
     _sealed_value_to_reasonable_jsonish(model.value),

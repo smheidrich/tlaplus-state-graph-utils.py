@@ -1,5 +1,4 @@
-from typing import Any
-
+from ..utils.jsonish import Jsonish
 from .model import (
   FunctionMerge,
   Record,
@@ -13,16 +12,14 @@ from .model import (
 # of the reasonable-json format
 
 
-def model_to_reasonable_jsonish(
-  model: dict[str, SealedValue]
-) -> dict[str, Any]:
+def model_to_reasonable_jsonish(model: dict[str, SealedValue]) -> Jsonish:
   return {
     key: _sealed_value_to_reasonable_jsonish(value)
     for key, value in model.items()
   }
 
 
-def _sealed_value_to_reasonable_jsonish(model: SealedValue) -> dict[str, Any]:
+def _sealed_value_to_reasonable_jsonish(model: SealedValue) -> Jsonish:
   match model:
     case Record(fields):
       return {
@@ -41,13 +38,13 @@ def _sealed_value_to_reasonable_jsonish(model: SealedValue) -> dict[str, Any]:
       return {"type": "simpleValue", "value": value}
 
 
-def _record_field_to_reasonable_jsonish(model: RecordField) -> dict[str, Any]:
+def _record_field_to_reasonable_jsonish(model: RecordField) -> Jsonish:
   return {"type": "recordField", "key": model.key, "value": model.value}
 
 
 def _single_elem_domain_function_to_reasonable_jsonish(
   model: SingleElemDomainFunction,
-) -> dict[str, Any]:
+) -> Jsonish:
   return {
     "type": "singleElemDomainFunction",
     "elem": model.elem,
