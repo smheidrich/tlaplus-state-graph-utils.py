@@ -4,8 +4,8 @@ from typing import TypeAlias
 
 @dataclass
 class RecordField:
-  key: bytes
-  value: bytes  # TODO! Nested model instead of bytes
+  key: str
+  value: str  # TODO! Nested model instead of str
 
 
 @dataclass
@@ -15,7 +15,7 @@ class Record:
 
 @dataclass
 class SingleElemDomainFunction:
-  elem: bytes
+  elem: str
   value: "SealedValue"
 
 
@@ -26,7 +26,7 @@ class FunctionMerge:
 
 @dataclass
 class SimpleValue:
-  value: bytes
+  value: str
 
 
 SealedValue: TypeAlias = Record | FunctionMerge | SimpleValue

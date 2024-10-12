@@ -52,7 +52,7 @@ def pretty_print_tree_sitter_tree(tree: Tree) -> None:
 
 def tlaplus_state_to_dataclasses(
   tlaplus_state: str,
-) -> dict[bytes, SealedValue]:
+) -> dict[str, SealedValue]:
   # Create dummy module to facilitate parsing
   # (TODO: Does tree-sitter support parsing sub-grammars somehow?)
   tlaplus_module = Template(
@@ -131,9 +131,9 @@ def tlaplus_state_to_dataclasses(
     assert var_name not in var_name_to_rhs
     var_name_to_rhs[var_name] = rhs
 
-  var_name_to_dc: dict[bytes, SealedValue] = {}
+  var_name_to_dc: dict[str, SealedValue] = {}
   for var_name, rhs in var_name_to_rhs.items():
-    var_name_to_dc[var_name] = tlaplus_value_to_dataclass(rhs)
+    var_name_to_dc[var_name.decode("utf-8")] = tlaplus_value_to_dataclass(rhs)
 
   return var_name_to_dc
 
@@ -166,7 +166,10 @@ def tlaplus_value_to_dataclass(rhs: Node) -> SealedValue:
           if node.type in {",", "]"}:
             record_fields.append(
               RecordField(
-                key, b"".join(cast(bytes, x.text) for x in value_nodes)
+                key.decode("utf-8"),
+                "".join(
+                  cast(bytes, x.text).decode("utf-8") for x in value_nodes
+                ),
               )
             )
             value_nodes = []
@@ -188,10 +191,10 @@ def tlaplus_value_to_dataclass(rhs: Node) -> SealedValue:
           return _compose_to_dataclasses(inner)
         case _:
           assert rhs.text is not None, "invalid rhs text (None)"
-          return SimpleValue(rhs.text)
+          return SimpleValue(rhs.text.decode("utf-8"))
     case _:
       assert rhs.text is not None, "invalid variable rhs (None)"
-      return SimpleValue(rhs.text)
+      return SimpleValue(rhs.text.decode("utf-8"))
 
 
 def _compose_to_dataclasses(node: Node) -> FunctionMerge | SimpleValue:
@@ -215,7 +218,7 @@ def _compose_to_dataclasses(node: Node) -> FunctionMerge | SimpleValue:
     return FunctionMerge(rhs_dc.functions + [lhs_dc])
   else:  # can't make sense of it so give up and return as raw value
     assert node.text is not None, "invalid node text (None)"
-    return SimpleValue(node.text)
+    return SimpleValue(node.text.decode("utf-8"))
 
 
 def _compose_operand_to_dataclasses(
@@ -238,7 +241,7 @@ def _compose_operand_to_dataclasses(
       assert rhs is not None, "invalid lhs (None)"
       assert lhs.text is not None, "invalid lhs text (None)"
       return SingleElemDomainFunction(
-        lhs.text, tlaplus_value_to_dataclass(rhs)
+        lhs.text.decode("utf-8"), tlaplus_value_to_dataclass(rhs)
       )
     case _:
       return None

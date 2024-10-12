@@ -14,12 +14,12 @@ from .model import (
 
 
 def model_to_reasonable_jsonish(
-  model: dict[bytes, SealedValue]
+  model: dict[str, SealedValue]
 ) -> dict[str, Any]:
-  d = {}
-  for key, value in model.items():
-    d[key.decode("utf-8")] = _sealed_value_to_reasonable_jsonish(value)
-  return d
+  return {
+    key: _sealed_value_to_reasonable_jsonish(value)
+    for key, value in model.items()
+  }
 
 
 def _sealed_value_to_reasonable_jsonish(model: SealedValue) -> dict[str, Any]:
@@ -38,15 +38,11 @@ def _sealed_value_to_reasonable_jsonish(model: SealedValue) -> dict[str, Any]:
         ],
       }
     case SimpleValue(value):
-      return {"type": "simpleValue", "value": value.decode("utf-8")}
+      return {"type": "simpleValue", "value": value}
 
 
 def _record_field_to_reasonable_jsonish(model: RecordField) -> dict[str, Any]:
-  return {
-    "type": "recordField",
-    "key": model.key.decode("utf-8"),
-    "value": model.value.decode("utf-8"),
-  }
+  return {"type": "recordField", "key": model.key, "value": model.value}
 
 
 def _single_elem_domain_function_to_reasonable_jsonish(
@@ -54,6 +50,6 @@ def _single_elem_domain_function_to_reasonable_jsonish(
 ) -> dict[str, Any]:
   return {
     "type": "singleElemDomainFunction",
-    "elem": model.elem.decode("utf-8"),
+    "elem": model.elem,
     "value": _sealed_value_to_reasonable_jsonish(model.value),
   }

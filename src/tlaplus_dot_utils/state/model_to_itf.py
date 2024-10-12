@@ -11,12 +11,12 @@ from .model import (
 
 
 def model_to_itf_state_jsonish(
-  model: dict[bytes, SealedValue]
+  model: dict[str, SealedValue]
 ) -> dict[str, Any]:
-  d = {}
-  for key, value in model.items():
-    d[key.decode("utf-8")] = _sealed_value_to_reasonable_jsonish(value)
-  return d
+  return {
+    key: _sealed_value_to_reasonable_jsonish(value)
+    for key, value in model.items()
+  }
 
 
 def _sealed_value_to_reasonable_jsonish(
@@ -33,17 +33,14 @@ def _sealed_value_to_reasonable_jsonish(
         ]
       }
     case SimpleValue(value):
-      return value.decode("utf-8")
+      return value
 
 
 def _record_field_to_key_value_tuple(model: RecordField) -> tuple[str, Any]:
-  return (model.key.decode("utf-8"), model.value.decode("utf-8"))
+  return model.key, model.value
 
 
 def _single_elem_domain_function_to_key_value_tuple(
   model: SingleElemDomainFunction,
 ) -> tuple[str, Any]:
-  return (
-    model.elem.decode("utf-8"),
-    _sealed_value_to_reasonable_jsonish(model.value),
-  )
+  return model.elem, _sealed_value_to_reasonable_jsonish(model.value)

@@ -27,23 +27,23 @@ def test_mixed() -> None:
 
   # Check
   assert parsed == {
-    b"a": SimpleValue(value=b'"b"'),
-    b"c": Record(
+    "a": SimpleValue(value='"b"'),
+    "c": Record(
       fields=[
         RecordField(
-          key=b"d",
-          value=b'"e"',
+          key="d",
+          value='"e"',
         ),
         RecordField(
-          key=b"d2",
-          value=b'"e2"',
+          key="d2",
+          value='"e2"',
         ),
       ],
     ),
-    b"f": FunctionMerge(
+    "f": FunctionMerge(
       [
-        SingleElemDomainFunction(b"G", SimpleValue(b'"H"')),
-        SingleElemDomainFunction(b"I", SimpleValue(b'"J"')),
+        SingleElemDomainFunction("G", SimpleValue('"H"')),
+        SingleElemDomainFunction("I", SimpleValue('"J"')),
       ]
     ),
   }
@@ -62,11 +62,11 @@ def test_three_merged_functions() -> None:
 
   # Check
   assert parsed == {
-    b"a": FunctionMerge(
+    "a": FunctionMerge(
       [
-        SingleElemDomainFunction(b"B", SimpleValue(b'"C"')),
-        SingleElemDomainFunction(b"D", SimpleValue(b'"E"')),
-        SingleElemDomainFunction(b"F", SimpleValue(b'"G"')),
+        SingleElemDomainFunction("B", SimpleValue('"C"')),
+        SingleElemDomainFunction("D", SimpleValue('"E"')),
+        SingleElemDomainFunction("F", SimpleValue('"G"')),
       ]
     )
   }
