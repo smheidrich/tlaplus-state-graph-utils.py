@@ -2,16 +2,17 @@
 
 ## Next
 
-[ ] Allow nested records
+[ ] Add any kind of test for styleClass parsing (reasonable JSON)
+[ ] Add any kind of test for styleClass output (D2)
 
 ## Soon
 
-[ ] Add any kind of test for styleClass parsing (reasonable JSON)
-[ ] Add any kind of test for styleClass output (D2)
 [ ] Fix bug re: bools in state not being parsed as such
 
 ## Later
 
+[ ] Consider using https://github.com/wenkokke/py-tree-sitter-type-provider
+    to simplify TLA+ state parsing
 [ ] Allow parsing of various structured state formats in reasonable-json
 [ ] ^ Use some kind of library, Pydantic or Marshmallow or whatever...
 [ ] ^ Error if mismatch between different reprs (TLA+, own structured, ITF)

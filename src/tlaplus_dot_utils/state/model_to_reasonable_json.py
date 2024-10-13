@@ -39,7 +39,11 @@ def _sealed_value_to_reasonable_jsonish(model: SealedValue) -> Jsonish:
 
 
 def _record_field_to_reasonable_jsonish(model: RecordField) -> Jsonish:
-  return {"type": "recordField", "key": model.key, "value": model.value}
+  return {
+    "type": "recordField",
+    "key": model.key,
+    "value": _sealed_value_to_reasonable_jsonish(model.value),
+  }
 
 
 def _single_elem_domain_function_to_reasonable_jsonish(

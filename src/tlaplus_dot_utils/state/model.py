@@ -5,7 +5,7 @@ from typing import TypeAlias
 @dataclass
 class RecordField:
   key: str
-  value: str  # TODO! Nested model instead of str
+  value: "SealedValue"
 
 
 @dataclass

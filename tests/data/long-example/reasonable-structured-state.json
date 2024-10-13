@@ -16,7 +16,10 @@
             {
               "type": "recordField",
               "key": "fileExists",
-              "value": "FALSE"
+              "value": {
+                "type": "simpleValue",
+                "value": "FALSE"
+              }
             }
           ]
         },
@@ -32,12 +35,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"start\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"start\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -51,12 +60,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"start\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"start\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -75,7 +90,10 @@
             {
               "type": "recordField",
               "key": "fileExists",
-              "value": "FALSE"
+              "value": {
+                "type": "simpleValue",
+                "value": "FALSE"
+              }
             }
           ]
         },
@@ -91,12 +109,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"create\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"create\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -110,12 +134,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"start\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"start\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -134,7 +164,10 @@
             {
               "type": "recordField",
               "key": "fileExists",
-              "value": "TRUE"
+              "value": {
+                "type": "simpleValue",
+                "value": "TRUE"
+              }
             }
           ]
         },
@@ -150,12 +183,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"done\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"done\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -169,12 +208,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"start\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"start\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -193,7 +238,10 @@
             {
               "type": "recordField",
               "key": "fileExists",
-              "value": "FALSE"
+              "value": {
+                "type": "simpleValue",
+                "value": "FALSE"
+              }
             }
           ]
         },
@@ -209,12 +257,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"create\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"create\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -228,12 +282,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"create\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"create\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -252,7 +312,10 @@
             {
               "type": "recordField",
               "key": "fileExists",
-              "value": "TRUE"
+              "value": {
+                "type": "simpleValue",
+                "value": "TRUE"
+              }
             }
           ]
         },
@@ -268,12 +331,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"done\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"done\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -287,12 +356,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"read\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"read\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -311,7 +386,10 @@
             {
               "type": "recordField",
               "key": "fileExists",
-              "value": "TRUE"
+              "value": {
+                "type": "simpleValue",
+                "value": "TRUE"
+              }
             }
           ]
         },
@@ -327,12 +405,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"done\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"done\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -346,12 +430,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"create\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"create\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -370,7 +460,10 @@
             {
               "type": "recordField",
               "key": "fileExists",
-              "value": "TRUE"
+              "value": {
+                "type": "simpleValue",
+                "value": "TRUE"
+              }
             }
           ]
         },
@@ -386,12 +479,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"done\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"done\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -405,12 +504,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"done\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"done\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -429,7 +534,10 @@
             {
               "type": "recordField",
               "key": "fileExists",
-              "value": "TRUE"
+              "value": {
+                "type": "simpleValue",
+                "value": "TRUE"
+              }
             }
           ]
         },
@@ -445,12 +553,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"done\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"done\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }
@@ -464,12 +578,18 @@
                   {
                     "type": "recordField",
                     "key": "pc",
-                    "value": "\"crashed\""
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "\"crashed\""
+                    }
                   },
                   {
                     "type": "recordField",
                     "key": "fileExists",
-                    "value": "FALSE"
+                    "value": {
+                      "type": "simpleValue",
+                      "value": "FALSE"
+                    }
                   }
                 ]
               }

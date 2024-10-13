@@ -32,11 +32,11 @@ def test_mixed() -> None:
       fields=[
         RecordField(
           key="d",
-          value='"e"',
+          value=SimpleValue('"e"'),
         ),
         RecordField(
           key="d2",
-          value='"e2"',
+          value=SimpleValue('"e2"'),
         ),
       ],
     ),
@@ -67,6 +67,41 @@ def test_three_merged_functions() -> None:
         SingleElemDomainFunction("B", SimpleValue('"C"')),
         SingleElemDomainFunction("D", SimpleValue('"E"')),
         SingleElemDomainFunction("F", SimpleValue('"G"')),
+      ]
+    )
+  }
+
+
+def test_nested_record() -> None:
+  # Setup
+  state_as_tlaplus = dedent(
+    r"""
+    /\ a = [ b |-> [ c |-> "d", c2 |-> "d2" ] ]
+    """
+  )
+
+  # Run
+  parsed = tlaplus_state_to_dataclasses(state_as_tlaplus)
+
+  # Check
+  assert parsed == {
+    "a": Record(
+      fields=[
+        RecordField(
+          key="b",
+          value=Record(
+            fields=[
+              RecordField(
+                key="c",
+                value=SimpleValue('"d"'),
+              ),
+              RecordField(
+                key="c2",
+                value=SimpleValue('"d2"'),
+              ),
+            ],
+          ),
+        )
       ]
     )
   }

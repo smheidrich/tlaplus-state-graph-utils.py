@@ -36,7 +36,7 @@ def _sealed_value_to_reasonable_jsonish(
 def _record_field_to_key_value_tuple(
   model: RecordField,
 ) -> tuple[str, Jsonish]:
-  return model.key, model.value
+  return model.key, _sealed_value_to_reasonable_jsonish(model.value)
 
 
 def _single_elem_domain_function_to_key_value_tuple(

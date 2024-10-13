@@ -164,14 +164,10 @@ def tlaplus_value_to_dataclass(rhs: Node) -> SealedValue:
         node = next(record_children_iter)
         while True:
           if node.type in {",", "]"}:
-            record_fields.append(
-              RecordField(
-                key.decode("utf-8"),
-                "".join(
-                  cast(bytes, x.text).decode("utf-8") for x in value_nodes
-                ),
-              )
-            )
+            assert len(value_nodes) == 1
+            value_node = value_nodes[0]
+            value_dc = tlaplus_value_to_dataclass(value_node)
+            record_fields.append(RecordField(key.decode("utf-8"), value_dc))
             value_nodes = []
             if node.type == ",":
               node = next(record_children_iter)
