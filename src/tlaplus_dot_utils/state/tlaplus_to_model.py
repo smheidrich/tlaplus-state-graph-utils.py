@@ -1,8 +1,43 @@
 from string import Template
 from textwrap import dedent, indent
+from typing import TYPE_CHECKING, Any
 
-import tree_sitter_tlaplus as tstla
-from tree_sitter import Language, Node, Parser, Tree
+from ..utils.package_extras import RequiredExtraNotInstalled
+
+try:
+  import tree_sitter_tlaplus as tstla
+except ModuleNotFoundError as e:
+  e2 = e
+
+  class RaiseTstlaMissingIfUsed:
+    def __init__(self, *a: Any, **kw: Any) -> None:
+      raise RequiredExtraNotInstalled(
+        "tree_sitter_tlaplus", "TLA+ state parsing", "state-parsing"
+      ) from e2
+
+  class Tstla:
+    def __getattr__(self, *a: Any, **kw: Any) -> Any:
+      RaiseTstlaMissingIfUsed()
+
+  if not TYPE_CHECKING:
+    tstla = Tstla()
+
+try:
+  from tree_sitter import Language, Node, Parser, Tree
+except ModuleNotFoundError as e:
+  e2 = e
+
+  class RaiseTreeSitterMissingIfUsed:
+    def __init__(self, *a: Any, **kw: Any) -> None:
+      raise RequiredExtraNotInstalled(
+        "tree_sitter", "TLA+ state parsing", "state-parsing"
+      ) from e2
+
+  if not TYPE_CHECKING:
+    Language = RaiseTreeSitterMissingIfUsed
+    Node = RaiseTreeSitterMissingIfUsed
+    Parser = RaiseTreeSitterMissingIfUsed
+    Tree = RaiseTreeSitterMissingIfUsed
 
 from .model import (
   FunctionMerge,

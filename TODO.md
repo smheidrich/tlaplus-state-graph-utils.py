@@ -41,6 +41,5 @@ After https://github.com/pypa/packaging.python.org/issues/1605 PR is done
 (either in the Packaging Guide or elsewhere) and I know what the actual best
 solution for handling missing extras is:
 
-[ ] Replace current "missing d2 extra" handling by this
-[ ] Make tree-sitter extra (for state parsing) separate from D2
-[ ] Ensure similar human-readable error msg when tree-sitter not installed
+[ ] Replace current "missing extra" handling (for both D2 output & state
+    parsing extras) by this
