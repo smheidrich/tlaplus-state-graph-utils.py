@@ -3,11 +3,12 @@
 ## Next
 
 [ ] Add any kind of test for styleClass parsing (reasonable JSON)
-[ ] Add any kind of test for styleClass output (D2)
 
 ## Soon
 
 [ ] Fix bug re: bools in state not being parsed as such
+[ ] Fix bug re: single state doesn't get rendered as D2 (empty string instead)
+    & use that to simplify D2 styleClass output test
 
 ## Later
 
