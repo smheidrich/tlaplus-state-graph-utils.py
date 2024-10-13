@@ -2,8 +2,6 @@
 
 ## Next
 
-[ ] Add any kind of test for styleClass parsing (reasonable JSON)
-
 ## Soon
 
 [ ] Fix bug re: bools in state not being parsed as such

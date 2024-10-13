@@ -1,6 +1,5 @@
 from string import Template
 from textwrap import dedent, indent
-from typing import cast
 
 import tree_sitter_tlaplus as tstla
 from tree_sitter import Language, Node, Parser, Tree

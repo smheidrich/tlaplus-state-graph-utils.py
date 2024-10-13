@@ -144,7 +144,7 @@ other tools to work with TLA+ state graphs. It looks like this:
       "simpleStructuredState": ...,
       "itfState": ...
       // optional, if added by user:
-      styleClass: "someclass"
+      "styleClass": "someclass"
     },
     ...
   ],

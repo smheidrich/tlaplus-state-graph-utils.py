@@ -136,7 +136,7 @@ def test_long_example_non_latex_against_reference(
 # Shorter, more focused tests for individual features:
 
 
-def test_styleclass() -> None:
+def test_style_class() -> None:
   # Setup
   # TODO Why doesn't this work with a single state and no steps? (output is empty)
   model = TransitionDiagram(
