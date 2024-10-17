@@ -27,23 +27,17 @@ def test_mixed() -> None:
 
   # Check
   assert parsed == {
-    "a": SimpleValue(value='"b"'),
+    "a": SimpleValue(value='b'),
     "c": Record(
       fields=[
-        RecordField(
-          key="d",
-          value=SimpleValue('"e"'),
-        ),
-        RecordField(
-          key="d2",
-          value=SimpleValue('"e2"'),
-        ),
+        RecordField(key="d", value=SimpleValue('e')),
+        RecordField(key="d2", value=SimpleValue('e2')),
       ],
     ),
     "f": FunctionMerge(
       [
-        SingleElemDomainFunction("G", SimpleValue('"H"')),
-        SingleElemDomainFunction("I", SimpleValue('"J"')),
+        SingleElemDomainFunction("G", SimpleValue("H")),
+        SingleElemDomainFunction("I", SimpleValue("J")),
       ]
     ),
   }
@@ -64,9 +58,9 @@ def test_three_merged_functions() -> None:
   assert parsed == {
     "a": FunctionMerge(
       [
-        SingleElemDomainFunction("B", SimpleValue('"C"')),
-        SingleElemDomainFunction("D", SimpleValue('"E"')),
-        SingleElemDomainFunction("F", SimpleValue('"G"')),
+        SingleElemDomainFunction("B", SimpleValue("C")),
+        SingleElemDomainFunction("D", SimpleValue("E")),
+        SingleElemDomainFunction("F", SimpleValue("G")),
       ]
     )
   }
@@ -91,14 +85,8 @@ def test_nested_record() -> None:
           key="b",
           value=Record(
             fields=[
-              RecordField(
-                key="c",
-                value=SimpleValue('"d"'),
-              ),
-              RecordField(
-                key="c2",
-                value=SimpleValue('"d2"'),
-              ),
+              RecordField(key="c", value=SimpleValue("d")),
+              RecordField(key="c2", value=SimpleValue("d2")),
             ],
           ),
         )

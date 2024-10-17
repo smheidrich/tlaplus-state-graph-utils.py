@@ -4,12 +4,13 @@
 
 ## Soon
 
-[ ] Fix bug re: bools in state not being parsed as such
 [ ] Fix bug re: single state doesn't get rendered as D2 (empty string instead)
     & use that to simplify D2 styleClass output test
 
 ## Later
 
+[ ] At least try to output line numbers etc. in exceptions raised from TLA+
+    state parsing
 [ ] Consider using https://github.com/wenkokke/py-tree-sitter-type-provider
     to simplify TLA+ state parsing
 [ ] Allow parsing of various structured state formats in reasonable-json

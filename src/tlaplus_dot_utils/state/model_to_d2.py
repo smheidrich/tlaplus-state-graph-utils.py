@@ -47,6 +47,21 @@ class BaseStateToD2Renderer(ABC):
   ) -> D2Shape:
     ...
 
+  def _inner_simple_value_to_tla(self, value: str | int | bool) -> str:
+    match value:
+      case str(string):
+        return '"' + repr(string).strip("'").replace('"', r"\"") + '"'
+      # Super important that this comes before int, because bool is a subtype
+      # of int as far as typing is concerned... m(
+      case bool(b) if b is False:
+        return "FALSE"
+      case bool(b) if b is True:
+        return "TRUE"
+      case int(integer):
+        return str(integer)
+      case _ as unreachable:
+        assert_never(unreachable)
+
 
 class ContainersStateToD2Renderer(BaseStateToD2Renderer):
   def _dataclass_state_to_d2_recursive(
@@ -63,7 +78,12 @@ class ContainersStateToD2Renderer(BaseStateToD2Renderer):
           {f"{function.elem} :>": function.value for function in functions},
         )
       case SimpleValue(value=value):
-        subshapes = [D2Shape(name="value", label=f"{value!r}")]
+        subshapes = [
+          D2Shape(
+            name="value",
+            label=f"{self._inner_simple_value_to_tla(value)!r}",
+          )
+        ]
       case str() as value:
         subshapes = [D2Shape(name="value", label=f"{value!r}")]
       case _ as unreachable:
@@ -94,14 +114,14 @@ class ContainersSimpleValuesInlineStateToD2Renderer(BaseStateToD2Renderer):
           {f"{function.elem} :>": function.value for function in functions},
         )
       case SimpleValue(value=value):
-        simple_value = f" {value}"
+        simple_value = f" {self._inner_simple_value_to_tla(value)}"
       case str() as value:
         simple_value = f" {value}"
       case _ as unreachable:
         assert_never(unreachable)
 
-    label = f"{var_name + simple_value}"
-    label = '"' + label.strip("'").replace('"', '\\"') + '"'
+    label = f"{var_name}{simple_value}".replace('"', r"\"")
+    label = f'"{label}"'
     shape = D2Shape(name=f"var{i}", label=label)
     for subshape in subshapes:
       shape.add_shape(subshape)
@@ -127,14 +147,14 @@ class ContainersSimpleValuesInlineNewlineSepStateToD2Renderer(
           {f"{function.elem} :>": function.value for function in functions},
         )
       case SimpleValue(value=value):
-        simple_value = f" {value}"
+        simple_value = f"\\n {self._inner_simple_value_to_tla(value)}"
       case str() as value:
         simple_value = f" {value}"
       case _ as unreachable:
         assert_never(unreachable)
 
-    label = f"{var_name}\\n{simple_value}"
-    label = '"' + label.strip("'").replace('"', '\\"') + '"'
+    label = f"{var_name}{simple_value}".strip("'").replace('"', r"\"")
+    label = f'"{label}"'
     shape = D2Shape(name=f"var{i}", label=label)
     for subshape in subshapes:
       shape.add_shape(subshape)

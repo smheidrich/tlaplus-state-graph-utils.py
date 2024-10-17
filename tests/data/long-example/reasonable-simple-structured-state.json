@@ -11,16 +11,16 @@
       "labelTlaPlus": "/\\ fs = [fileExists |-> FALSE]\n/\\ procs = ( A :> [pc |-> \"start\", fileExists |-> FALSE] @@\n  B :> [pc |-> \"start\", fileExists |-> FALSE] )",
       "simpleStructuredState": {
         "fs": {
-          "fileExists": "FALSE"
+          "fileExists": false
         },
         "procs": {
           "A": {
-            "pc": "\"start\"",
-            "fileExists": "FALSE"
+            "pc": "start",
+            "fileExists": false
           },
           "B": {
-            "pc": "\"start\"",
-            "fileExists": "FALSE"
+            "pc": "start",
+            "fileExists": false
           }
         }
       }
@@ -30,16 +30,16 @@
       "labelTlaPlus": "/\\ fs = [fileExists |-> FALSE]\n/\\ procs = ( A :> [pc |-> \"create\", fileExists |-> FALSE] @@\n  B :> [pc |-> \"start\", fileExists |-> FALSE] )",
       "simpleStructuredState": {
         "fs": {
-          "fileExists": "FALSE"
+          "fileExists": false
         },
         "procs": {
           "A": {
-            "pc": "\"create\"",
-            "fileExists": "FALSE"
+            "pc": "create",
+            "fileExists": false
           },
           "B": {
-            "pc": "\"start\"",
-            "fileExists": "FALSE"
+            "pc": "start",
+            "fileExists": false
           }
         }
       }
@@ -49,16 +49,16 @@
       "labelTlaPlus": "/\\ fs = [fileExists |-> TRUE]\n/\\ procs = ( A :> [pc |-> \"done\", fileExists |-> FALSE] @@\n  B :> [pc |-> \"start\", fileExists |-> FALSE] )",
       "simpleStructuredState": {
         "fs": {
-          "fileExists": "TRUE"
+          "fileExists": true
         },
         "procs": {
           "A": {
-            "pc": "\"done\"",
-            "fileExists": "FALSE"
+            "pc": "done",
+            "fileExists": false
           },
           "B": {
-            "pc": "\"start\"",
-            "fileExists": "FALSE"
+            "pc": "start",
+            "fileExists": false
           }
         }
       }
@@ -68,16 +68,16 @@
       "labelTlaPlus": "/\\ fs = [fileExists |-> FALSE]\n/\\ procs = ( A :> [pc |-> \"create\", fileExists |-> FALSE] @@\n  B :> [pc |-> \"create\", fileExists |-> FALSE] )",
       "simpleStructuredState": {
         "fs": {
-          "fileExists": "FALSE"
+          "fileExists": false
         },
         "procs": {
           "A": {
-            "pc": "\"create\"",
-            "fileExists": "FALSE"
+            "pc": "create",
+            "fileExists": false
           },
           "B": {
-            "pc": "\"create\"",
-            "fileExists": "FALSE"
+            "pc": "create",
+            "fileExists": false
           }
         }
       }
@@ -87,16 +87,16 @@
       "labelTlaPlus": "/\\ fs = [fileExists |-> TRUE]\n/\\ procs = ( A :> [pc |-> \"done\", fileExists |-> FALSE] @@\n  B :> [pc |-> \"read\", fileExists |-> FALSE] )",
       "simpleStructuredState": {
         "fs": {
-          "fileExists": "TRUE"
+          "fileExists": true
         },
         "procs": {
           "A": {
-            "pc": "\"done\"",
-            "fileExists": "FALSE"
+            "pc": "done",
+            "fileExists": false
           },
           "B": {
-            "pc": "\"read\"",
-            "fileExists": "FALSE"
+            "pc": "read",
+            "fileExists": false
           }
         }
       }
@@ -106,16 +106,16 @@
       "labelTlaPlus": "/\\ fs = [fileExists |-> TRUE]\n/\\ procs = ( A :> [pc |-> \"done\", fileExists |-> FALSE] @@\n  B :> [pc |-> \"create\", fileExists |-> FALSE] )",
       "simpleStructuredState": {
         "fs": {
-          "fileExists": "TRUE"
+          "fileExists": true
         },
         "procs": {
           "A": {
-            "pc": "\"done\"",
-            "fileExists": "FALSE"
+            "pc": "done",
+            "fileExists": false
           },
           "B": {
-            "pc": "\"create\"",
-            "fileExists": "FALSE"
+            "pc": "create",
+            "fileExists": false
           }
         }
       }
@@ -125,16 +125,16 @@
       "labelTlaPlus": "/\\ fs = [fileExists |-> TRUE]\n/\\ procs = ( A :> [pc |-> \"done\", fileExists |-> FALSE] @@\n  B :> [pc |-> \"done\", fileExists |-> FALSE] )",
       "simpleStructuredState": {
         "fs": {
-          "fileExists": "TRUE"
+          "fileExists": true
         },
         "procs": {
           "A": {
-            "pc": "\"done\"",
-            "fileExists": "FALSE"
+            "pc": "done",
+            "fileExists": false
           },
           "B": {
-            "pc": "\"done\"",
-            "fileExists": "FALSE"
+            "pc": "done",
+            "fileExists": false
           }
         }
       }
@@ -144,16 +144,16 @@
       "labelTlaPlus": "/\\ fs = [fileExists |-> TRUE]\n/\\ procs = ( A :> [pc |-> \"done\", fileExists |-> FALSE] @@\n  B :> [pc |-> \"crashed\", fileExists |-> FALSE] )",
       "simpleStructuredState": {
         "fs": {
-          "fileExists": "TRUE"
+          "fileExists": true
         },
         "procs": {
           "A": {
-            "pc": "\"done\"",
-            "fileExists": "FALSE"
+            "pc": "done",
+            "fileExists": false
           },
           "B": {
-            "pc": "\"crashed\"",
-            "fileExists": "FALSE"
+            "pc": "crashed",
+            "fileExists": false
           }
         }
       }

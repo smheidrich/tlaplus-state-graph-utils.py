@@ -26,7 +26,7 @@ class FunctionMerge:
 
 @dataclass
 class SimpleValue:
-  value: str
+  value: str | bool | int
 
 
 SealedValue: TypeAlias = Record | FunctionMerge | SimpleValue

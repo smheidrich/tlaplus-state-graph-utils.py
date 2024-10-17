@@ -221,10 +221,10 @@ def tlaplus_value_to_dataclass(rhs: Node) -> SealedValue:
           return _compose_to_dataclasses(inner)
         case _:
           assert rhs.text is not None, "invalid rhs text (None)"
-          return SimpleValue(rhs.text.decode("utf-8"))
+          return _simple_value_to_dataclass(rhs)
     case _:
       assert rhs.text is not None, "invalid variable rhs (None)"
-      return SimpleValue(rhs.text.decode("utf-8"))
+      return _simple_value_to_dataclass(rhs)
 
 
 def _compose_to_dataclasses(node: Node) -> FunctionMerge | SimpleValue:
@@ -246,9 +246,8 @@ def _compose_to_dataclasses(node: Node) -> FunctionMerge | SimpleValue:
     lhs_dc, SingleElemDomainFunction
   ):
     return FunctionMerge(rhs_dc.functions + [lhs_dc])
-  else:  # can't make sense of it so give up and return as raw value
-    assert node.text is not None, "invalid node text (None)"
-    return SimpleValue(node.text.decode("utf-8"))
+  else:  # can't make sense of it so hope it's a simple value
+    return _simple_value_to_dataclass(node)
 
 
 def _compose_operand_to_dataclasses(
@@ -275,3 +274,24 @@ def _compose_operand_to_dataclasses(
       )
     case _:
       return None
+
+
+def _simple_value_to_dataclass(node: Node) -> SimpleValue:
+  match node.type:
+    case "string":
+      return SimpleValue(node.text[1:-1].decode("utf-8"))
+    case "boolean":
+      match node.text:
+        case b"FALSE":
+          return SimpleValue(False)
+        case b"TRUE":
+          return SimpleValue(True)
+        case _:
+          raise ValueError(f"node type was boolean but got value {node.text}")
+    case "nat_number":
+      return SimpleValue(int(node.text.decode("utf-8")))
+    case _:
+      raise ValueError(
+        f"expected simple value but got {node.text} which is of "
+        f"type {node.type}"
+      )
