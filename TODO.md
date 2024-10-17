@@ -4,15 +4,10 @@
 
 ## Soon
 
-[ ] Fix bug re: single state doesn't get rendered as D2 (empty string instead)
-    & use that to simplify D2 styleClass output test
-
 ## Later
 
 [ ] At least try to output line numbers etc. in exceptions raised from TLA+
     state parsing
-[ ] Consider using https://github.com/wenkokke/py-tree-sitter-type-provider
-    to simplify TLA+ state parsing
 [ ] Allow parsing of various structured state formats in reasonable-json
 [ ] ^ Use some kind of library, Pydantic or Marshmallow or whatever...
 [ ] ^ Error if mismatch between different reprs (TLA+, own structured, ITF)
@@ -44,3 +39,13 @@ solution for handling missing extras is:
 
 [ ] Replace current "missing extra" handling (for both D2 output & state
     parsing extras) by this
+
+After d2 fmt bug is fixed https://github.com/terrastruct/d2/issues/1577
+
+[ ] use that to simplify D2 styleClass output test (cf. TODOs there)
+
+As soon as py-tree-sitter-type-provider allows outputting .py sources somehow
+(directly or via stubgen)
+https://github.com/wenkokke/py-tree-sitter-type-provider/issues/93
+
+[ ] Use py-tree-sitter-type-provider to simplify TLA+ state parsing

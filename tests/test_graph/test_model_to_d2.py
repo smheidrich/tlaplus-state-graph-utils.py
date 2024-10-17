@@ -1,6 +1,8 @@
 import subprocess as sp
 from textwrap import dedent
 
+import pytest
+
 from tlaplus_dot_utils.graph.model import State, Step, TransitionDiagram
 from tlaplus_dot_utils.graph.model_to_d2 import (
   ContainersStateDiagramToD2Renderer,
@@ -138,7 +140,7 @@ def test_long_example_non_latex_against_reference(
 
 def test_style_class() -> None:
   # Setup
-  # TODO Why doesn't this work with a single state and no steps? (output is empty)
+  # TODO Simplify to use single state, cf. test
   model = TransitionDiagram(
     states=[
       State(id=1, label_tlaplus=r"/\ a = 1", style_class="someclass"),
@@ -179,6 +181,43 @@ def test_style_class() -> None:
       style: {
         stroke: blue
       }
+    }
+    """
+  )
+
+
+# TODO: As soon as this becomes XPASS due to the d2 bug being fixed, we can
+#   use the possibility to have just single states to simplify the test
+@pytest.mark.xfail(
+  reason="d2 fmt bug: https://github.com/terrastruct/d2/issues/1577"
+)
+def test_single_state_no_steps() -> None:
+  """
+  This tests the test setup or rather d2 fmt more than anything
+  """
+  # Setup
+  model = TransitionDiagram(
+    states=[
+      State(id=1, label_tlaplus=r"/\ a = 1", style_class="someclass"),
+    ],
+    steps=[],
+  )
+  # Run
+  d2 = format_d2(
+    model_to_d2_str(
+      model,
+      renderer=ContainersStateDiagramToD2Renderer(
+        ContainersSimpleValuesInlineStateToD2Renderer()
+      ),
+    )
+  )
+
+  # Check
+  assert d2 == dedent(
+    """\
+    state1: "" {
+      class: someclass
+      var0: "a 1"
     }
     """
   )
