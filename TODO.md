@@ -4,6 +4,9 @@
 
 ## Soon
 
+[ ] Rename to tlaplus-state-graph-utils.py?
+[ ] Publish on PyPI
+
 ## Later
 
 [ ] At least try to output line numbers etc. in exceptions raised from TLA+
