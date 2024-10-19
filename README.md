@@ -16,7 +16,7 @@ Installing the package puts a CLI program named `tlaplus-state-graph-utils.py` i
 ```
 usage: tlaplus-state-graph-utils.py [-h] [--version] COMMAND ...
 
-utilities for transforming TLA+-produced GraphViz dot files
+utilities for working with TLA+ state graphs
 
 options:
   -h, --help  show this help message and exit
