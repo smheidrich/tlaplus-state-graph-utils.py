@@ -5,7 +5,7 @@ Python utilities for working with TLA+ state graphs
 ## Installation
 
 ```bash
-pip install https://github.com/smheidrich/tlaplus-state-graph-utils.py.git
+pip install tlaplus-state-graph-utils
 ```
 
 ## Using the CLI
@@ -191,7 +191,7 @@ Another supported output format is [D2](https://d2lang.com/), but to use it,
 the package's `d2` extra needs to be installed:
 
 ```bash
-pip install 'https://github.com/smheidrich/tlaplus-state-graph-utils.py.git[d2]'
+pip install tlaplus-state-graph-utils[d2]'
 ```
 
 Here is an example showing how to go from a `dot` file produced by TLA+ to
