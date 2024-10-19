@@ -279,6 +279,7 @@ def _compose_operand_to_dataclasses(
 def _simple_value_to_dataclass(node: Node) -> SimpleValue:
   match node.type:
     case "string":
+      assert node.text is not None, "invalid simple value text (None)"
       return SimpleValue(node.text[1:-1].decode("utf-8"))
     case "boolean":
       match node.text:
@@ -287,11 +288,14 @@ def _simple_value_to_dataclass(node: Node) -> SimpleValue:
         case b"TRUE":
           return SimpleValue(True)
         case _:
-          raise ValueError(f"node type was boolean but got value {node.text}")
+          raise ValueError(
+            f"node type was boolean but got value {node.text!r}"
+          )
     case "nat_number":
+      assert node.text is not None, "invalid simple value text (None)"
       return SimpleValue(int(node.text.decode("utf-8")))
     case _:
       raise ValueError(
-        f"expected simple value but got {node.text} which is of "
+        f"expected simple value but got {node.text!r} which is of "
         f"type {node.type}"
       )

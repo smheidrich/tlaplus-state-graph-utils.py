@@ -18,7 +18,7 @@ def model_to_itf_state_jsonish(model: dict[str, SealedValue]) -> Jsonish:
 
 def _sealed_value_to_reasonable_jsonish(
   model: SealedValue,
-) -> dict[str, Jsonish] | str:
+) -> dict[str, Jsonish] | str | int | bool:
   match model:
     case Record(fields):
       return dict(_record_field_to_key_value_tuple(rf) for rf in fields)
