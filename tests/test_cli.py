@@ -5,9 +5,9 @@ from pathlib import Path
 
 import pytest
 from pytest import CaptureFixture
-from tlaplus_dot_utils.cli import run_cli
-from tlaplus_dot_utils.graph.model import TransitionDiagram
-from tlaplus_dot_utils.graph.reasonable_json_to_model import (
+from tlaplus_state_graph_utils.cli import run_cli
+from tlaplus_state_graph_utils.graph.model import TransitionDiagram
+from tlaplus_state_graph_utils.graph.reasonable_json_to_model import (
   reasonable_json_file_to_model,
 )
 

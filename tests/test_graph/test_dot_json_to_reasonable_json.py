@@ -1,7 +1,7 @@
-from tlaplus_dot_utils.graph.dot_json_to_reasonable_json import (
+from tlaplus_state_graph_utils.graph.dot_json_to_reasonable_json import (
   dot_jsonish_to_reasonable_jsonish,
 )
-from tlaplus_dot_utils.utils.jsonish import Jsonish
+from tlaplus_state_graph_utils.utils.jsonish import Jsonish
 
 
 def test_example_against_reference(

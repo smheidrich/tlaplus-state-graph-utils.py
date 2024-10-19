@@ -4,9 +4,9 @@ from importlib.resources.abc import Traversable
 
 import pytest
 
-from tlaplus_dot_utils.graph.dot_json_to_model import dot_jsonish_to_model
-from tlaplus_dot_utils.graph.model import TransitionDiagram
-from tlaplus_dot_utils.utils.jsonish import Jsonish
+from tlaplus_state_graph_utils.graph.dot_json_to_model import dot_jsonish_to_model
+from tlaplus_state_graph_utils.graph.model import TransitionDiagram
+from tlaplus_state_graph_utils.utils.jsonish import Jsonish
 
 
 @pytest.fixture

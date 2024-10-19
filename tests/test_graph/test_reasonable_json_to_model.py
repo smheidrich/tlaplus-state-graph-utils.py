@@ -5,8 +5,8 @@
 import json
 from io import StringIO
 
-from tlaplus_dot_utils.graph.model import State, TransitionDiagram
-from tlaplus_dot_utils.graph.reasonable_json_to_model import (
+from tlaplus_state_graph_utils.graph.model import State, TransitionDiagram
+from tlaplus_state_graph_utils.graph.reasonable_json_to_model import (
   reasonable_json_file_to_model,
 )
 

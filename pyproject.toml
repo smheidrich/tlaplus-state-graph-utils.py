@@ -1,5 +1,5 @@
 [project]
-name = "tlaplus-dot-utils"
+name = "tlaplus-state-graph-utils"
 version = "0.2.0"
 description = "Add your description here"
 readme = "README.md"
@@ -8,7 +8,7 @@ dependencies = [
 ]
 
 [project.scripts]
-'tlaplus-dot-utils.py' = 'tlaplus_dot_utils.cli:main'
+'tlaplus-state-graph-utils.py' = 'tlaplus_state_graph_utils.cli:main'
 
 [project.optional-dependencies]
 d2 = [

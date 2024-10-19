@@ -1,20 +1,20 @@
-# tlaplus-dot-utils.py
+# tlaplus-state-graph-utils.py
 
 Python utilities for transforming GraphViz dot files produced by TLA+
 
 ## Installation
 
 ```bash
-pip install https://github.com/smheidrich/tlaplus-dot-utils.py.git
+pip install https://github.com/smheidrich/tlaplus-state-graph-utils.py.git
 ```
 
 ## Using the CLI
 
-Installing the package puts a CLI program named `tlaplus-dot-utils.py` in your
+Installing the package puts a CLI program named `tlaplus-state-graph-utils.py` in your
 `PATH`. Here is its `--help` text:
 
 ```
-usage: tlaplus-dot-utils.py [-h] [--version] COMMAND ...
+usage: tlaplus-state-graph-utils.py [-h] [--version] COMMAND ...
 
 utilities for transforming TLA+-produced GraphViz dot files
 
@@ -32,7 +32,7 @@ convert between different representations of TLA+ state graphs. Here is its
 `--help` text:
 
 ```
-usage: tlaplus-dot-utils.py convert [-h] [--output OUTPUT]
+usage: tlaplus-state-graph-utils.py convert [-h] [--output OUTPUT]
                                     [--from {reasonable-json,tlaplus-dot-json}]
                                     [--to {reasonable-json,d2}] [--pretty]
                                     [--reasonable-json-structured-state]
@@ -93,7 +93,7 @@ diagram output into a "reasonable" JSON format that's easier to work with:
 
 ```bash
 # In your TLA+ Model directory:
-dot -Tjson Model_1.dot | tlaplus-dot-utils.py convert -t reasonable-json
+dot -Tjson Model_1.dot | tlaplus-state-graph-utils.py convert -t reasonable-json
 ```
 
 The following sections go into more details about the supported input and
@@ -191,7 +191,7 @@ Another supported output format is [D2](https://d2lang.com/), but to use it,
 the package's `d2` extra needs to be installed:
 
 ```bash
-pip install 'https://github.com/smheidrich/tlaplus-dot-utils.py.git[d2]'
+pip install 'https://github.com/smheidrich/tlaplus-state-graph-utils.py.git[d2]'
 ```
 
 Here is an example showing how to go from a `dot` file produced by TLA+ to
@@ -200,7 +200,7 @@ a graph rendered using D2 in one shell command:
 ```bash
 # In your TLA+ Model directory:
 dot -Tjson Model_1.dot \
-| tlaplus-dot-utils.py convert -t d2 \
+| tlaplus-state-graph-utils.py convert -t d2 \
 | D2_LAYOUT=elk d2 - > Model_1.svg
 ```
 
@@ -239,7 +239,7 @@ structured/JSON state output and the [`jq`](https://jqlang.github.io/jq/) JSON
 processing tool, e.g.:
 
 ```bash
-tlaplus-dot-utils.py convert --reasonable-json-simple-structured-state \
+tlaplus-state-graph-utils.py convert --reasonable-json-simple-structured-state \
 | jq '.states[] |= (.styleClass =
 if .someKey == "some-value" then
   "class1"

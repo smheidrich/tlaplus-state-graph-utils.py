@@ -2,11 +2,11 @@ from importlib.abc import Traversable
 from io import StringIO
 
 import pytest
-from tlaplus_dot_utils.graph.any_to_model import (
+from tlaplus_state_graph_utils.graph.any_to_model import (
   CouldNotDetermineInputFormatError,
   any_file_to_model,
 )
-from tlaplus_dot_utils.graph.model import TransitionDiagram
+from tlaplus_state_graph_utils.graph.model import TransitionDiagram
 
 
 def test_dot_json(

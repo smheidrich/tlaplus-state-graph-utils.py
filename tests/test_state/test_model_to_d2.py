@@ -1,11 +1,11 @@
 from textwrap import dedent
 
-from tlaplus_dot_utils.state.model_to_d2 import (
+from tlaplus_state_graph_utils.state.model_to_d2 import (
   ContainersSimpleValuesInlineNewlineSepStateToD2Renderer,
   ContainersSimpleValuesInlineStateToD2Renderer,
   ContainersStateToD2Renderer,
 )
-from tlaplus_dot_utils.state.tlaplus_to_model import (
+from tlaplus_state_graph_utils.state.tlaplus_to_model import (
   tlaplus_state_to_dataclasses,
 )
 

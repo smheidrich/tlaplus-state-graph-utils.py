@@ -9,7 +9,7 @@ for x in tests/data/long-example/*.d2; do
 done
 
 # Conditional styling (cookbook):
-tlaplus-dot-utils.py convert --reasonable-json-simple-structured-state \
+tlaplus-state-graph-utils.py convert --reasonable-json-simple-structured-state \
 tests/data/long-example/reasonable.json \
 | jq '.states[] |= (.styleClass =
 if
@@ -26,7 +26,7 @@ else
 end
 )' \
 | (
-  tlaplus-dot-utils.py convert -t d2 --d2-output-state-as latex
+  tlaplus-state-graph-utils.py convert -t d2 --d2-output-state-as latex
   echo
   echo '
     classes { danger: { style: { fill: lemonchiffon } }

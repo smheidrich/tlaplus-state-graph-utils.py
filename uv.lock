@@ -140,8 +140,8 @@ wheels = [
 ]
 
 [[package]]
-name = "tlaplus-dot-utils"
-version = "0.1.0"
+name = "tlaplus-state-graph-utils"
+version = "0.2.0"
 source = { editable = "." }
 
 [package.optional-dependencies]

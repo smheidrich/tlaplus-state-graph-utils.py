@@ -3,14 +3,14 @@ from textwrap import dedent
 
 import pytest
 
-from tlaplus_dot_utils.graph.model import State, Step, TransitionDiagram
-from tlaplus_dot_utils.graph.model_to_d2 import (
+from tlaplus_state_graph_utils.graph.model import State, Step, TransitionDiagram
+from tlaplus_state_graph_utils.graph.model_to_d2 import (
   ContainersStateDiagramToD2Renderer,
   LatexStateDiagramToD2Renderer,
   SimpleStateDiagramToD2Renderer,
   model_to_d2_str,
 )
-from tlaplus_dot_utils.state.model_to_d2 import (
+from tlaplus_state_graph_utils.state.model_to_d2 import (
   ContainersSimpleValuesInlineNewlineSepStateToD2Renderer,
   ContainersSimpleValuesInlineStateToD2Renderer,
   ContainersStateToD2Renderer,
