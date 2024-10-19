@@ -1,6 +1,6 @@
 # tlaplus-state-graph-utils.py
 
-Python utilities for transforming GraphViz dot files produced by TLA+
+Python utilities for working with TLA+ state graphs
 
 ## Installation
 

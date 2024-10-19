@@ -4,7 +4,6 @@
 
 ## Soon
 
-[ ] Rename to tlaplus-state-graph-utils.py?
 [ ] Publish on PyPI
 
 ## Later
