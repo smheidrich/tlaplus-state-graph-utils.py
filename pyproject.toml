@@ -1,6 +1,6 @@
 [project]
 name = "tlaplus-state-graph-utils"
-version = "0.2.0.post1"
+version = "0.2.0"
 description = "Utilities for working with TLA+ state graphs"
 readme = "README.md"
 requires-python = ">=3.12"
